@@ -1,4 +1,5 @@
-﻿using TinyIoC;
+﻿using Fync.Common.Libraries;
+using TinyIoC;
 
 namespace Fync.Api.App_Start
 {
@@ -10,6 +11,7 @@ namespace Fync.Api.App_Start
             System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver = new TinyIocApiResolver(container);
 
             Registrations.Register(container);
+            Data.Registrations.Register(container);
         }
     }
 }

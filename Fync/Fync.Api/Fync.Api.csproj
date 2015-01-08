@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -81,14 +84,11 @@
   <ItemGroup>
     <Compile Include="App_Start\Registrations.cs" />
     <Compile Include="Controllers\FolderController.cs" />
-    <Compile Include="Libraries\TinyIocApiResolver.cs" />
     <Compile Include="App_Start\TinyIocConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Libraries\TinyIoCAspNetExtensions.cs" />
-    <Compile Include="Libraries\TinyIoC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +103,16 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fync.Common\Fync.Common.csproj">
+      <Project>{54B35500-158C-4E88-A14D-325F0EF39F36}</Project>
+      <Name>Fync.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fync.Data\Fync.Data.csproj">
+      <Project>{3074A107-12FF-47D8-86CA-F4B506B562AF}</Project>
+      <Name>Fync.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

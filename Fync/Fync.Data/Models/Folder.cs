@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fync.Data.Models
 {
-    internal sealed class Folder : DatabaseEntity
+    public class Folder : DatabaseEntity
     {
         public Folder()
         {
@@ -11,8 +13,12 @@ namespace Fync.Data.Models
         }
 
         public string Name { get; set; }
-        public DateTime LastModified { get; set; }
-        
-        public ICollection<Folder> SubFolders { get; set; } 
+        [Required]
+        public DateTime? LastModified { get; set; }
+
+        [ForeignKey("Parent")]
+        public Guid? Parent_Id { get; set; }   
+        public virtual Folder Parent { get; set; }
+        public virtual ICollection<Folder> SubFolders { get; set; } 
     }
 }

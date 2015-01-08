@@ -1,10 +1,9 @@
-﻿using TinyIoC;
+﻿using System;
+using System.Web;
+using TinyIoC;
 
-namespace Nancy.Hosting.Aspnet
+namespace Fync.Common.Libraries
 {
-    using System;
-    using System.Web;
-
     public class HttpContextLifetimeProvider : TinyIoCContainer.ITinyIoCObjectLifetimeProvider
     {
         private readonly string _KeyName = String.Format("TinyIoC.HttpContext.{0}", Guid.NewGuid());

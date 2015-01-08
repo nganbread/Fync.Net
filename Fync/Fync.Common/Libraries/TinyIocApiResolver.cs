@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web.Http.Dependencies;
 using TinyIoC;
 
-namespace Fync.Api.App_Start
+namespace Fync.Common.Libraries
 {
-    internal class TinyIocApiResolver : IDependencyResolver
+    public class TinyIocApiResolver : IDependencyResolver
     {
         private readonly TinyIoCContainer _container;
         public TinyIocApiResolver(TinyIoCContainer container)
