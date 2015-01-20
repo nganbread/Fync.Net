@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Data.Entity;
-using Fync.Data.Models;
+using Fync.Service.Models.Data;
 
 namespace Fync.Data
 {
     public interface IContext : IDisposable
     {
-        IDbSet<Folder> Folders { get; }
-        Folder GetTree(Folder root);
+        IDbSet<FolderEntity> Folders { get; }
+        FolderEntity GetTree(FolderEntity root);
         void SaveChanges();
     }
 }

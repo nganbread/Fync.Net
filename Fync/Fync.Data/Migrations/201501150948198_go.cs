@@ -3,7 +3,7 @@ namespace Fync.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class _new : DbMigration
+    public partial class go : DbMigration
     {
         public override void Up()
         {
@@ -14,14 +14,13 @@ namespace Fync.Data.Migrations
                         Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(),
                         LastModified = c.DateTime(nullable: false),
-                        Parent_Id = c.Guid(),
+                        ParentId = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Folder", t => t.Parent_Id)
-                .Index(t => t.Parent_Id);
+                .ForeignKey("dbo.Folder", t => t.ParentId)
+                .Index(t => t.ParentId);
 
             SqlFile("SqlScripts/AddHierarchyNodeColumn.sql");
-
 
             CreateStoredProcedure(
                 "dbo.Folder_Insert",
@@ -29,13 +28,13 @@ namespace Fync.Data.Migrations
                     {
                         Name = p.String(),
                         LastModified = p.DateTime(),
-                        Parent_Id = p.Guid(),
+                        ParentId = p.Guid(),
                     },
                 body:
                     @"DECLARE @generated_keys table([Id] uniqueidentifier)
-                      INSERT [dbo].[Folder]([Name], [LastModified], [Parent_Id])
+                      INSERT [dbo].[Folder]([Name], [LastModified], [ParentId])
                       OUTPUT inserted.[Id] INTO @generated_keys
-                      VALUES (@Name, @LastModified, @Parent_Id)
+                      VALUES (@Name, @LastModified, @ParentId)
                       
                       DECLARE @Id uniqueidentifier
                       SELECT @Id = t.[Id]
@@ -54,11 +53,11 @@ namespace Fync.Data.Migrations
                         Id = p.Guid(),
                         Name = p.String(),
                         LastModified = p.DateTime(),
-                        Parent_Id = p.Guid(),
+                        ParentId = p.Guid(),
                     },
                 body:
                     @"UPDATE [dbo].[Folder]
-                      SET [Name] = @Name, [LastModified] = @LastModified, [Parent_Id] = @Parent_Id
+                      SET [Name] = @Name, [LastModified] = @LastModified, [ParentId] = @ParentId
                       WHERE ([Id] = @Id)"
             );
             
@@ -73,13 +72,9 @@ namespace Fync.Data.Migrations
                       WHERE ([Id] = @Id)"
             );
 
-
-            SqlFile("SqlScripts/CreateFolderInsert.sql");
-            SqlFile("SqlScripts/CreateFolderUpdate.sql");
-            SqlFile("SqlScripts/CreateFolderDelete.sql");
-
-
-
+            SqlFile("SqlScripts/AlterFolderInsert.sql");
+            SqlFile("SqlScripts/AlterFolderUpdate.sql");
+            SqlFile("SqlScripts/AlterFolderDelete.sql");
         }
         
         public override void Down()
@@ -87,8 +82,8 @@ namespace Fync.Data.Migrations
             DropStoredProcedure("dbo.Folder_Delete");
             DropStoredProcedure("dbo.Folder_Update");
             DropStoredProcedure("dbo.Folder_Insert");
-            DropForeignKey("dbo.Folder", "Parent_Id", "dbo.Folder");
-            DropIndex("dbo.Folder", new[] { "Parent_Id" });
+            DropForeignKey("dbo.Folder", "ParentId", "dbo.Folder");
+            DropIndex("dbo.Folder", new[] { "ParentId" });
             DropTable("dbo.Folder");
         }
     }

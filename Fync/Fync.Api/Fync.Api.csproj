@@ -110,8 +110,12 @@
       <Name>Fync.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fync.Data\Fync.Data.csproj">
-      <Project>{3074A107-12FF-47D8-86CA-F4B506B562AF}</Project>
+      <Project>{3074a107-12ff-47d8-86ca-f4b506b562af}</Project>
       <Name>Fync.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fync.Service\Fync.Service.csproj">
+      <Project>{1BABFEF7-6C54-412B-A2B7-376D0A3B4254}</Project>
+      <Name>Fync.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

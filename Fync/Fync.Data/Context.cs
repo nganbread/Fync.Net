@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using Fync.Common;
-using Fync.Data.Models;
+using Fync.Service.Models.Data;
 
 namespace Fync.Data
 {
@@ -15,9 +15,9 @@ namespace Fync.Data
             
         }
 
-        public IDbSet<Folder> Folders { get; set; }
+        public IDbSet<FolderEntity> Folders { get; set; }
 
-        public Folder GetTree(Folder root)
+        public FolderEntity GetTree(FolderEntity root)
         {
             var script = "DECLARE @rootId hierarchyId " +
                          "SELECT @rootId = [HierarchyNode] " +
@@ -28,9 +28,9 @@ namespace Fync.Data
                          "FROM [dbo].[Folder] " +
                          "WHERE [HierarchyNode].IsDescendantOf(@rootId) = 1 OR [Id] = '{0}'".FormatWith(root.Id);
 
-            //var flat = ((DbSet<Folder>) Folders).SqlQuery(script).ToList(); //Change tracked
-            var flat = Database.SqlQuery<Folder>(script).ToList();
-            var children = flat.ToLookup(x => x.Parent_Id.GetValueOrDefault()); //Not change tracked
+            var flat = ((DbSet<FolderEntity>)Folders).SqlQuery(script).ToList(); //Change tracked
+            //var flat = Database.SqlQuery<FolderEntity>(script).ToList(); //Not change tracked
+            var children = flat.ToLookup(x => x.ParentId.GetValueOrDefault());
 
             var newRoot = flat.Single(x => x.Id == root.Id);
             FindAndAttachChildren(newRoot, children);
@@ -40,10 +40,18 @@ namespace Fync.Data
 
         void IContext.SaveChanges()
         {
-            SaveChanges();
+            try
+            {
+                SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                
+            }
         }
 
-        public void FindAndAttachChildren(Folder root, ILookup<Guid, Folder> children)
+        public void FindAndAttachChildren(FolderEntity root, ILookup<Guid, FolderEntity> children)
         {
             if (children.Contains(root.Id))
             {
@@ -60,8 +68,10 @@ namespace Fync.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<Folder>().HasMany(x => x.SubFolders).WithOptional(x => x.Parent);
-            modelBuilder.Entity<Folder>().MapToStoredProcedures(x => x
+
+            modelBuilder.Entity<FolderEntity>().ToTable("Folder");
+            modelBuilder.Entity<FolderEntity>().HasMany(x => x.SubFolders).WithRequired(x => x.Parent);
+            modelBuilder.Entity<FolderEntity>().MapToStoredProcedures(x => x
                 .Insert(y => y.HasName("Folder_Insert"))
                 .Update(y => y.HasName("Folder_Update"))
                 .Delete(y => y.HasName("Folder_Delete")));

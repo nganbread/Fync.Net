@@ -1,18 +1,18 @@
 ALTER PROCEDURE [dbo].[Folder_Insert]
     @Name [nvarchar](max),
     @LastModified [datetime],
-    @Parent_Id [uniqueidentifier]
+    @ParentId [uniqueidentifier]
 AS
 BEGIN
 	
 	DECLARE @generated_keys table([Id] uniqueidentifier)
 
-	IF(@Parent_Id IS NULL)
+	IF(@ParentId IS NULL)
 		BEGIN
 		
-			INSERT [dbo].[Folder]([Name], [LastModified], [Parent_Id], [HierarchyNode])
+			INSERT [dbo].[Folder]([Name], [LastModified], [ParentId], [HierarchyNode])
 			OUTPUT inserted.[Id] INTO @generated_keys
-			VALUES (@Name, @LastModified, @Parent_Id, hierarchyid::GetRoot())
+			VALUES (@Name, @LastModified, @ParentId, hierarchyid::GetRoot())
         
 		END
 	ELSE
@@ -21,7 +21,7 @@ BEGIN
 			DECLARE @parentHierarchyNode hierarchyid
 			SELECT @parentHierarchyNode = [HierarchyNode]
 			FROM [dbo].[Folder]
-			WHERE [Id] = @Parent_Id
+			WHERE [Id] = @ParentId
 
 			-- find the largest child of the parent
 			DECLARE @largestChildHierarchyNode hierarchyid
@@ -29,9 +29,9 @@ BEGIN
 			FROM [dbo].[Folder]
 			WHERE [HierarchyNode].GetAncestor(1) = @parentHierarchyNode
 
-			INSERT [dbo].[Folder]([Name], [LastModified], [Parent_Id], [HierarchyNode])
+			INSERT [dbo].[Folder]([Name], [LastModified], [ParentId], [HierarchyNode])
 			OUTPUT inserted.[Id] INTO @generated_keys
-			VALUES (@Name, @LastModified, @Parent_Id, @parentHierarchyNode.GetDescendant(@largestChildHierarchyNode, NULL))
+			VALUES (@Name, @LastModified, @ParentId, @parentHierarchyNode.GetDescendant(@largestChildHierarchyNode, NULL))
     	
 		END
 	                  

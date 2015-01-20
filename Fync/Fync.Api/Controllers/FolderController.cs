@@ -1,45 +1,34 @@
 ﻿using System;
-using System.Linq;
+using System.Web;
 using System.Web.Http;
-using Fync.Common;
-using Fync.Data;
-using Fync.Data.Models;
+using Fync.Service;
+using Fync.Service.Models;
 
 namespace Fync.Api.Controllers
 {
     public class FolderController : ApiController
     {
-        private readonly Func<IContext> _context;
+        private readonly IFolderService _folderService;
 
-        public FolderController(Func<IContext> context)
+        public FolderController(IFolderService folderService)
         {
-            _context = context;
+            _folderService = folderService;
         }
 
-        public Folder Get()
+        public Folder Get(Guid id)
         {
-            //using (var context = _context())
-            //{
-            //    var folderAbc = new Folder { Name = "Abc", LastModified = DateTime.UtcNow };
-            //    var folderAb = new Folder { Name = "Ab", LastModified = DateTime.UtcNow };
-            //    var folderAa = new Folder { Name = "Aa", LastModified = DateTime.UtcNow };
-            //    var folderA = new Folder { Name = "A", LastModified = DateTime.UtcNow };
+            return _folderService.GetFolderTree(id);
+        }
 
-            //    folderAb.SubFolders.Add(folderAbc);
-            //    folderA.SubFolders.Add(folderAa, folderAb);
+        public void Put(Folder root)
+        {
+            if(root.Id == Guid.Empty) throw new HttpException();
+            _folderService.UpdateRootFolder(root);
+        }
 
-            //    context.Folders.Add(folderA);
-            //    context.SaveChanges();
-            //}
-
-            using (var context = _context())
-            {
-                var root = context.Folders.Single(x => x.Name == "A");
-
-                var many = root.SubFolders.SelectMany(x => x.SubFolders.SelectMany(y => y.SubFolders)).ToList();
-
-                return context.GetTree(root);
-            }
+        public Guid Post(Folder root)
+        {
+            return _folderService.CreateTree(root);
         }
     }
 }

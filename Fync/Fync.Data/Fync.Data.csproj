@@ -48,14 +48,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Entities\DatabaseEntity.cs" />
+    <Compile Include="Entities\FolderEntity.cs" />
+    <Compile Include="EntityComparer.cs" />
     <Compile Include="IContext.cs" />
-    <Compile Include="Migrations\201501081100378_new.cs" />
-    <Compile Include="Migrations\201501081100378_new.Designer.cs">
-      <DependentUpon>201501081100378_new.cs</DependentUpon>
+    <Compile Include="Migrations\201501150948198_go.cs" />
+    <Compile Include="Migrations\201501150948198_go.Designer.cs">
+      <DependentUpon>201501150948198_go.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501200715252_root.cs" />
+    <Compile Include="Migrations\201501200715252_root.Designer.cs">
+      <DependentUpon>201501200715252_root.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\DatabaseEntity.cs" />
-    <Compile Include="Models\Folder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registrations.cs" />
   </ItemGroup>
@@ -70,13 +75,13 @@
     <Content Include="SqlScripts\AddHierarchyNodeColumn.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlScripts\CreateFolderDelete.sql">
+    <Content Include="SqlScripts\AlterFolderDelete.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlScripts\CreateFolderInsert.sql">
+    <Content Include="SqlScripts\AlterFolderInsert.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlScripts\CreateFolderUpdate.sql">
+    <Content Include="SqlScripts\AlterFolderUpdate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -87,8 +92,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201501081100378_new.resx">
-      <DependentUpon>201501081100378_new.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201501150948198_go.resx">
+      <DependentUpon>201501150948198_go.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501200715252_root.resx">
+      <DependentUpon>201501200715252_root.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

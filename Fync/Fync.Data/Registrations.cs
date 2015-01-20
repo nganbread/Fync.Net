@@ -7,7 +7,7 @@ namespace Fync.Data
     {
         public static void Register(TinyIoCContainer container)
         {
-            container.Register<IContext, Context>().AsMultiInstance();
+            container.Register<IContext, Context>().AsPerRequestSingleton();
         }
     }
 }

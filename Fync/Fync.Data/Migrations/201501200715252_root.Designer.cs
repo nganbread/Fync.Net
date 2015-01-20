@@ -7,13 +7,13 @@ namespace Fync.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.2-31219")]
-    public sealed partial class _new : IMigrationMetadata
+    public sealed partial class root : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_new));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(root));
         
         string IMigrationMetadata.Id
         {
-            get { return "201501081100378_new"; }
+            get { return "201501200715252_root"; }
         }
         
         string IMigrationMetadata.Source

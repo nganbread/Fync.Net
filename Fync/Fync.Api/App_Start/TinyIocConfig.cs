@@ -12,6 +12,7 @@ namespace Fync.Api.App_Start
 
             Registrations.Register(container);
             Data.Registrations.Register(container);
+            Service.Registrations.Register(container);
         }
     }
 }
