@@ -13,7 +13,7 @@ namespace Fync.Api
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 SlidingExpiration = true,
-                ExpireTimeSpan = new TimeSpan(30, 0, 0, 0, 0),
+                ExpireTimeSpan = new TimeSpan(0, 0, 30, 0),
                 Provider = new CookieAuthenticationProvider
                 {
                     OnResponseSignIn = context =>
@@ -21,7 +21,7 @@ namespace Fync.Api
                         //Dont 'expire' the cookie
                         context.Properties.ExpiresUtc = DateTime.UtcNow.AddYears(10);
                     }
-                }
+                },
             });
         }
     }

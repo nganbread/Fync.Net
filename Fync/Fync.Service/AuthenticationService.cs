@@ -1,25 +1,25 @@
-﻿using Fync.Data.Identity;
+﻿using System;
+using Fync.Data.Identity;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 
 namespace Fync.Service
 {
     internal class AuthenticationService : IAuthenticationService
     {
-        private readonly IAuthenticationManager _authenticationManager;
-        private readonly UserManager<User, int> _userManager;
+        private readonly Func<IAuthenticationManager> _authenticationManagerFactory;
+        private readonly Func<UserManager<User, int>> _userManagerFactory;
 
-        public AuthenticationService(IAuthenticationManager authenticationManager, UserManager<User, int> userManager)
+        public AuthenticationService(Func<IAuthenticationManager> authenticationManagerFactory, Func<UserManager<User, int>> userManagerFactory)
         {
-            _authenticationManager = authenticationManager;
-            _userManager = userManager;
+            _authenticationManagerFactory = authenticationManagerFactory;
+            _userManagerFactory = userManagerFactory;
         }
 
         public bool Login(string emailAddress, string password)
         {
-            _authenticationManager.SignOut();
-            var user = _userManager.Find(emailAddress, password);
+            _authenticationManagerFactory().SignOut();
+            var user = _userManagerFactory().Find(emailAddress, password);
 
             if (user == null) return false;
 
@@ -30,9 +30,9 @@ namespace Fync.Service
 
         private void Login(User user)
         {
-            var identity = _userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+            var identity = _userManagerFactory().CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
 
-            _authenticationManager.SignIn(new AuthenticationProperties
+            _authenticationManagerFactory().SignIn(new AuthenticationProperties
             {
                 IsPersistent = true
             }, identity);
@@ -46,11 +46,16 @@ namespace Fync.Service
                 Email = email,
             };
 
-            var result = _userManager.Create(user, password);
+            var result = _userManagerFactory().Create(user, password);
             if (!result.Succeeded) return false;
 
             Login(user);
             return true;
+        }
+
+        public void Logout()
+        {
+            _authenticationManagerFactory().SignOut();
         }
     }
 }

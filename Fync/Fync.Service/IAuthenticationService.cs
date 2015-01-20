@@ -4,5 +4,6 @@
     {
         bool Login(string emailAddress, string password);
         bool Register(string email, string password);
+        void Logout();
     }
 }

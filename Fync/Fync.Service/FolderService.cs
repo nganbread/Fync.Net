@@ -55,7 +55,7 @@ namespace Fync.Service
         {
             originalTree.LastModified = updatedTree.LastModified;
 
-            foreach (var original in originalTree.SubFolders)
+            foreach (var original in originalTree.SubFolders.ToList())
             {
                 var updated = updatedTree.SubFolders.SingleOrDefault(x => x.Name == original.Name);
                 if (updated == null)
@@ -80,7 +80,7 @@ namespace Fync.Service
         private void RemoveNode(FolderEntity remove)
         {
             _context.Folders.Remove(remove);
-            foreach (var folder in remove.SubFolders)
+            foreach (var folder in remove.SubFolders.ToList())
             {
                 RemoveNode(folder);
             }

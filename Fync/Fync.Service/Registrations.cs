@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.Entity;
+using Fync.Common.Libraries;
 using Fync.Data.Identity;
 using Fync.Service.Maps;
 using Fync.Service.Models;
@@ -19,16 +19,12 @@ namespace Fync.Service
 
             RegisterMaps(container);
             RegisterIdentity(container);
-
-            var a = container.CanResolve<DbContext>();
-            var b = container.CanResolve<IUserStore<User, int>>();
-            var c = container.CanResolve<UserManager<User, int>>();
         }
 
         private static void RegisterIdentity(TinyIoCContainer container)
         {
-            container.Register<IUserStore<User, int>, UserStore<User, Role, int, UserLogin, UserRole, UserClaim>>();
-            container.Register<UserManager<User, int>>();
+            container.Register<IUserStore<User, int>, UserStore<User, Role, int, UserLogin, UserRole, UserClaim>>().AsPerRequestSingleton();
+            container.Register<UserManager<User, int>>().AsPerRequestSingleton();
         }
 
         private static void RegisterMaps(TinyIoCContainer container)
