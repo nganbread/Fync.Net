@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using Fync.Data.Identity;
 using Fync.Service.Models.Data;
 
 namespace Fync.Data
@@ -7,7 +8,8 @@ namespace Fync.Data
     public interface IContext : IDisposable
     {
         IDbSet<FolderEntity> Folders { get; }
-        FolderEntity GetTree(FolderEntity root);
+        IDbSet<User> Users { get; }
+        FolderEntity GetTree(Guid id);
         void SaveChanges();
     }
 }

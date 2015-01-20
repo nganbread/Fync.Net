@@ -13,37 +13,42 @@ namespace Fync.Service
         private readonly IContext _context;
         private readonly Func<FolderEntity, Folder> _toFolder;
         private readonly Func<Folder, FolderEntity> _toFolderEntity;
+        private readonly ICurrentUser _currentUser;
 
-        public FolderService(IContext context, Func<FolderEntity, Folder> toFolder, Func<Folder, FolderEntity> toFolderEntity)
+        public FolderService(IContext context, Func<FolderEntity, Folder> toFolder, Func<Folder, FolderEntity> toFolderEntity, ICurrentUser currentUser)
         {
             _context = context;
             _toFolder = toFolder;
             _toFolderEntity = toFolderEntity;
+            _currentUser = currentUser;
         }
 
-        public Folder GetFolderTree(Guid root)
+        public Folder GetFullTree()
         {
-            var folder = _context.Folders.Single(x => x.Id == root);
-            return _context.GetTree(folder).Map(_toFolder);
+            return _currentUser.User.RootFolder == null 
+                ? null
+                : GetFullTree(_currentUser.User.RootFolder.Id);   
         }
 
-        public Guid CreateTree(Folder root)
+        public Folder GetFullTree(Guid root)
         {
-            var rootEntity = root.Map(_toFolderEntity);
+            return _context.GetTree(root).Map(_toFolder);
+        }
 
-            _context.Folders.Add(rootEntity);
+        public void UpdateRootFolder(Folder updatedRootFolder)
+        {
+            if (_currentUser.User.RootFolder == null)
+            {
+                _currentUser.User.RootFolder = updatedRootFolder.Map(_toFolderEntity);
+                _context.SaveChanges();
+                return;
+            }
+            var rootFolder = _context.GetTree(_currentUser.User.RootFolder.Id);
+
+            rootFolder.Name = updatedRootFolder.Name;
+            UpdateNodeByName(rootFolder, updatedRootFolder);
+
             _context.SaveChanges();
-
-            return rootEntity.Id;
-        }
-
-        public void UpdateRootFolder(Folder updatedTree)
-        {
-            var rootEntity = _context.Folders.Single(x => x.Id == updatedTree.Id);
-            var originalTree = _context.GetTree(rootEntity);
-
-            originalTree.Name = updatedTree.Name;
-            UpdateNodeByName(originalTree, updatedTree);
         }
 
         private void UpdateNodeByName(FolderEntity originalTree, Folder updatedTree)

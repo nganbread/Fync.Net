@@ -13,7 +13,7 @@ namespace Fync.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201501200715252_root"; }
+            get { return "201501200854518_root"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using Fync.Service;
@@ -6,6 +8,7 @@ using Fync.Service.Models;
 
 namespace Fync.Api.Controllers
 {
+    [Authorize]
     public class FolderController : ApiController
     {
         private readonly IFolderService _folderService;
@@ -15,20 +18,19 @@ namespace Fync.Api.Controllers
             _folderService = folderService;
         }
 
-        public Folder Get(Guid id)
+        public Folder Get(Guid? id = null)
         {
-            return _folderService.GetFolderTree(id);
+            return id.HasValue
+            ? _folderService.GetFullTree(id.Value)
+            : _folderService.GetFullTree();
         }
 
-        public void Put(Folder root)
+        public HttpResponseMessage Put(Folder root)
         {
-            if(root.Id == Guid.Empty) throw new HttpException();
+            if(root == null) return new HttpResponseMessage(HttpStatusCode.BadRequest);
+
             _folderService.UpdateRootFolder(root);
-        }
-
-        public Guid Post(Folder root)
-        {
-            return _folderService.CreateTree(root);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

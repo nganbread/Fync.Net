@@ -5,8 +5,8 @@ namespace Fync.Service
 {
     public interface IFolderService
     {
-        Folder GetFolderTree(Guid root);
-        Guid CreateTree(Folder root);
-        void UpdateRootFolder(Folder updatedTree);
+        Folder GetFullTree(Guid root);
+        void UpdateRootFolder(Folder updatedRootFolder);
+        Folder GetFullTree();
     }
 }

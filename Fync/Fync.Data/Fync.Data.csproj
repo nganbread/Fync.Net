@@ -36,6 +36,12 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -52,13 +58,18 @@
     <Compile Include="Entities\FolderEntity.cs" />
     <Compile Include="EntityComparer.cs" />
     <Compile Include="IContext.cs" />
+    <Compile Include="Identity\Role.cs" />
+    <Compile Include="Identity\User.cs" />
+    <Compile Include="Identity\UserClaim.cs" />
+    <Compile Include="Identity\UserLogin.cs" />
+    <Compile Include="Identity\UserRole.cs" />
     <Compile Include="Migrations\201501150948198_go.cs" />
     <Compile Include="Migrations\201501150948198_go.Designer.cs">
       <DependentUpon>201501150948198_go.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201501200715252_root.cs" />
-    <Compile Include="Migrations\201501200715252_root.Designer.cs">
-      <DependentUpon>201501200715252_root.cs</DependentUpon>
+    <Compile Include="Migrations\201501200854518_root.cs" />
+    <Compile Include="Migrations\201501200854518_root.Designer.cs">
+      <DependentUpon>201501200854518_root.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,8 +106,8 @@
     <EmbeddedResource Include="Migrations\201501150948198_go.resx">
       <DependentUpon>201501150948198_go.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201501200715252_root.resx">
-      <DependentUpon>201501200715252_root.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201501200854518_root.resx">
+      <DependentUpon>201501200854518_root.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
