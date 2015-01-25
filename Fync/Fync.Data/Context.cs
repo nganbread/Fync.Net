@@ -49,7 +49,7 @@ namespace Fync.Data
             }
             catch (Exception e)
             {
-                
+                throw e;
             }
         }
 

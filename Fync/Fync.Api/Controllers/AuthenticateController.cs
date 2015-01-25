@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using Fync.Service;
 using Fync.Service.Models;

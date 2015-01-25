@@ -4,16 +4,14 @@ using Fync.Service.Models.Data;
 
 namespace Fync.Service.Maps
 {
-    internal static class FromFolder
+    internal static class FromNewFolder
     {
-        public static FolderEntity ToFolderEntity(Folder folder)
+        public static FolderEntity ToFolderEntity(NewFolder folder)
         {
             return new FolderEntity
             {
-                Id = folder.Id,
                 Name = folder.Name,
                 SubFolders = folder.SubFolders.MapToList(ToFolderEntity),
-                LastModified = folder.LastModified
             };
         }
     }

@@ -42,10 +42,37 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,24 +80,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloudBlobContainerName.cs" />
+    <Compile Include="CloudTableName.cs" />
+    <Compile Include="DeletedSymbolicFileTableAccess.cs" />
+    <Compile Include="Entities\Table\DeletedSymbolicFileTableEntity.cs" />
+    <Compile Include="Entities\Table\FileTableEntity.cs" />
+    <Compile Include="Entities\Table\SymbolicFileTableEntity.cs" />
+    <Compile Include="Entities\Table\SymbolicFileTableEntityBase.cs" />
+    <Compile Include="Extensions\SymbolicFileHashStringExtensions.cs" />
+    <Compile Include="FileBlobAccess.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Entities\DatabaseEntity.cs" />
     <Compile Include="Entities\FolderEntity.cs" />
     <Compile Include="EntityComparer.cs" />
+    <Compile Include="FileTableAccess.cs" />
+    <Compile Include="IDeletedSymbolicFileTableAccess.cs" />
+    <Compile Include="Migrations\201501241120188_Initial.cs" />
+    <Compile Include="Migrations\201501241120188_Initial.Designer.cs">
+      <DependentUpon>201501241120188_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SymbolicFileTableAccess.cs" />
     <Compile Include="IContext.cs" />
-    <Compile Include="Identity\Role.cs" />
-    <Compile Include="Identity\User.cs" />
-    <Compile Include="Identity\UserClaim.cs" />
-    <Compile Include="Identity\UserLogin.cs" />
-    <Compile Include="Identity\UserRole.cs" />
-    <Compile Include="Migrations\201501150948198_go.cs" />
-    <Compile Include="Migrations\201501150948198_go.Designer.cs">
-      <DependentUpon>201501150948198_go.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201501200854518_root.cs" />
-    <Compile Include="Migrations\201501200854518_root.Designer.cs">
-      <DependentUpon>201501200854518_root.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Entities\Identity\Role.cs" />
+    <Compile Include="Entities\Identity\User.cs" />
+    <Compile Include="Entities\Identity\UserClaim.cs" />
+    <Compile Include="Entities\Identity\UserLogin.cs" />
+    <Compile Include="Entities\Identity\UserRole.cs" />
+    <Compile Include="IFileBlobAccess.cs" />
+    <Compile Include="IFileTableAccess.cs" />
+    <Compile Include="ISymbolicFileTableAccess.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registrations.cs" />
@@ -103,11 +141,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201501150948198_go.resx">
-      <DependentUpon>201501150948198_go.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201501200854518_root.resx">
-      <DependentUpon>201501200854518_root.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201501241120188_Initial.resx">
+      <DependentUpon>201501241120188_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

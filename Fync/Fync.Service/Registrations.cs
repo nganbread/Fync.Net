@@ -1,5 +1,7 @@
 ﻿using System;
 using Fync.Common.Libraries;
+using Fync.Data;
+using Fync.Data.Entities.Table;
 using Fync.Data.Identity;
 using Fync.Service.Maps;
 using Fync.Service.Models;
@@ -14,8 +16,10 @@ namespace Fync.Service
     {
         public static void Register(TinyIoCContainer container)
         {
-            container.Register<IFolderService, FolderService>();
+            container.Register<IFolderService, FolderService>().AsSingleton();
             container.Register<IAuthenticationService, AuthenticationService>();
+            container.Register<ISymbolicFileService, SymbolicFileService>().AsSingleton();
+            container.Register<IHasher, Sha256Haser>().AsSingleton();
 
             RegisterMaps(container);
             RegisterIdentity(container);
@@ -30,7 +34,8 @@ namespace Fync.Service
         private static void RegisterMaps(TinyIoCContainer container)
         {
             container.Register<Func<FolderEntity, Folder>>(FromFolderEntity.ToFolder);
-            container.Register<Func<Folder, FolderEntity>>(FromFolder.ToFolderEntity);
+            container.Register<Func<NewFolder, FolderEntity>>(FromNewFolder.ToFolderEntity);
+            container.Register<Func<SymbolicFileTableEntity, SymbolicFile>>(FromSymbolicFileTableEntity.ToSymbolicFile);
         }
     }
 }

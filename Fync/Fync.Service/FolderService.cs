@@ -12,15 +12,17 @@ namespace Fync.Service
     {
         private readonly IContext _context;
         private readonly Func<FolderEntity, Folder> _toFolder;
-        private readonly Func<Folder, FolderEntity> _toFolderEntity;
+        private readonly Func<NewFolder, FolderEntity> _toFolderEntity;
         private readonly ICurrentUser _currentUser;
+        private readonly ISymbolicFileService _symbolicFileService;
 
-        public FolderService(IContext context, Func<FolderEntity, Folder> toFolder, Func<Folder, FolderEntity> toFolderEntity, ICurrentUser currentUser)
+        public FolderService(IContext context, Func<FolderEntity, Folder> toFolder, Func<NewFolder, FolderEntity> toFolderEntity, ICurrentUser currentUser, ISymbolicFileService symbolicFileService)
         {
             _context = context;
             _toFolder = toFolder;
             _toFolderEntity = toFolderEntity;
             _currentUser = currentUser;
+            _symbolicFileService = symbolicFileService;
         }
 
         public Folder GetFullTree()
@@ -35,26 +37,25 @@ namespace Fync.Service
             return _context.GetTree(root).Map(_toFolder);
         }
 
-        public void UpdateRootFolder(Folder updatedRootFolder)
+        public void UpdateRootFolder(NewFolder updatedRootFolder)
         {
             if (_currentUser.User.RootFolder == null)
             {
-                _currentUser.User.RootFolder = updatedRootFolder.Map(_toFolderEntity);
+                var root = updatedRootFolder.Map(_toFolderEntity);
+                _context.Folders.Add(root);
+                _currentUser.User.RootFolder = root;
                 _context.SaveChanges();
                 return;
             }
             var rootFolder = _context.GetTree(_currentUser.User.RootFolder.Id);
 
-            rootFolder.Name = updatedRootFolder.Name;
             UpdateNodeByName(rootFolder, updatedRootFolder);
 
             _context.SaveChanges();
         }
 
-        private void UpdateNodeByName(FolderEntity originalTree, Folder updatedTree)
+        private void UpdateNodeByName(FolderEntity originalTree, NewFolder updatedTree)
         {
-            originalTree.LastModified = updatedTree.LastModified;
-
             foreach (var original in originalTree.SubFolders.ToList())
             {
                 var updated = updatedTree.SubFolders.SingleOrDefault(x => x.Name == original.Name);
@@ -73,14 +74,17 @@ namespace Fync.Service
             //add
             foreach (var subFolder in updatedTree.SubFolders.Where(x => originalTree.SubFolders.All(y => !y.Name.Equals(x.Name, StringComparison.InvariantCultureIgnoreCase))))
             {
-                originalTree.SubFolders.Add(subFolder.Map(_toFolderEntity));
+                var folderEntity = subFolder.Map(_toFolderEntity);
+                folderEntity.DateCreated = DateTime.UtcNow;
+                originalTree.SubFolders.Add(folderEntity);
             }
         }
 
-        private void RemoveNode(FolderEntity remove)
+        private void RemoveNode(FolderEntity folderToRemove)
         {
-            _context.Folders.Remove(remove);
-            foreach (var folder in remove.SubFolders.ToList())
+            _symbolicFileService.DeleteSymbolicFilesFromFolder(folderToRemove.Id);
+            _context.Folders.Remove(folderToRemove);
+            foreach (var folder in folderToRemove.SubFolders.ToList())
             {
                 RemoveNode(folder);
             }

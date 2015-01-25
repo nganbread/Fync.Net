@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -44,10 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="IConfiguration.cs" />
     <Compile Include="Libraries\TinyIoC.cs" />
     <Compile Include="Libraries\TinyIocApiResolver.cs" />
     <Compile Include="Libraries\TinyIoCAspNetExtensions.cs" />
     <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="Registrations.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

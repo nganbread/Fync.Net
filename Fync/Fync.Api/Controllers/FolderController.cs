@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using Fync.Service;
 using Fync.Service.Models;
@@ -21,11 +20,11 @@ namespace Fync.Api.Controllers
         public Folder Get(Guid? id = null)
         {
             return id.HasValue
-            ? _folderService.GetFullTree(id.Value)
-            : _folderService.GetFullTree();
+                ? _folderService.GetFullTree(id.Value)
+                : _folderService.GetFullTree();
         }
 
-        public HttpResponseMessage Put(Folder root)
+        public HttpResponseMessage Put(NewFolder root)
         {
             if(root == null) return new HttpResponseMessage(HttpStatusCode.BadRequest);
 

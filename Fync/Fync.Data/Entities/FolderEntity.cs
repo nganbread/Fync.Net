@@ -20,7 +20,7 @@ namespace Fync.Service.Models.Data
         [Required]
         public string Name { get; set; }
         [Required]
-        public DateTime? LastModified { get; set; }
+        public DateTime DateCreated { get; set; }
 
         public virtual ICollection<FolderEntity> SubFolders { get; set; }
     }

@@ -3,10 +3,25 @@ namespace Fync.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class root : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Folder",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        ParentId = c.Guid(),
+                        Name = c.String(nullable: false),
+                        DateCreated = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Folder", t => t.ParentId)
+                .Index(t => t.ParentId);
+
+            SqlFile("SqlScripts/AddHierarchyNodeColumn.sql");
+
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -78,20 +93,19 @@ namespace Fync.Data.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
-            AlterColumn("dbo.Folder", "Name", c => c.String(nullable: false));
-            AlterStoredProcedure(
+            CreateStoredProcedure(
                 "dbo.Folder_Insert",
                 p => new
                     {
                         ParentId = p.Guid(),
                         Name = p.String(),
-                        LastModified = p.DateTime(),
+                        DateCreated = p.DateTime(),
                     },
                 body:
                     @"DECLARE @generated_keys table([Id] uniqueidentifier)
-                      INSERT [dbo].[Folder]([ParentId], [Name], [LastModified])
+                      INSERT [dbo].[Folder]([ParentId], [Name], [DateCreated])
                       OUTPUT inserted.[Id] INTO @generated_keys
-                      VALUES (@ParentId, @Name, @LastModified)
+                      VALUES (@ParentId, @Name, @DateCreated)
                       
                       DECLARE @Id uniqueidentifier
                       SELECT @Id = t.[Id]
@@ -103,30 +117,48 @@ namespace Fync.Data.Migrations
                       WHERE @@ROWCOUNT > 0 AND t0.[Id] = @Id"
             );
             
-            AlterStoredProcedure(
+            CreateStoredProcedure(
                 "dbo.Folder_Update",
                 p => new
                     {
                         Id = p.Guid(),
                         ParentId = p.Guid(),
                         Name = p.String(),
-                        LastModified = p.DateTime(),
+                        DateCreated = p.DateTime(),
                     },
                 body:
                     @"UPDATE [dbo].[Folder]
-                      SET [ParentId] = @ParentId, [Name] = @Name, [LastModified] = @LastModified
+                      SET [ParentId] = @ParentId, [Name] = @Name, [DateCreated] = @DateCreated
                       WHERE ([Id] = @Id)"
             );
             
+            CreateStoredProcedure(
+                "dbo.Folder_Delete",
+                p => new
+                    {
+                        Id = p.Guid(),
+                    },
+                body:
+                    @"DELETE [dbo].[Folder]
+                      WHERE ([Id] = @Id)"
+            );
+
+            SqlFile("SqlScripts/AlterFolderInsert.sql");
+            SqlFile("SqlScripts/AlterFolderUpdate.sql");
+            SqlFile("SqlScripts/AlterFolderDelete.sql");   
         }
         
         public override void Down()
         {
+            DropStoredProcedure("dbo.Folder_Delete");
+            DropStoredProcedure("dbo.Folder_Update");
+            DropStoredProcedure("dbo.Folder_Insert");
             DropForeignKey("dbo.AspNetUsers", "RootFolder_Id", "dbo.Folder");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Folder", "ParentId", "dbo.Folder");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", new[] { "RootFolder_Id" });
@@ -134,13 +166,13 @@ namespace Fync.Data.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            AlterColumn("dbo.Folder", "Name", c => c.String());
+            DropIndex("dbo.Folder", new[] { "ParentId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
-            throw new NotSupportedException("Scaffolding create or alter procedure operations is not supported in down methods.");
+            DropTable("dbo.Folder");
         }
     }
 }

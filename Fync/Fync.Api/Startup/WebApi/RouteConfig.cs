@@ -9,10 +9,14 @@ namespace Fync.Api.App_Start
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-                );
+                name: "Default",
+                routeTemplate: "api/{controller}");
+
+            config.Routes.MapHttpRoute(
+                name: "FolderContext",
+                routeTemplate: "api/{folderId}/{controller}");
+
+
         }
     }
 }

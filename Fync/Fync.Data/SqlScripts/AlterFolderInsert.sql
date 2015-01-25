@@ -1,6 +1,6 @@
 ALTER PROCEDURE [dbo].[Folder_Insert]
     @Name [nvarchar](max),
-    @LastModified [datetime],
+    @DateCreated [datetime],
     @ParentId [uniqueidentifier]
 AS
 BEGIN
@@ -10,9 +10,9 @@ BEGIN
 	IF(@ParentId IS NULL)
 		BEGIN
 		
-			INSERT [dbo].[Folder]([Name], [LastModified], [ParentId], [HierarchyNode])
+			INSERT [dbo].[Folder]([Name], [DateCreated], [ParentId], [HierarchyNode])
 			OUTPUT inserted.[Id] INTO @generated_keys
-			VALUES (@Name, @LastModified, @ParentId, hierarchyid::GetRoot())
+			VALUES (@Name, @DateCreated, @ParentId, hierarchyid::GetRoot())
         
 		END
 	ELSE
@@ -29,9 +29,9 @@ BEGIN
 			FROM [dbo].[Folder]
 			WHERE [HierarchyNode].GetAncestor(1) = @parentHierarchyNode
 
-			INSERT [dbo].[Folder]([Name], [LastModified], [ParentId], [HierarchyNode])
+			INSERT [dbo].[Folder]([Name], [DateCreated], [ParentId], [HierarchyNode])
 			OUTPUT inserted.[Id] INTO @generated_keys
-			VALUES (@Name, @LastModified, @ParentId, @parentHierarchyNode.GetDescendant(@largestChildHierarchyNode, NULL))
+			VALUES (@Name, @DateCreated, @ParentId, @parentHierarchyNode.GetDescendant(@largestChildHierarchyNode, NULL))
     	
 		END
 	                  

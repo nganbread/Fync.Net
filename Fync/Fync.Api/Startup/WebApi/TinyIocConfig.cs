@@ -11,6 +11,7 @@ namespace Fync.Api.App_Start
             var container = new TinyIoCContainer();
 
             Registrations.Register(container);
+            Common.Registrations.Register(container);
             Data.Registrations.Register(container);
             Service.Registrations.Register(container);
 

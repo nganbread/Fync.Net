@@ -13,7 +13,7 @@ namespace Fync.Service.Maps
                 Id = folderEntity.Id,
                 Name = folderEntity.Name,
                 SubFolders = folderEntity.SubFolders.MapToList(ToFolder),
-                LastModified = folderEntity.LastModified
+                DateCreated = folderEntity.DateCreated
             };
         }
     }

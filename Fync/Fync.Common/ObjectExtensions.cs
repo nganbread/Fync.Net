@@ -24,5 +24,12 @@ namespace Fync.Common
                 RecursivelySet(next, set, recurse);
             }
         }
+
+        public static TOut SafeGet<TIn, TOut>(this TIn @this, Func<TIn, TOut> get, TOut @default = default(TOut))
+        {
+            return @this == null
+                ? @default
+                : get(@this);
+        }
     }
 }

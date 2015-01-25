@@ -10,7 +10,8 @@ namespace Fync.Service.Models
             SubFolders = new List<Folder>();
         }
 
-        public DateTime? LastModified { get; set; }
+        //[NotEqual(default(DateTime))]
+        public DateTime DateCreated { get; set; }
         public string Name { get; set; }
         public IList<Folder> SubFolders { get; set; }
         public Guid Id { get; set; }
