@@ -17,7 +17,8 @@ namespace Fync.Data
         public ICloudBlob UploadFile(Stream stream)
         {
             stream.Position = 0;
-            var blob = _blobContainer.GetBlockBlobReference(Guid.NewGuid().ToString());
+            var blobName = Guid.NewGuid().ToString();
+            var blob = _blobContainer.GetBlockBlobReference(blobName);
             blob.UploadFromStream(stream);
             return blob;
         }

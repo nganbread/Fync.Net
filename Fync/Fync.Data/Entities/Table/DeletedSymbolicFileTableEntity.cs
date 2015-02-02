@@ -11,7 +11,7 @@ namespace Fync.Data.Entities.Table
 
         public DeletedSymbolicFileTableEntity(Guid folderId, string fileFileName, string hash, DateTime dateCreated, DateTime dateDeleted)
         {
-            PartitionKey = folderId.ToString();
+            PartitionKey = folderId.ToString(); // or use file name?
             RowKey = Guid.NewGuid().ToString();
 
             FileName = fileFileName;

@@ -30,20 +30,39 @@ namespace Fync.Data
             //TODO: cache all of these as singletons
             container.Register<CloudStorageAccount>(CreateCloudStorageAccount);
             container.Register<CloudBlobContainer>((c, parameters) => CreateCloudBlobContainer(c, CloudBlobContainerName.File), CloudBlobContainerName.File);
-            container.Register<CloudTable>((c, parameters) => CreateCloudTableClient(c, CloudTableName.SymbolicFile), CloudTableName.SymbolicFile);
-            container.Register<CloudTable>((c, parameters) => CreateCloudTableClient(c, CloudTableName.DeletedSymbolicFile), CloudTableName.DeletedSymbolicFile);
-            container.Register<CloudTable>((c, parameters) => CreateCloudTableClient(c, CloudTableName.File), CloudTableName.File);
+            //container.Register<CloudTable>((c, parameters) => CreateCloudTableClient(c, CloudTableName.SymbolicFile), CloudTableName.SymbolicFile);
+            //container.Register<CloudTable>((c, parameters) => CreateCloudTableClient(c, CloudTableName.DeletedSymbolicFile), CloudTableName.DeletedSymbolicFile);
+            //container.Register<CloudTable>((c, parameters) => CreateCloudTableClient(c, CloudTableName.File), CloudTableName.File);
+
+            container.Register<Func<string, CloudTable>>((c, parameters) => (tableName => CreateOrGetTable(tableName, container)));
+            //container.Register<Func<string, string, CloudTable>>((c, parameters) => ((prefix, tableName) => CreateOrGetTable("{0}_{1}".FormatWith(prefix, tableName), container)));
         }
 
-        private static CloudTable CreateCloudTableClient(TinyIoCContainer container, string tableName)
+        private static CloudTable CreateOrGetTable(string tableName, TinyIoCContainer container)
         {
+            if (container.CanResolve<CloudTable>(tableName))
+            {
+                return container.Resolve<CloudTable>(tableName);
+            }
+            
             var storageAccount = container.Resolve<CloudStorageAccount>();
             var tableClient = storageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference(tableName);
             table.CreateIfNotExists();
 
+            container.Register<CloudTable>(table, tableName);
             return table;
         }
+
+        //private static CloudTable CreateCloudTableClient(TinyIoCContainer container, string tableName)
+        //{
+        //    var storageAccount = container.Resolve<CloudStorageAccount>();
+        //    var tableClient = storageAccount.CreateCloudTableClient();
+        //    var table = tableClient.GetTableReference(tableName);
+        //    table.CreateIfNotExists();
+
+        //    return table;
+        //}
 
         private static CloudStorageAccount CreateCloudStorageAccount(TinyIoCContainer container, NamedParameterOverloads parameters)
         {

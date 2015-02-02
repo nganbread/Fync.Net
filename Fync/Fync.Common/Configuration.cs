@@ -9,6 +9,11 @@ namespace Fync.Common
             get { return GetStringFromConfig("CloudStorageConnectionString"); }
         }
 
+        public string RootFolderName
+        {
+            get { return GetStringFromConfig("RootFolderName"); }
+        }
+
         private string GetStringFromConfig(string key)
         {
             return ConfigurationManager.AppSettings[key];

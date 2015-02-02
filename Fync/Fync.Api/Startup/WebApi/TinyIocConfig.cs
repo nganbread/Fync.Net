@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
+using Fync.Api.Controllers;
 using Fync.Common.Libraries;
+using Fync.Service;
 using TinyIoC;
 
 namespace Fync.Api.App_Start

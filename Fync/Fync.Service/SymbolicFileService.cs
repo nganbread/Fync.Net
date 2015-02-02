@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using Fync.Common;
+using Fync.Common.Models;
 using Fync.Data;
 using Fync.Data.Entities.Table;
-using Fync.Service.Models;
 using File = Fync.Service.Models.File;
 
 namespace Fync.Service
@@ -48,7 +48,7 @@ namespace Fync.Service
             };
         }
 
-        public void CreateFile(Stream stream, Guid folderId, string fileName)
+        public void CreateSymbolicFile(Stream stream, Guid folderId, string fileName, DateTime dateCreated)
         {
             var hash = _hasher.Hash(stream);
             if (!_fileTableAccess.FileExists(hash))
@@ -58,7 +58,7 @@ namespace Fync.Service
                 _fileTableAccess.CreateFile(hash, blob.Name);
             }
 
-            AddFileToFolder(folderId, hash, fileName);
+            AddSymbolicFileToFolder(folderId, hash, fileName, dateCreated);
         }
 
         public IList<SymbolicFile> GetFilesInFolder(Guid folderId)
@@ -71,32 +71,32 @@ namespace Fync.Service
             return _symbolicFileTableAccess.GetSymbolicFileOrDefault(folderId, fileName).Map(_toFile);
         }
 
-        public void AddFileToFolder(Guid folderId, NewSymbolicFile symbolicFile)
+        public void AddSymbolicFileToFolder(Guid folderId, NewSymbolicFile symbolicFile, DateTime dateCreated)
         {
             if (!_fileTableAccess.FileExists(symbolicFile.Hash)) throw new Exception();
 
-            AddFileToFolder(folderId, symbolicFile.Hash, symbolicFile.Name);
+            AddSymbolicFileToFolder(folderId, symbolicFile.Hash, symbolicFile.Name, dateCreated);
         }
 
-        private void AddFileToFolder(Guid folderId, string hash, string fileName)
+        private void AddSymbolicFileToFolder(Guid folderId, string hash, string fileName, DateTime dateCreatedUtc)
         {
-            DeleteSymbolicFileFromFolder(folderId, fileName);
-            _symbolicFileTableAccess.AddSymbolicFileToFolder(folderId, hash, fileName, DateTime.UtcNow);
+            DeleteSymbolicFileFromFolder(folderId, fileName, dateCreatedUtc);
+            _symbolicFileTableAccess.InsertSymbolicFileToFolder(folderId, hash, fileName, dateCreatedUtc);
         }
 
-        public void DeleteSymbolicFilesFromFolder(Guid folderId)
+        public void DeleteSymbolicFilesFromFolder(Guid folderId, DateTime dateDeleted)
         {
             var symbolicFiles = _symbolicFileTableAccess.GetSymbolicFilesInFolder(folderId);
-            _deletedSymbolicFileTableAccess.AddDeletedSymbolicFilesInFolderToFolder(symbolicFiles, DateTime.UtcNow);
-            _symbolicFileTableAccess.DeleteSymbolicFilesFromFolder(symbolicFiles);
+            _deletedSymbolicFileTableAccess.AddDeletedSymbolicFilesInFolderToFolder(symbolicFiles, dateDeleted);
+            _symbolicFileTableAccess.DeleteSymbolicFilesFromFolder(symbolicFiles, dateDeleted);
         }
 
-        public void DeleteSymbolicFileFromFolder(Guid folderId, string fileName)
+        public void DeleteSymbolicFileFromFolder(Guid folderId, string fileName, DateTime dateDeleted)
         {
             var symbolicFile = _symbolicFileTableAccess.GetSymbolicFileOrDefault(folderId, fileName);
             if (symbolicFile != null)
             {
-                _deletedSymbolicFileTableAccess.AddDeletedSymbolicFileToFolder(symbolicFile, DateTime.UtcNow);
+                _deletedSymbolicFileTableAccess.AddDeletedSymbolicFileToFolder(symbolicFile, dateDeleted);
                 _symbolicFileTableAccess.DeleteSymbolicFileFromFolder(symbolicFile);
             }
         }

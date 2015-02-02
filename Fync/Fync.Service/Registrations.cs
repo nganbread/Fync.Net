@@ -1,5 +1,7 @@
 ﻿using System;
+using Fync.Common;
 using Fync.Common.Libraries;
+using Fync.Common.Models;
 using Fync.Data;
 using Fync.Data.Entities.Table;
 using Fync.Data.Identity;
@@ -19,7 +21,8 @@ namespace Fync.Service
             container.Register<IFolderService, FolderService>().AsSingleton();
             container.Register<IAuthenticationService, AuthenticationService>();
             container.Register<ISymbolicFileService, SymbolicFileService>().AsSingleton();
-            container.Register<IHasher, Sha256Haser>().AsSingleton();
+            container.Register<IFileService, FileService>().AsSingleton();
+            container.Register<IInitialisationService, InitialisationService>().AsSingleton();
 
             RegisterMaps(container);
             RegisterIdentity(container);

@@ -2,8 +2,9 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Fync.Common.Models;
 using Fync.Service;
-using Fync.Service.Models;
+using Fync.Service.Models.Data;
 
 namespace Fync.Api.Controllers
 {
@@ -24,11 +25,22 @@ namespace Fync.Api.Controllers
                 : _folderService.GetFullTree();
         }
 
+        public Folder Post(Guid folderId, NewFolder newFolder)
+        {
+            return _folderService.CreateFolder(folderId, newFolder.Name, DateTime.UtcNow);
+        }
+
+        public HttpResponseMessage Delete(Guid folderId)
+        {
+            _folderService.DeleteFolder(folderId, DateTime.UtcNow);
+            return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+
         public HttpResponseMessage Put(NewFolder root)
         {
             if(root == null) return new HttpResponseMessage(HttpStatusCode.BadRequest);
 
-            _folderService.UpdateRootFolder(root);
+            _folderService.UpdateRootFolder(root, DateTime.UtcNow);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }

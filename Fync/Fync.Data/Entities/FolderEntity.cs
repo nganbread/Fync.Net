@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Fync.Data.Identity;
 using Fync.Data.Models;
 
 namespace Fync.Service.Models.Data
@@ -13,6 +14,10 @@ namespace Fync.Service.Models.Data
             SubFolders = new List<FolderEntity>();    
         }
 
+        [ForeignKey("Owner")]
+        public int OwnerId { get; set; }
+        public virtual User Owner { get; set; }
+
         [ForeignKey("Parent")]
         public Guid? ParentId { get; set; }
         public virtual FolderEntity Parent { get; set; }
@@ -20,8 +25,9 @@ namespace Fync.Service.Models.Data
         [Required]
         public string Name { get; set; }
         [Required]
-        public DateTime DateCreated { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
         public virtual ICollection<FolderEntity> SubFolders { get; set; }
+        public bool Deleted { get; set; }
     }
 }

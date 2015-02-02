@@ -9,6 +9,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fync.Common", "Fync.Common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fync.Service", "Fync.Service\Fync.Service.csproj", "{1BABFEF7-6C54-412B-A2B7-376D0A3B4254}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fync.Client", "Fync.Client\Fync.Client.csproj", "{2072B023-A82A-4D55-81C5-7DE49F422E80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B7420E70-9532-41A2-9BC1-73187A7A2904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fync.Client.Tests", "Fync.Client.Tests\Fync.Client.Tests.csproj", "{40C756DC-A237-4F41-9CFC-27378CF04637}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{ADE2AEA4-BC36-43F6-8027-BA6841451464}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,8 +42,19 @@ Global
 		{1BABFEF7-6C54-412B-A2B7-376D0A3B4254}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BABFEF7-6C54-412B-A2B7-376D0A3B4254}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BABFEF7-6C54-412B-A2B7-376D0A3B4254}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2072B023-A82A-4D55-81C5-7DE49F422E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2072B023-A82A-4D55-81C5-7DE49F422E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2072B023-A82A-4D55-81C5-7DE49F422E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2072B023-A82A-4D55-81C5-7DE49F422E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40C756DC-A237-4F41-9CFC-27378CF04637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40C756DC-A237-4F41-9CFC-27378CF04637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40C756DC-A237-4F41-9CFC-27378CF04637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40C756DC-A237-4F41-9CFC-27378CF04637}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40C756DC-A237-4F41-9CFC-27378CF04637} = {B7420E70-9532-41A2-9BC1-73187A7A2904}
 	EndGlobalSection
 EndGlobal

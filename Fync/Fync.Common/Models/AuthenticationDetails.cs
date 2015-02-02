@@ -1,4 +1,4 @@
-﻿namespace Fync.Service.Models
+namespace Fync.Common.Models
 {
     public class AuthenticationDetails
     {

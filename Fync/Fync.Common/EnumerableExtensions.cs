@@ -29,5 +29,13 @@ namespace Fync.Common
                 action(item);
             }
         }
+
+        public static void Remove<T>(this ICollection<T> collection, IEnumerable<T> remove)
+        {
+            foreach (var item in remove.ToArray())
+            {
+                collection.Remove(item);
+            }
+        }
     }
 }

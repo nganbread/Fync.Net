@@ -1,4 +1,5 @@
 ﻿using Fync.Common;
+using Fync.Common.Models;
 using Fync.Service.Models;
 using Fync.Service.Models.Data;
 
@@ -13,7 +14,8 @@ namespace Fync.Service.Maps
                 Id = folderEntity.Id,
                 Name = folderEntity.Name,
                 SubFolders = folderEntity.SubFolders.MapToList(ToFolder),
-                DateCreated = folderEntity.DateCreated
+                ModifiedDate = folderEntity.ModifiedDate,
+                Deleted = folderEntity.Deleted
             };
         }
     }

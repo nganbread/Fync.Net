@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Fync.Data.Entities.Table;
 using Fync.Data.Extensions;
 using Microsoft.WindowsAzure.Storage.Table;

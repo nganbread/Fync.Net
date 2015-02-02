@@ -12,38 +12,17 @@ namespace Fync.Data.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
+                        OwnerId = c.Int(nullable: false),
                         ParentId = c.Guid(),
                         Name = c.String(nullable: false),
-                        DateCreated = c.DateTime(nullable: false),
+                        ModifiedDate = c.DateTime(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.OwnerId, cascadeDelete: true)
                 .ForeignKey("dbo.Folder", t => t.ParentId)
+                .Index(t => t.OwnerId)
                 .Index(t => t.ParentId);
-
-            SqlFile("SqlScripts/AddHierarchyNodeColumn.sql");
-
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.Int(nullable: false),
-                        RoleId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -61,12 +40,9 @@ namespace Fync.Data.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
-                        RootFolder_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Folder", t => t.RootFolder_Id)
-                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
-                .Index(t => t.RootFolder_Id);
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -93,19 +69,44 @@ namespace Fync.Data.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.Int(nullable: false),
+                        RoleId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
             CreateStoredProcedure(
                 "dbo.Folder_Insert",
                 p => new
                     {
+                        OwnerId = p.Int(),
                         ParentId = p.Guid(),
                         Name = p.String(),
-                        DateCreated = p.DateTime(),
+                        ModifiedDate = p.DateTime(),
+                        Deleted = p.Boolean(),
                     },
                 body:
                     @"DECLARE @generated_keys table([Id] uniqueidentifier)
-                      INSERT [dbo].[Folder]([ParentId], [Name], [DateCreated])
+                      INSERT [dbo].[Folder]([OwnerId], [ParentId], [Name], [ModifiedDate], [Deleted])
                       OUTPUT inserted.[Id] INTO @generated_keys
-                      VALUES (@ParentId, @Name, @DateCreated)
+                      VALUES (@OwnerId, @ParentId, @Name, @ModifiedDate, @Deleted)
                       
                       DECLARE @Id uniqueidentifier
                       SELECT @Id = t.[Id]
@@ -122,13 +123,15 @@ namespace Fync.Data.Migrations
                 p => new
                     {
                         Id = p.Guid(),
+                        OwnerId = p.Int(),
                         ParentId = p.Guid(),
                         Name = p.String(),
-                        DateCreated = p.DateTime(),
+                        ModifiedDate = p.DateTime(),
+                        Deleted = p.Boolean(),
                     },
                 body:
                     @"UPDATE [dbo].[Folder]
-                      SET [ParentId] = @ParentId, [Name] = @Name, [DateCreated] = @DateCreated
+                      SET [OwnerId] = @OwnerId, [ParentId] = @ParentId, [Name] = @Name, [ModifiedDate] = @ModifiedDate, [Deleted] = @Deleted
                       WHERE ([Id] = @Id)"
             );
             
@@ -143,9 +146,10 @@ namespace Fync.Data.Migrations
                       WHERE ([Id] = @Id)"
             );
 
+            SqlFile("SqlScripts/AddHierarchyNodeColumn.sql");
             SqlFile("SqlScripts/AlterFolderInsert.sql");
             SqlFile("SqlScripts/AlterFolderUpdate.sql");
-            SqlFile("SqlScripts/AlterFolderDelete.sql");   
+            SqlFile("SqlScripts/AlterFolderDelete.sql");
         }
         
         public override void Down()
@@ -153,25 +157,25 @@ namespace Fync.Data.Migrations
             DropStoredProcedure("dbo.Folder_Delete");
             DropStoredProcedure("dbo.Folder_Update");
             DropStoredProcedure("dbo.Folder_Insert");
-            DropForeignKey("dbo.AspNetUsers", "RootFolder_Id", "dbo.Folder");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Folder", "ParentId", "dbo.Folder");
+            DropForeignKey("dbo.Folder", "OwnerId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Folder", "ParentId", "dbo.Folder");
-            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUsers", new[] { "RootFolder_Id" });
-            DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Folder", new[] { "ParentId" });
+            DropIndex("dbo.Folder", new[] { "OwnerId" });
+            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.AspNetUserRoles");
-            DropTable("dbo.AspNetRoles");
             DropTable("dbo.Folder");
         }
     }

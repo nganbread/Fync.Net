@@ -16,15 +16,6 @@ namespace Fync.Common
             return source.Select(mapper).ToList();
         }
 
-        public static void RecursivelySet<T>(this T @this, Action<T> set, Func<T, IEnumerable<T>> recurse)
-        {
-            set(@this);
-            foreach (var next in recurse(@this))
-            {
-                RecursivelySet(next, set, recurse);
-            }
-        }
-
         public static TOut SafeGet<TIn, TOut>(this TIn @this, Func<TIn, TOut> get, TOut @default = default(TOut))
         {
             return @this == null

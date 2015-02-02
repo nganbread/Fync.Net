@@ -1,8 +1,7 @@
-﻿using Fync.Api;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(Startup /*Needs to be fully qualified*/))]
+[assembly: OwinStartup(typeof(Fync.Api.Startup /*Needs to be fully qualified*/))]
 namespace Fync.Api
 {
     public partial class Startup

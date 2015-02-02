@@ -13,17 +13,20 @@ namespace Fync.Api
         public CurrentUser(Func<UserManager<User, int>> userManager)
         {
             _userManager = userManager;
-        }
-
-        public User User
-        {
-            get
+            _lazyUser = new Lazy<User>(() =>
             {
                 var id = HttpContext.Current.User.Identity.GetUserId<int>();
                 return id == 0
-                ? null
-                : _userManager().FindById(id);
-            }
+                    ? null
+                    : _userManager().FindById(id);
+            });
+        }
+
+        private readonly Lazy<User> _lazyUser;
+
+        public User User
+        {
+            get { return _lazyUser.Value; }
         }
     }
 }

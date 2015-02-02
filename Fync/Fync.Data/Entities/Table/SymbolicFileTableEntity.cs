@@ -19,5 +19,8 @@ namespace Fync.Data.Entities.Table
             Hash = hash;
             DateCreated = dateCreated;
         }
+
+        public bool Deleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Fync.Common;
+using Fync.Common.Models;
 using Fync.Service.Models;
 using Fync.Service.Models.Data;
 

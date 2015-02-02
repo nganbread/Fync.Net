@@ -14,7 +14,7 @@
     <RootNamespace>Fync.Api</RootNamespace>
     <AssemblyName>Fync.Api</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -108,9 +108,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\MultipartFormDataModelBinderAttribute.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\SymbolicFileController.cs" />
     <Compile Include="Startup\Registrations.cs" />
     <Compile Include="Startup\WebApi\RouteConfig.cs" />
     <Compile Include="Startup\Owin\Startup.WebApi.cs" />
@@ -162,9 +162,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>50640</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51261/</IISUrl>
+          <IISUrl>http://localhost/Fync</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

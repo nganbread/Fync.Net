@@ -58,24 +58,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationService.cs" />
+    <Compile Include="FileService.cs" />
+    <Compile Include="IFileService.cs" />
+    <Compile Include="IInitialisationService.cs" />
+    <Compile Include="InitialisationService.cs" />
+    <Compile Include="Maps\FromDeletedSymbolicFileTableEntity.cs" />
     <Compile Include="Maps\FromSymbolicFileTableEntity.cs" />
     <Compile Include="Models\DeletedSymbolicFile.cs" />
     <Compile Include="Models\File.cs" />
-    <Compile Include="Models\NewFolder.cs" />
-    <Compile Include="Models\NewSymbolicFile.cs" />
     <Compile Include="SymbolicFileService.cs" />
     <Compile Include="FolderService.cs" />
-    <Compile Include="Sha256Haser.cs" />
     <Compile Include="IAuthenticationService.cs" />
     <Compile Include="ICurrentUser.cs" />
     <Compile Include="ISymbolicFileService.cs" />
     <Compile Include="IFolderService.cs" />
-    <Compile Include="IHasher.cs" />
     <Compile Include="Maps\FromNewFolder.cs" />
     <Compile Include="Maps\FromFolderEntity.cs" />
-    <Compile Include="Models\SymbolicFile.cs" />
-    <Compile Include="Models\Folder.cs" />
-    <Compile Include="Models\AuthenticationDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registrations.cs" />
   </ItemGroup>

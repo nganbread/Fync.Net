@@ -95,9 +95,9 @@
     <Compile Include="EntityComparer.cs" />
     <Compile Include="FileTableAccess.cs" />
     <Compile Include="IDeletedSymbolicFileTableAccess.cs" />
-    <Compile Include="Migrations\201501241120188_Initial.cs" />
-    <Compile Include="Migrations\201501241120188_Initial.Designer.cs">
-      <DependentUpon>201501241120188_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201501291005418_Initial.cs" />
+    <Compile Include="Migrations\201501291005418_Initial.Designer.cs">
+      <DependentUpon>201501291005418_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="SymbolicFileTableAccess.cs" />
     <Compile Include="IContext.cs" />
@@ -141,8 +141,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201501241120188_Initial.resx">
-      <DependentUpon>201501241120188_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201501291005418_Initial.resx">
+      <DependentUpon>201501291005418_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

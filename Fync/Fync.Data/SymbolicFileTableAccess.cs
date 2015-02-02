@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Fync.Common;
 using Fync.Data.Entities.Table;
-using Fync.Data.Extensions;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Fync.Data
@@ -33,20 +32,26 @@ namespace Fync.Data
 
         public void DeleteSymbolicFileFromFolder(SymbolicFileTableEntity symbolicFile)
         {
-            _cloudTable.Execute(TableOperation.Delete(symbolicFile));
+            symbolicFile.Deleted = true;
+            _cloudTable.Execute(TableOperation.Merge(symbolicFile));
         }
 
-        public void DeleteSymbolicFilesFromFolder(IEnumerable<SymbolicFileTableEntity> symbolicFiles)
+        public void DeleteSymbolicFilesFromFolder(IEnumerable<SymbolicFileTableEntity> symbolicFiles, DateTime dateDeleted)
         {
             foreach (var symbolicFileBatch in symbolicFiles.Split(100))
             {
                 var batchOperation = new TableBatchOperation();
-                symbolicFileBatch.ForEach(x => batchOperation.Delete(x));
+                symbolicFileBatch.ForEach(x =>
+                {
+                    x.DateDeleted = dateDeleted;
+                    x.Deleted = true;
+                    batchOperation.Merge(x);
+                });
                 _cloudTable.ExecuteBatch(batchOperation);
             }
         }
 
-        public void AddSymbolicFileToFolder(Guid folderId, string hash, string fileName, DateTime createdDate)
+        public void InsertSymbolicFileToFolder(Guid folderId, string hash, string fileName, DateTime createdDate)
         {
             var symbolicFile = new SymbolicFileTableEntity(folderId, fileName, hash, createdDate);
             _cloudTable.Execute(TableOperation.InsertOrReplace(symbolicFile));

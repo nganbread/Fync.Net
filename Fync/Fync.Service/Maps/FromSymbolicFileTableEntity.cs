@@ -1,5 +1,5 @@
+using Fync.Common.Models;
 using Fync.Data.Entities.Table;
-using Fync.Service.Models;
 
 namespace Fync.Service.Maps
 {
@@ -10,8 +10,11 @@ namespace Fync.Service.Maps
             return new SymbolicFile
             {
                 Hash = file.Hash,
-                DateCreated = file.DateCreated,
+                DateCreatedUtc = file.DateCreated,
                 Name = file.FileName,
+                FolderId = file.FolderId,
+                Deleted = file.Deleted,
+                DateDeletedUtc = file.DateDeleted
             };
         }
     }

@@ -7,6 +7,7 @@ namespace Fync.Common
         public static void Register(TinyIoCContainer container)
         {
             container.Register<IConfiguration, Configuration>();
+            container.Register<IHasher, Sha256Hasher>().AsSingleton();
         }
     }
 }

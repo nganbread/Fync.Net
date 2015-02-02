@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace Fync.Service.Models
+namespace Fync.Common.Models
 {
     public class Folder
     {
@@ -11,9 +11,10 @@ namespace Fync.Service.Models
         }
 
         //[NotEqual(default(DateTime))]
-        public DateTime DateCreated { get; set; }
+        public DateTime ModifiedDate { get; set; }
         public string Name { get; set; }
         public IList<Folder> SubFolders { get; set; }
         public Guid Id { get; set; }
+        public bool Deleted { get; set; }
     }
 }

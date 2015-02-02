@@ -1,5 +1,6 @@
 ﻿using System;
 using Fync.Data.Identity;
+using Fync.Service.Models.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -50,6 +51,7 @@ namespace Fync.Service
             if (!result.Succeeded) return false;
 
             Login(user);
+
             return true;
         }
 
