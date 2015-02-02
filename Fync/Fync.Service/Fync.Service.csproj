@@ -60,8 +60,6 @@
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="IFileService.cs" />
-    <Compile Include="IInitialisationService.cs" />
-    <Compile Include="InitialisationService.cs" />
     <Compile Include="Maps\FromDeletedSymbolicFileTableEntity.cs" />
     <Compile Include="Maps\FromSymbolicFileTableEntity.cs" />
     <Compile Include="Models\DeletedSymbolicFile.cs" />

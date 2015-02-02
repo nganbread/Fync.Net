@@ -1,4 +1,6 @@
 ﻿using System;
+using Fync.Common;
+using Fync.Data;
 using Fync.Data.Identity;
 using Fync.Service.Models.Data;
 using Microsoft.AspNet.Identity;
@@ -10,11 +12,15 @@ namespace Fync.Service
     {
         private readonly Func<IAuthenticationManager> _authenticationManagerFactory;
         private readonly Func<UserManager<User, int>> _userManagerFactory;
+        private readonly IContext _context;
+        private readonly IConfiguration _configuration;
 
-        public AuthenticationService(Func<IAuthenticationManager> authenticationManagerFactory, Func<UserManager<User, int>> userManagerFactory)
+        public AuthenticationService(Func<IAuthenticationManager> authenticationManagerFactory, Func<UserManager<User, int>> userManagerFactory, IContext context, IConfiguration configuration)
         {
             _authenticationManagerFactory = authenticationManagerFactory;
             _userManagerFactory = userManagerFactory;
+            _context = context;
+            _configuration = configuration;
         }
 
         public bool Login(string emailAddress, string password)
@@ -51,6 +57,15 @@ namespace Fync.Service
             if (!result.Succeeded) return false;
 
             Login(user);
+
+            _context.Folders.Add(new FolderEntity
+            {
+                Name = _configuration.RootFolderName,
+                ModifiedDate = DateTime.UtcNow,
+                Owner = user
+            });
+
+            _context.SaveChanges();
 
             return true;
         }

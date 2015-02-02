@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="CloudBlobContainerName.cs" />
     <Compile Include="CloudTableName.cs" />
+    <Compile Include="ContextWrapper.cs" />
     <Compile Include="DeletedSymbolicFileTableAccess.cs" />
     <Compile Include="Entities\Table\DeletedSymbolicFileTableEntity.cs" />
     <Compile Include="Entities\Table\FileTableEntity.cs" />

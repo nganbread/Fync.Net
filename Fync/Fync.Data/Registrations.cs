@@ -13,8 +13,9 @@ namespace Fync.Data
     {
         public static void Register(TinyIoCContainer container)
         {
+            container.Register<IContext, ContextWrapper>().AsSingleton();
+
             container.Register<Context>().AsPerRequestSingleton();
-            container.Register<IContext>((c, overloads) => c.Resolve<Context>());
             container.Register<DbContext>((c, overloads) => c.Resolve<Context>());
 
             container.Register<IFileTableAccess, FileTableAccess>();

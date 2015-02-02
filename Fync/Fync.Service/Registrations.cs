@@ -22,7 +22,6 @@ namespace Fync.Service
             container.Register<IAuthenticationService, AuthenticationService>();
             container.Register<ISymbolicFileService, SymbolicFileService>().AsSingleton();
             container.Register<IFileService, FileService>().AsSingleton();
-            container.Register<IInitialisationService, InitialisationService>().AsSingleton();
 
             RegisterMaps(container);
             RegisterIdentity(container);

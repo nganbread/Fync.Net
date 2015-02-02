@@ -11,12 +11,10 @@ namespace Fync.Api.Controllers
     public class RegisterController : ApiController
     {
         private readonly IAuthenticationService _authenticationService;
-        private readonly IInitialisationService _initialisationService;
 
-        public RegisterController(IAuthenticationService authenticationService, IInitialisationService initialisationService)
+        public RegisterController(IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
-            _initialisationService = initialisationService;
         }
 
         public HttpResponseMessage Post(AuthenticationDetails model)
@@ -25,7 +23,6 @@ namespace Fync.Api.Controllers
             {
                 if (_authenticationService.Register(model.EmailAddress, model.Password))
                 {
-                    _initialisationService.InitialiseUser();
                     return new HttpResponseMessage(HttpStatusCode.OK);
                 }                
             }
