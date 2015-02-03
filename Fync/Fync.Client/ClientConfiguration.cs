@@ -12,7 +12,7 @@ namespace Fync.Client
 
         public DirectoryInfo BaseDirectory
         {
-            get { return new DirectoryInfo(@"D:/Fync2/"); }
+            get { return new DirectoryInfo(@"D:/Fync5/"); }
         }
 
         public string EmailAddress

@@ -13,7 +13,6 @@ namespace Fync.Service.Maps
                 DateCreatedUtc = file.DateCreated,
                 Name = file.FileName,
                 FolderId = file.FolderId,
-                Deleted = file.Deleted,
                 DateDeletedUtc = file.DateDeleted
             };
         }

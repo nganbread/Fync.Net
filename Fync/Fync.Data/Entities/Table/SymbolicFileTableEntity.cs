@@ -20,7 +20,6 @@ namespace Fync.Data.Entities.Table
             DateCreated = dateCreated;
         }
 
-        public bool Deleted { get; set; }
         public DateTime? DateDeleted { get; set; }
     }
 }

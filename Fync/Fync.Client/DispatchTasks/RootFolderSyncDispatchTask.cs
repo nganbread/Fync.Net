@@ -26,6 +26,7 @@ namespace Fync.Client.DispatchTasks
         {
             _serverFolder = await _httpClient.GetAsync<Folder>("Folder");
             _localFolder = _clientConfiguration.BaseDirectory;
+            _localFolder.Create();
         }
 
         public override int GetHashCode()

@@ -51,15 +51,15 @@ namespace Fync.Api.Controllers
         {
             try
             {
-            var provider = new MultipartMemoryStreamProvider();
+                var provider = new MultipartMemoryStreamProvider();
 
-            await Request.Content.ReadAsMultipartAsync(provider);
+                await Request.Content.ReadAsMultipartAsync(provider);
 
-            if (provider.Contents.Count != 2) return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                if (provider.Contents.Count != 2) return new HttpResponseMessage(HttpStatusCode.BadRequest);
 
-            var stream = await provider.Contents.Single(x => x.Headers.ContentType.MediaType != "application/file").ReadAsStreamAsync();
-            var modelJson = await provider.Contents.Single(x => x.Headers.ContentType.MediaType == "application/json").ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<NewFile>(modelJson);
+                var stream = await provider.Contents.Single(x => x.Headers.ContentType.MediaType != "application/file").ReadAsStreamAsync();
+                var modelJson = await provider.Contents.Single(x => x.Headers.ContentType.MediaType == "application/json").ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<NewFile>(modelJson);
 
                 _symbolicFileService.CreateSymbolicFile(stream, folderId, model.Name, DateTime.UtcNow);
 

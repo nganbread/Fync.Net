@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using Fync.Client.Dispatcher;
 
 namespace Fync.Client

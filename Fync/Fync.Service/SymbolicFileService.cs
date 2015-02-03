@@ -97,7 +97,7 @@ namespace Fync.Service
             if (symbolicFile != null)
             {
                 _deletedSymbolicFileTableAccess.AddDeletedSymbolicFileToFolder(symbolicFile, dateDeleted);
-                _symbolicFileTableAccess.DeleteSymbolicFileFromFolder(symbolicFile);
+                _symbolicFileTableAccess.DeleteSymbolicFileFromFolder(symbolicFile, dateDeleted);
             }
         }
     }

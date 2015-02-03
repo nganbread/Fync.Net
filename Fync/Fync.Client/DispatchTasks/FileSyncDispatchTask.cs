@@ -52,15 +52,23 @@ namespace Fync.Client.DispatchTasks
 
         public override async Task Perform()
         {
+            //handle serverFile.Deleted
             if (_serverFile == null)
             {
                 await UploadNewFile();
             }
             else if (!_localFile.Exists)
             {
-                await DownloadFile();    
+                if (!_serverFile.DateDeletedUtc.HasValue)
+                {
+                    await DownloadFile();
+                }
             }
-            else if(_localFile.LastWriteTimeUtc > _serverFile.DateCreatedUtc)
+            else if (_serverFile.DateDeletedUtc > _localFile.LastWriteTimeUtc)
+            {
+                DeleteFile();
+            }
+            else if (_localFile.LastWriteTimeUtc > _serverFile.DateCreatedUtc)
             {
                 await UploadExistingFile();
             }
@@ -76,6 +84,11 @@ namespace Fync.Client.DispatchTasks
             }
         }
 
+        private void DeleteFile()
+        {
+            _localFile.Delete();
+        }
+
         private async Task DownloadFile()
         {
             //check local hashes first
@@ -83,6 +96,7 @@ namespace Fync.Client.DispatchTasks
             var existingFile = filePaths.FirstOrDefault(x => x.Exists);
             if (existingFile != null)
             {
+                //double check that the existing file is the same
                 var freshHash = await _hasher.HashAsync(existingFile.FullName);
                 if (freshHash == _serverFile.Hash)
                 {
