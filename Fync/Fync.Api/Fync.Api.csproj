@@ -117,6 +117,7 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\SymbolicFileController.cs" />
+    <Compile Include="CurrentUserWrapper.cs" />
     <Compile Include="Startup\Registrations.cs" />
     <Compile Include="Startup\WebApi\RouteConfig.cs" />
     <Compile Include="Startup\Owin\Startup.WebApi.cs" />

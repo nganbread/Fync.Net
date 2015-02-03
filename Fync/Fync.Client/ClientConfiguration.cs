@@ -7,7 +7,7 @@ namespace Fync.Client
     {
         public Uri BaseUri
         {
-            get { return new Uri(@"http://localhost/Fync/api/"); }
+            get { return new Uri(@"http://fync.azurewebsites.net/api/"); }
         }
 
         public DirectoryInfo BaseDirectory
@@ -17,7 +17,7 @@ namespace Fync.Client
 
         public string EmailAddress
         {
-            get { return @"scotty.n@gmail.com"; }
+            get { return @"user@email.com"; }
         }
 
         public string Password
