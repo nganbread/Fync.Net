@@ -46,13 +46,13 @@ namespace Fync.Client.DispatchTasks
             var serverFiles = await _httpClient.GetAsync<IList<SymbolicFile>>("{0}/SymbolicFile", _serverFolder.Id);
             foreach (var serverFile in serverFiles)
             {
-                _dispatcher.Add(_dispatchFactory.FileSync(_serverFolder, _localFolder.CreateFileInfo(serverFile.Name), serverFile));
+                _dispatcher.Queue(_dispatchFactory.FileSync(_serverFolder, _localFolder.CreateFileInfo(serverFile.Name), serverFile));
             }
 
             foreach (var fileInfo in _localFolder.GetFiles().ToList())
             {
                 var serverFile = serverFiles.SingleOrDefault(x => x.Name.Equals(fileInfo.Name, StringComparison.InvariantCultureIgnoreCase));
-                _dispatcher.Add(_dispatchFactory.FileSync(_serverFolder, fileInfo, serverFile));
+                _dispatcher.Queue(_dispatchFactory.FileSync(_serverFolder, fileInfo, serverFile));
             }
         }
 
@@ -73,7 +73,7 @@ namespace Fync.Client.DispatchTasks
                 tasks.Add(task);
             }
 
-            _dispatcher.Add(tasks);
+            _dispatcher.Queue(tasks);
         }
     }
 }

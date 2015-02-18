@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Fync.Client.DataBase
 {
-    internal interface ILocalDatabase : IDisposable
+    public interface IHashCache : IDisposable
     {
         IList<FileInfo> FilePathsOfCachedHash(string hash);
         void RemoveHash(string hash, string filePath);

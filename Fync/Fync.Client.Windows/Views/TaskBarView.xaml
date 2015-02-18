@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Fync.Client.Windows.Views.TaskBarView"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"                     
+             xmlns:tb="http://www.hardcodet.net/taskbar"
+             xmlns:viewModels="clr-namespace:Fync.Client.Windows.ViewModels"
+             d:DataContext="{d:DesignInstance viewModels:TaskBarViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <tb:TaskbarIcon
+        DoubleClickCommand="{Binding ShowLoggingWindow}"
+        IconSource="pack://application:,,,/Icons/Red.ico">
+        <tb:TaskbarIcon.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Logging" Command="{Binding ShowLoggingWindow}"/>
+                <Separator />
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+            </ContextMenu>
+        </tb:TaskbarIcon.ContextMenu>
+    </tb:TaskbarIcon>
+</UserControl>

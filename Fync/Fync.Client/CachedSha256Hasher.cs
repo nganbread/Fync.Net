@@ -8,24 +8,24 @@ namespace Fync.Client
 {
     internal class CachedSha256Hasher : Sha256Hasher
     {
-        private readonly ILocalDatabase _localDatabase;
+        private readonly IHashCache _hashCache;
 
-        public CachedSha256Hasher(ILocalDatabase localDatabase)
+        public CachedSha256Hasher(IHashCache hashCache)
         {
-            _localDatabase = localDatabase;
+            _hashCache = hashCache;
         }
         
         public override string Hash(string filePath)
         {
             var hash = base.Hash(filePath);
-            _localDatabase.InsertHash(hash, filePath);
+            _hashCache.InsertHash(hash, filePath);
             return hash;
         }
 
         public override async Task<string> HashAsync(string filePath)
         {
             var hash = await base.HashAsync(filePath);
-            await _localDatabase.InsertHashAsync(hash, filePath);
+            await _hashCache.InsertHashAsync(hash, filePath);
             return hash;
         }
     }

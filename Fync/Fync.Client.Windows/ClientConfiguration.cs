@@ -1,18 +1,19 @@
 using System;
+using System.Configuration;
 using System.IO;
 
-namespace Fync.Client
+namespace Fync.Client.Windows
 {
     internal class ClientConfiguration : IClientConfiguration
     {
         public Uri BaseUri
         {
-            get { return new Uri(@"http://fync.azurewebsites.net/api/"); }
+            get { return new Uri(ConfigurationManager.AppSettings["BaseUri"]); }
         }
 
         public DirectoryInfo BaseDirectory
         {
-            get { return new DirectoryInfo(@"D:/Fync5/"); }
+            get { return new DirectoryInfo(@"D:/Fync7/"); }
         }
 
         public string EmailAddress

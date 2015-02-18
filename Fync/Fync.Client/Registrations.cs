@@ -8,29 +8,24 @@ using TinyIoC;
 
 namespace Fync.Client
 {
-    class Program
+    public static class Registrations
     {
-        private static void Main(string[] args)
+        public static void Register(TinyIoCContainer container)
         {
-            var container = new TinyIoCContainer();
-            Registrations.Register(container);
-            container.Register<ILocalDatabase, LocalDatabase>().AsSingleton();
             container.Register<IHttpClient, HttpClientWrapper>().AsSingleton();
             container.Register<IHasher, CachedSha256Hasher>().AsSingleton();
             container.Register<IDirectoryHelper, DirectoryHelper>().AsSingleton();
             container.Register<IFileHelper, FileHelper>().AsSingleton();
-            container.Register<IClientConfiguration, ClientConfiguration>().AsSingleton();
             container.Register<IDispatcher, Dispatcher.Dispatcher>().AsSingleton();
-            container.Register<Application>();
+            container.Register<IFileMonitor, FileMonitor>().AsSingleton();
+            container.Register<IFolderMonitor, FolderMonitor>().AsSingleton();
+            container.Register<ISyncEngine, SyncEngine>();
 
             container.Register<FileSyncDispatchTask>().AsMultiInstance();
             container.Register<FolderSyncDispatchTask>().AsMultiInstance();
             container.Register<RootFolderSyncDispatchTask>().AsSingleton();
             
             container.Register<IDispatchFactory, DispatchFactory>().AsSingleton();
-            
-            container.Resolve<Application>().Start();
-            container.Resolve<ILocalDatabase>().Dispose();
         }
 
     }

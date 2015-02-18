@@ -11,6 +11,8 @@ A Dropbox/SkyDrive/OneDrive/Google Drive/Box alternative written in .NET and bui
 * TinyIoC
 * Moq
 * NUnit
+* WPF NotifyIcon
+* Fody
 
 Azure services used
 * SQL Server

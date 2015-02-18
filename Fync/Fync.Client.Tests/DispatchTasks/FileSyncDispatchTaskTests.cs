@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Fync.Client.DataBase;
+using Fync.Client.Dispatcher;
 using Fync.Client.DispatchTasks;
 using Fync.Client.HelperServices;
 using Fync.Client.Web;
@@ -17,7 +18,8 @@ namespace Fync.Client.Tests.DispatchTasks
         private Mock<IHttpClient> _httpClient;
         private Mock<IFileHelper> _fileHelper;
         private Mock<IHasher> _hasher;
-        private Mock<ILocalDatabase> _localDataBase;
+        private Mock<IHashCache> _localDataBase;
+        private Mock<IDispatcher> _dispatcher;
 
         [TestFixtureSetUp]
         public void Setup()
@@ -25,7 +27,8 @@ namespace Fync.Client.Tests.DispatchTasks
             _httpClient = new Mock<IHttpClient>();
             _fileHelper = new Mock<IFileHelper>();
             _hasher = new Mock<IHasher>();
-            _localDataBase = new Mock<ILocalDatabase>();
+            _localDataBase = new Mock<IHashCache>();
+            _dispatcher = new Mock<IDispatcher>();
         }
 
         private FileSyncDispatchTask CreateTask(Folder parentFolder, FileInfo localFile, SymbolicFile serverFile)
@@ -37,7 +40,8 @@ namespace Fync.Client.Tests.DispatchTasks
                 _fileHelper.Object,
                 _httpClient.Object,
                 _hasher.Object,
-                _localDataBase.Object);
+                _localDataBase.Object,
+                _dispatcher.Object);
         }
 
         [Test]

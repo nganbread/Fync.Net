@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Fync.Client.DataBase;
+using Fync.Client.Dispatcher;
+using Fync.Client.Extensions;
 using Fync.Client.HelperServices;
 using Fync.Client.Web;
 using Fync.Common;
@@ -18,9 +20,10 @@ namespace Fync.Client.DispatchTasks
         private readonly IFileHelper _fileHelper;
         private readonly IHttpClient _httpClient;
         private readonly IHasher _hasher;
-        private readonly ILocalDatabase _localDataBase;
+        private readonly IHashCache _localDataBase;
+        private readonly IDispatcher _dispatcher;
 
-        public FileSyncDispatchTask(Folder parentFolder, FileInfo localFile, SymbolicFile serverFile, IFileHelper fileHelper, IHttpClient httpClient, IHasher hasher, ILocalDatabase localDataBase)
+        public FileSyncDispatchTask(Folder parentFolder, FileInfo localFile, SymbolicFile serverFile, IFileHelper fileHelper, IHttpClient httpClient, IHasher hasher, IHashCache localDataBase, IDispatcher dispatcher)
         {
             _parentFolder = parentFolder;
             _localFile = localFile;
@@ -29,6 +32,7 @@ namespace Fync.Client.DispatchTasks
             _httpClient = httpClient;
             _hasher = hasher;
             _localDataBase = localDataBase;
+            _dispatcher = dispatcher;
         }
 
         public override int GetHashCode()
@@ -52,9 +56,11 @@ namespace Fync.Client.DispatchTasks
 
         public override async Task Perform()
         {
+            Logger.Instance.Log(_localFile.FullName);
             //handle serverFile.Deleted
             if (_serverFile == null)
             {
+                Logger.Instance.Log("\tUpload file");
                 await UploadNewFile();
             }
             else if (!_localFile.Exists)
@@ -91,6 +97,7 @@ namespace Fync.Client.DispatchTasks
 
         private async Task DownloadFile()
         {
+            Logger.Instance.Log("Download File");
             //check local hashes first
             var filePaths = await _localDataBase.FilePathsOfCachedHashAsync(_serverFile.Hash);
             var existingFile = filePaths.FirstOrDefault(x => x.Exists);
@@ -101,12 +108,14 @@ namespace Fync.Client.DispatchTasks
                 if (freshHash == _serverFile.Hash)
                 {
                     //file exists on disk already
+                    Logger.Instance.Log("\tFile exists, Copy it over");
                     existingFile.CopyTo(_localFile.FullName);
                     return;
                 }
             }
 
             //Download the file
+            Logger.Instance.Log("\tDownload file...");
             var fileStream = await _httpClient.GetStreamAsync("{0}/Data?fileName={1}", _parentFolder.Id, _serverFile.Name);
             await _fileHelper.SaveToDiskAsync(fileStream, _localFile);
             await _hasher.HashAsync(_localFile.FullName); //TODO:hash it while its in memory instead of from disk

@@ -14,4 +14,49 @@ namespace Fync.Client.Extensions
             return new FileInfo(directoryInfo.FullName.Slash(fileName));
         }
     }
+
+    public static class FileInfoExtensions
+    {
+        public static bool CanRead(this FileInfo fileInfo)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = fileInfo.OpenRead();
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            return false;
+        }
+
+        public static bool CanWrite(this FileInfo fileInfo)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = fileInfo.OpenWrite();
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            return false;
+        }
+    }
 }

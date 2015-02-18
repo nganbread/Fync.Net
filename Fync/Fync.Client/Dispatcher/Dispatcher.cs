@@ -14,14 +14,14 @@ namespace Fync.Client.Dispatcher
         {
             _dispatchItems = new HashSet<IDispatchTask>();
         }
-        public void Add(IDispatchTask task)
+        public void Queue(IDispatchTask task)
         {
             _dispatchItems.Add(task);
 
             Start();
         }
 
-        public void Add(IEnumerable<IDispatchTask> tasks)
+        public void Queue(IEnumerable<IDispatchTask> tasks)
         {
             foreach (var task in tasks)
             {

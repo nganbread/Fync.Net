@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Threading.Tasks;
+using Fync.Client.DataBase;
 using Fync.Common;
 
-namespace Fync.Client.DataBase
+namespace Fync.Client.Windows
 {
-    internal class LocalDatabase : ILocalDatabase
+    internal class LocalDatabaseHashCache : IHashCache
     {
         private readonly SQLiteConnection _connection;
         private const string SelectHashSql = "SELECT FilePath FROM Hashes WHERE Hash = '{0}';";
@@ -18,7 +19,7 @@ namespace Fync.Client.DataBase
         private const string CreateHashIndexSql = "CREATE INDEX IF NOT EXISTS index_hash ON Hashes(Hash);";
 
 
-        public LocalDatabase(IClientConfiguration clientConfiguration)
+        public LocalDatabaseHashCache(IClientConfiguration clientConfiguration)
         {
             var databaseFileName = clientConfiguration.DatabaseFileName;
             SQLiteConnection.CreateFile(databaseFileName);
