@@ -2,7 +2,7 @@ using System;
 using System.Configuration;
 using System.IO;
 
-namespace Fync.Client.Windows
+namespace Fync.Client.Windows.Services
 {
     internal class ClientConfiguration : IClientConfiguration
     {

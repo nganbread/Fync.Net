@@ -25,7 +25,7 @@ namespace Fync.Client.Windows.ViewModels
 
         private void ShowWindow()
         {
-            _windowLauncher.Launch(Registrations.Windows.Main);
+            _windowLauncher.Launch(WindowNames.Main);
         }
 
         public ICommand ShowLoggingWindow

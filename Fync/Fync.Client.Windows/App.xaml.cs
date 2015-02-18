@@ -20,7 +20,7 @@ namespace Fync.Client.Windows
             _container = new TinyIoCContainer();
             Common.Registrations.Register(_container);
             Client.Registrations.Register(_container);
-            Registrations.Registrations.Register(_container);
+            Registrations.Register(_container);
 
             //Start
             Logger.Instance = _container.Resolve<ILogger>();

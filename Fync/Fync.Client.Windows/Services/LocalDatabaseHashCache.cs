@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Fync.Client.DataBase;
 using Fync.Common;
 
-namespace Fync.Client.Windows
+namespace Fync.Client.Windows.Services
 {
     internal class LocalDatabaseHashCache : IHashCache
     {

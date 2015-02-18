@@ -68,18 +68,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClientConfiguration.cs" />
-    <Compile Include="LocalDatabaseHashCache.cs" />
+    <Compile Include="Services\ClientConfiguration.cs" />
+    <Compile Include="Services\LocalDatabaseHashCache.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Registrations\Registrations.cs" />
+    <Compile Include="Registrations.cs" />
     <Compile Include="Services\IWindowLauncher.cs" />
     <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\WindowLauncher.cs" />
     <Compile Include="Components\Command.cs" />
     <Compile Include="ViewModels\Windows\LoggingWindowModel.cs" />
     <Compile Include="ViewModels\TaskBarViewModel.cs" />
-    <Compile Include="Registrations\Views.cs" />
-    <Compile Include="Registrations\Windows.cs" />
+    <Compile Include="ViewNames.cs" />
+    <Compile Include="WindowNames.cs" />
     <Compile Include="Views\TaskBarView.xaml.cs">
       <DependentUpon>TaskBarView.xaml</DependentUpon>
     </Compile>

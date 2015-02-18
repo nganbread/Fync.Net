@@ -7,7 +7,7 @@ using Fync.Client.Windows.Views;
 using Fync.Client.Windows.Views.Windows;
 using TinyIoC;
 
-namespace Fync.Client.Windows.Registrations
+namespace Fync.Client.Windows
 {
     internal static class Registrations
     {
@@ -27,12 +27,12 @@ namespace Fync.Client.Windows.Registrations
 
         private static void RegisterViews(TinyIoCContainer container)
         {
-            container.Register<TaskBarView>(Views.TaskBar);
+            container.Register<TaskBarView>(ViewNames.TaskBar);
         }
 
         private static void RegisterWindows(TinyIoCContainer container)
         {
-            container.Register<Window, LoggingWindow>(Windows.Main);
+            container.Register<Window, LoggingWindow>(WindowNames.Main);
         }
 
         private static Func<string, Window> WindowManufacturer(TinyIoCContainer tinyIoCContainer)
