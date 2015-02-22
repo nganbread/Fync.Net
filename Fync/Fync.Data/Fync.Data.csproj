@@ -82,36 +82,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloudBlobContainerName.cs" />
-    <Compile Include="CloudTableName.cs" />
+    <Compile Include="Azure\CloudBlobContainerName.cs" />
+    <Compile Include="Azure\CloudTableName.cs" />
     <Compile Include="ContextWrapper.cs" />
-    <Compile Include="DeletedSymbolicFileTableAccess.cs" />
+    <Compile Include="Azure\DeletedSymbolicFileTableAccess.cs" />
     <Compile Include="Entities\Table\DeletedSymbolicFileTableEntity.cs" />
     <Compile Include="Entities\Table\FileTableEntity.cs" />
     <Compile Include="Entities\Table\SymbolicFileTableEntity.cs" />
     <Compile Include="Entities\Table\SymbolicFileTableEntityBase.cs" />
     <Compile Include="Extensions\SymbolicFileHashStringExtensions.cs" />
-    <Compile Include="FileBlobAccess.cs" />
+    <Compile Include="Azure\FileBlobAccess.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Entities\DatabaseEntity.cs" />
     <Compile Include="Entities\FolderEntity.cs" />
-    <Compile Include="EntityComparer.cs" />
-    <Compile Include="FileTableAccess.cs" />
-    <Compile Include="IDeletedSymbolicFileTableAccess.cs" />
+    <Compile Include="Azure\FileTableAccess.cs" />
+    <Compile Include="Azure\IDeletedSymbolicFileTableAccess.cs" />
     <Compile Include="Migrations\201501291005418_Initial.cs" />
     <Compile Include="Migrations\201501291005418_Initial.Designer.cs">
       <DependentUpon>201501291005418_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="SymbolicFileTableAccess.cs" />
+    <Compile Include="Azure\SymbolicFileTableAccess.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Entities\Identity\Role.cs" />
     <Compile Include="Entities\Identity\User.cs" />
     <Compile Include="Entities\Identity\UserClaim.cs" />
     <Compile Include="Entities\Identity\UserLogin.cs" />
     <Compile Include="Entities\Identity\UserRole.cs" />
-    <Compile Include="IFileBlobAccess.cs" />
-    <Compile Include="IFileTableAccess.cs" />
-    <Compile Include="ISymbolicFileTableAccess.cs" />
+    <Compile Include="Azure\IFileBlobAccess.cs" />
+    <Compile Include="Azure\IFileTableAccess.cs" />
+    <Compile Include="Azure\ISymbolicFileTableAccess.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registrations.cs" />

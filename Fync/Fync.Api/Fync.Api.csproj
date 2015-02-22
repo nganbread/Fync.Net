@@ -119,6 +119,7 @@
     <Compile Include="Controllers\SymbolicFileController.cs" />
     <Compile Include="CurrentUserWrapper.cs" />
     <Compile Include="Startup\Registrations.cs" />
+    <Compile Include="Startup\TinyIocApiResolver.cs" />
     <Compile Include="Startup\WebApi\RouteConfig.cs" />
     <Compile Include="Startup\Owin\Startup.WebApi.cs" />
     <Compile Include="Controllers\AuthenticateController.cs" />

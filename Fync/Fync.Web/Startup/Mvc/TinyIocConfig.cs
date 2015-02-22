@@ -1,11 +1,11 @@
-﻿using System.Web.Http;
+﻿using Fync.Common.Libraries;
 using TinyIoC;
 
-namespace Fync.Api.App_Start
+namespace Fync.Web
 {
     internal static class TinyIocConfig
     {
-        public static void Configure(HttpConfiguration config)
+        public static TinyIocMvcResolver Configure()
         {
             var container = new TinyIoCContainer();
 
@@ -14,7 +14,7 @@ namespace Fync.Api.App_Start
             Data.Registrations.Register(container);
             Service.Registrations.Register(container);
 
-            config.DependencyResolver = new TinyIocApiResolver(container);
+            return new TinyIocMvcResolver(container);
         }
     }
 }

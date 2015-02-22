@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Http.Dependencies;
 using TinyIoC;
 
-namespace Fync.Common.Libraries
+namespace Fync.Api
 {
     public class TinyIocApiResolver : IDependencyResolver
     {

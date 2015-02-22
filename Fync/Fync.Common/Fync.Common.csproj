@@ -50,7 +50,6 @@
     <Compile Include="IConfiguration.cs" />
     <Compile Include="IHasher.cs" />
     <Compile Include="Libraries\TinyIoC.cs" />
-    <Compile Include="Libraries\TinyIocApiResolver.cs" />
     <Compile Include="Libraries\TinyIoCAspNetExtensions.cs" />
     <Compile Include="Models\AuthenticationDetails.cs" />
     <Compile Include="Models\NewFile.cs" />
