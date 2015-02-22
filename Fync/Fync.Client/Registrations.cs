@@ -2,6 +2,7 @@
 using Fync.Client.Dispatcher;
 using Fync.Client.DispatchTasks;
 using Fync.Client.HelperServices;
+using Fync.Client.Monitor;
 using Fync.Client.Web;
 using Fync.Common;
 using TinyIoC;

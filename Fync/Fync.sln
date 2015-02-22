@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{ADE2AE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fync.Client.Windows", "Fync.Client.Windows\Fync.Client.Windows.csproj", "{3F83BEAC-F473-479B-90A7-C220075A2D7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fync.Web", "Fync.Web\Fync.Web.csproj", "{5E552445-F7A7-4AA2-9B38-FBE9A31E38EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{3F83BEAC-F473-479B-90A7-C220075A2D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F83BEAC-F473-479B-90A7-C220075A2D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F83BEAC-F473-479B-90A7-C220075A2D7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E552445-F7A7-4AA2-9B38-FBE9A31E38EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E552445-F7A7-4AA2-9B38-FBE9A31E38EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E552445-F7A7-4AA2-9B38-FBE9A31E38EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E552445-F7A7-4AA2-9B38-FBE9A31E38EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

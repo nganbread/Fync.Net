@@ -2,7 +2,7 @@ using System;
 
 namespace Fync.Client
 {
-    internal interface IFileMonitor : IDisposable
+    public interface IFileMonitor : IDisposable
     {
         void Monitor();
     }

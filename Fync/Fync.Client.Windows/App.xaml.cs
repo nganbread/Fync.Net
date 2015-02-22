@@ -26,6 +26,8 @@ namespace Fync.Client.Windows
             Logger.Instance = _container.Resolve<ILogger>();
             _container.Resolve<TaskBarView>();
             Task.Run(() => _container.Resolve<ISyncEngine>().Start());
+            Task.Run(() => _container.Resolve<IFileMonitor>().Monitor());
+            Task.Run(() => _container.Resolve<IFolderMonitor>().Monitor());
         }
 
         protected override void OnExit(ExitEventArgs e)

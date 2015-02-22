@@ -1,7 +1,6 @@
-using System;
 using System.IO;
 
-namespace Fync.Client
+namespace Fync.Client.Monitor
 {
     internal class FileMonitor : IFileMonitor
     {
@@ -49,25 +48,25 @@ namespace Fync.Client
                     {
                         var fileInfo = new FileInfo(fileSystemEventArgs.FullPath);
                         if (!fileInfo.Exists) return;
-                        Logger.Instance.Log("Change {0}", fileSystemEventArgs.FullPath);
+                        Logger.Instance.Log("File\tChange {0}", fileSystemEventArgs.FullPath);
                         break;
                     }
                 case WatcherChangeTypes.Created:
                     {
                         var fileInfo = new FileInfo(fileSystemEventArgs.FullPath);
                         if (!fileInfo.Exists) return;
-                        Logger.Instance.Log("Created {0}", fileSystemEventArgs.FullPath);
+                        Logger.Instance.Log("File\tCreated {0}", fileSystemEventArgs.FullPath);
                         break;
                     }
                 case WatcherChangeTypes.Renamed: 
                     { 
                         var fileInfo = new FileInfo(fileSystemEventArgs.FullPath);
                         if (!fileInfo.Exists) return;
-                        Logger.Instance.Log("Renamed {0}", fileSystemEventArgs.FullPath);
+                        Logger.Instance.Log("File\tRenamed {0}", fileSystemEventArgs.FullPath);
                         break;
                     }
                 case WatcherChangeTypes.Deleted:
-                    Logger.Instance.Log("Deleted {0}", fileSystemEventArgs.FullPath);
+                    Logger.Instance.Log("File\tDeleted {0}", fileSystemEventArgs.FullPath);
                     break;
             }
         }

@@ -76,6 +76,7 @@ namespace Fync.Client.DispatchTasks
             }
             else if (_localFile.LastWriteTimeUtc > _serverFile.DateCreatedUtc)
             {
+                Logger.Instance.Log("\t Uploading existing file");
                 await UploadExistingFile();
             }
             else
@@ -83,6 +84,7 @@ namespace Fync.Client.DispatchTasks
                 if (_serverFile.Hash == await _hasher.HashAsync(_localFile.FullName))
                 {
                     //hashes are the same, file hasnt changed
+                    Logger.Instance.Log("\t No change - Equal hashes");
                     return;
                 }
 
@@ -162,6 +164,7 @@ namespace Fync.Client.DispatchTasks
             if (hash == _serverFile.Hash)
             {
                 //file hasnt changed. no point updating it - should we update the last write time?
+                Logger.Instance.Log("\t No change - Equal hashes");
                 return;
             }
 

@@ -1,8 +1,6 @@
-using System;
 using System.IO;
-using Fync.Client;
 
-namespace Fync.Client
+namespace Fync.Client.Monitor
 {
     internal class FolderMonitor : IFolderMonitor
     {
@@ -21,8 +19,7 @@ namespace Fync.Client
             _folderWatcher.IncludeSubdirectories = true;
             _folderWatcher.EnableRaisingEvents = true;
             _folderWatcher.Filter = "*.*";
-            _folderWatcher.NotifyFilter =
-                NotifyFilters.DirectoryName;
+            _folderWatcher.NotifyFilter = NotifyFilters.DirectoryName;
 
             StopListening();
             StartListening();
@@ -48,25 +45,25 @@ namespace Fync.Client
                     {
                         var fileInfo = new DirectoryInfo(fileSystemEventArgs.FullPath);
                         if (!fileInfo.Exists) return;
-                        Logger.Instance.Log("Change {0}", fileSystemEventArgs.FullPath);
+                        Logger.Instance.Log("Folder\tChange {0}", fileSystemEventArgs.FullPath);
                         break;
                     }
                 case WatcherChangeTypes.Created:
                     {
                         var fileInfo = new DirectoryInfo(fileSystemEventArgs.FullPath);
                         if (!fileInfo.Exists) return;
-                        Logger.Instance.Log("Created {0}", fileSystemEventArgs.FullPath);
+                        Logger.Instance.Log("Folder\tCreated {0}", fileSystemEventArgs.FullPath);
                         break;
                     }
                 case WatcherChangeTypes.Renamed:
                     {
                         var fileInfo = new DirectoryInfo(fileSystemEventArgs.FullPath);
                         if (!fileInfo.Exists) return;
-                        Logger.Instance.Log("Renamed {0}", fileSystemEventArgs.FullPath);
+                        Logger.Instance.Log("Folder\tRenamed {0}", fileSystemEventArgs.FullPath);
                         break;
                     }
                 case WatcherChangeTypes.Deleted:
-                    Logger.Instance.Log("Deleted {0}", fileSystemEventArgs.FullPath);
+                    Logger.Instance.Log("Folder\tDeleted {0}", fileSystemEventArgs.FullPath);
                     break;
                     //trigger an update on that folder
             }

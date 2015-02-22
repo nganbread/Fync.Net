@@ -2,7 +2,7 @@
 
 namespace Fync.Client
 {
-    internal interface IFolderMonitor : IDisposable
+    public interface IFolderMonitor : IDisposable
     {
         void Monitor();
     }
