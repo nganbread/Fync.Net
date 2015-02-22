@@ -5,16 +5,12 @@ namespace Fync.Web
 {
     internal static class TinyIocConfig
     {
-        public static TinyIocMvcResolver Configure()
+        public static void Configure(TinyIoCContainer container)
         {
-            var container = new TinyIoCContainer();
-
             Registrations.Register(container);
             Common.Registrations.Register(container);
             Data.Registrations.Register(container);
             Service.Registrations.Register(container);
-
-            return new TinyIocMvcResolver(container);
         }
     }
 }

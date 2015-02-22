@@ -6,7 +6,8 @@ A Dropbox/SkyDrive/OneDrive/Google Drive/Box alternative written in .NET and bui
 * .NET4.5
 * OWIN
 * OWIN Identity
-* WebApi
+* WebApi 2
+* MVC 5
 * Entity Framework
 * TinyIoC
 * Moq
@@ -18,6 +19,9 @@ Azure services used
 * SQL Server
 * Table Storage
 * Blob Storage
+
+Web componenents used:
+* LESS
 
 Other components:
 * SQLite

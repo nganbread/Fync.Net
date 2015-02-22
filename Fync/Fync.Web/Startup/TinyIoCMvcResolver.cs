@@ -12,6 +12,7 @@ namespace Fync.Common.Libraries
          {  
              _container = container;  
          }  
+
          public object GetService(Type serviceType)  
          {  
              try  

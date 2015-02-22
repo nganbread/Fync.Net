@@ -1,7 +1,7 @@
-﻿@model Fync.Web.Models.Account.LoginModel
+﻿@model Fync.Web.Models.Account.RegisterModel
            
 
-@using (Html.BeginForm("LoginPost", "Account", FormMethod.Post))
+@using (Html.BeginForm("RegisterPost", "Account", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     
@@ -12,8 +12,4 @@
     @Html.PasswordFor(x => x.Password)
     
     <button type="submit">Login</button>
-}
-
-@section header{
-    BBB
 }

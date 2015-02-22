@@ -2,7 +2,7 @@
 
 namespace Fync.Web.Models.Account
 {
-    public class LoginModel
+    public class RegisterModel
     {
         [Required]
         [EmailAddress]
