@@ -19,7 +19,7 @@ namespace Fync.Data.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.OwnerId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.OwnerId)
                 .ForeignKey("dbo.Folder", t => t.ParentId)
                 .Index(t => t.OwnerId)
                 .Index(t => t.ParentId);
@@ -29,6 +29,7 @@ namespace Fync.Data.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        RootFolderId = c.Guid(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -145,6 +146,7 @@ namespace Fync.Data.Migrations
                     @"DELETE [dbo].[Folder]
                       WHERE ([Id] = @Id)"
             );
+
 
             SqlFile("SqlScripts/AddHierarchyNodeColumn.sql");
             SqlFile("SqlScripts/AlterFolderInsert.sql");

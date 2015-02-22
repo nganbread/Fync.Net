@@ -5,6 +5,7 @@ using Fync.Common;
 using Fync.Common.Models;
 using Fync.Data;
 using Fync.Data.Entities.Table;
+using Microsoft.WindowsAzure.Storage;
 using File = Fync.Service.Models.File;
 
 namespace Fync.Service

@@ -13,12 +13,12 @@ namespace Fync.Client.Windows.Services
 
         public DirectoryInfo BaseDirectory
         {
-            get { return new DirectoryInfo(@"D:/Fync7/"); }
+            get { return new DirectoryInfo(@"D:/Railway/"); }
         }
 
         public string EmailAddress
         {
-            get { return @"user@email.com"; }
+            get { return @"user4@email.com"; }
         }
 
         public string Password

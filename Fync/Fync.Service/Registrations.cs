@@ -36,6 +36,7 @@ namespace Fync.Service
         private static void RegisterMaps(TinyIoCContainer container)
         {
             container.Register<Func<FolderEntity, Folder>>(FromFolderEntity.ToFolder);
+            container.Register<Func<FolderEntity, int, Folder>>(FromFolderEntity.ToFolder);
             container.Register<Func<NewFolder, FolderEntity>>(FromNewFolder.ToFolderEntity);
             container.Register<Func<SymbolicFileTableEntity, SymbolicFile>>(FromSymbolicFileTableEntity.ToSymbolicFile);
         }

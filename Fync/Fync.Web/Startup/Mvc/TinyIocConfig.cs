@@ -1,5 +1,4 @@
-﻿using Fync.Common.Libraries;
-using TinyIoC;
+﻿using TinyIoC;
 
 namespace Fync.Web
 {

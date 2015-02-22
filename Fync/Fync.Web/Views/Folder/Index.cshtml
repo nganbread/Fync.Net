@@ -1,0 +1,16 @@
+﻿@model FolderModel
+
+<h2>
+    @Model.Folder.Name
+</h2>
+<ol>
+    @foreach (var folder in Model.Folder.SubFolders)
+    {
+        <li>@Html.ActionLink(folder.Name, "Index", "Folder", new {folder.Id}, null)</li>
+        
+    }
+    @foreach (var file in Model.Files)
+    {
+        <li>@Html.ActionLink(file.Name, "Index", "Data", new {Model.Folder.Id, fileName = file.Name}, null)</li>
+    }
+</ol>

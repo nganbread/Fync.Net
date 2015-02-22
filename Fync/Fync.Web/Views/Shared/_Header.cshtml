@@ -3,7 +3,11 @@
     var currentUser = ViewBag.CurrentUser as ICurrentUser;
 }
 
-<div>
-    
-</div>
-Header
+@if (currentUser.User == null)
+{
+    Html.Partial("_AuthenticatedHeader");
+}
+else
+{
+    Html.Partial("_AnonymousHeader");
+}

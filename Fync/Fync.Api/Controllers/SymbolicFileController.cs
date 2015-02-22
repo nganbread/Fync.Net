@@ -57,7 +57,7 @@ namespace Fync.Api.Controllers
 
                 if (provider.Contents.Count != 2) return new HttpResponseMessage(HttpStatusCode.BadRequest);
 
-                var stream = await provider.Contents.Single(x => x.Headers.ContentType.MediaType != "application/file").ReadAsStreamAsync();
+                var stream = await provider.Contents.Single(x => x.Headers.ContentType.MediaType == "application/file").ReadAsStreamAsync();
                 var modelJson = await provider.Contents.Single(x => x.Headers.ContentType.MediaType == "application/json").ReadAsStringAsync();
                 var model = JsonConvert.DeserializeObject<NewFile>(modelJson);
 

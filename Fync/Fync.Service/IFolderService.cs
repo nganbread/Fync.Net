@@ -12,5 +12,6 @@ namespace Fync.Service
         Folder CreateFolder(Guid folderId, string folderName, DateTime createDate);
         void DeleteFolder(Guid folderId, DateTime deletedDate);
         Folder GetFullTree();
+        Folder GetFolder(Guid id);
     }
 }

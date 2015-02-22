@@ -3,29 +3,29 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width" />
     <title>Fync</title>
 
     @RenderSection("Styles", required: false)
     @Styles.Render("~/Content/css")
 </head>
 <body>
-<div>
-    @if (IsSectionDefined("header"))
-    {
-        @RenderSection("header", required: false)
-    }
-    else
-    {
-        @Html.Partial("_Header")
-    }
-</div>
-<div>
-    @RenderBody()
-</div>
-<div>
-    @RenderSection("footer", required: false)
-</div>
+    <div>
+        @if (IsSectionDefined("header"))
+        {
+            @RenderSection("header", required: false)
+        }
+        else
+        {
+            @Html.Partial("_Header")
+        }
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <div>
+        @RenderSection("footer", required: false)
+    </div>
 </body>
 </html>
 

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using Fync.Common;
+using Fync.Common.Models;
 using Fync.Data.Identity;
 using Fync.Service.Models.Data;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -91,7 +92,7 @@ namespace Fync.Data
 
             modelBuilder.Entity<FolderEntity>().ToTable("Folder");
             modelBuilder.Entity<FolderEntity>().HasMany(x => x.SubFolders).WithOptional(x => x.Parent);
-            modelBuilder.Entity<FolderEntity>().HasRequired(x => x.Owner);
+            modelBuilder.Entity<FolderEntity>().HasRequired(x => x.Owner).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<FolderEntity>().MapToStoredProcedures(x => x
                 .Insert(y => y.HasName("Folder_Insert"))
                 .Update(y => y.HasName("Folder_Update"))

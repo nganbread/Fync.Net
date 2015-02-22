@@ -53,18 +53,19 @@ namespace Fync.Service
                 Email = email,
             };
 
+            var rootFolder = new FolderEntity
+            {
+                Name = _configuration.RootFolderName,
+                ModifiedDate = DateTime.UtcNow,
+                Owner = user
+            };
+            _context.Folders.Add(rootFolder);
             var result = _userManagerFactory().Create(user, password);
             if (!result.Succeeded) return false;
 
             Login(user);
 
-            _context.Folders.Add(new FolderEntity
-            {
-                Name = _configuration.RootFolderName,
-                ModifiedDate = DateTime.UtcNow,
-                Owner = user
-            });
-
+            user.RootFolderId = rootFolder.Id;
             _context.SaveChanges();
 
             return true;

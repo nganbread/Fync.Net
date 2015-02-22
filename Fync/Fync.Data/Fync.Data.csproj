@@ -97,10 +97,6 @@
     <Compile Include="Entities\FolderEntity.cs" />
     <Compile Include="Azure\FileTableAccess.cs" />
     <Compile Include="Azure\IDeletedSymbolicFileTableAccess.cs" />
-    <Compile Include="Migrations\201501291005418_Initial.cs" />
-    <Compile Include="Migrations\201501291005418_Initial.Designer.cs">
-      <DependentUpon>201501291005418_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Azure\SymbolicFileTableAccess.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Entities\Identity\Role.cs" />
@@ -111,6 +107,10 @@
     <Compile Include="Azure\IFileBlobAccess.cs" />
     <Compile Include="Azure\IFileTableAccess.cs" />
     <Compile Include="Azure\ISymbolicFileTableAccess.cs" />
+    <Compile Include="Migrations\201502220828040_Initial.cs" />
+    <Compile Include="Migrations\201502220828040_Initial.Designer.cs">
+      <DependentUpon>201502220828040_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registrations.cs" />
@@ -143,8 +143,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201501291005418_Initial.resx">
-      <DependentUpon>201501291005418_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502220828040_Initial.resx">
+      <DependentUpon>201502220828040_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

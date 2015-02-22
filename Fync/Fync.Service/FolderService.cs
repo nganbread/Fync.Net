@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using Fync.Common;
 using Fync.Common.Models;
@@ -13,14 +14,16 @@ namespace Fync.Service
     {
         private readonly IContext _context;
         private readonly Func<FolderEntity, Folder> _toFolder;
+        private readonly Func<FolderEntity, int, Folder> _toFolderWithDepth;
         private readonly Func<NewFolder, FolderEntity> _toFolderEntity;
         private readonly ICurrentUser _currentUser;
         private readonly ISymbolicFileService _symbolicFileService;
 
-        public FolderService(IContext context, Func<FolderEntity, Folder> toFolder, Func<NewFolder, FolderEntity> toFolderEntity, ICurrentUser currentUser, ISymbolicFileService symbolicFileService)
+        public FolderService(IContext context, Func<FolderEntity, Folder> toFolder, Func<FolderEntity, int, Folder> toFolderWithDepth, Func<NewFolder, FolderEntity> toFolderEntity, ICurrentUser currentUser, ISymbolicFileService symbolicFileService)
         {
             _context = context;
             _toFolder = toFolder;
+            _toFolderWithDepth = toFolderWithDepth;
             _toFolderEntity = toFolderEntity;
             _currentUser = currentUser;
             _symbolicFileService = symbolicFileService;
@@ -65,6 +68,12 @@ namespace Fync.Service
         public Folder GetFullTree()
         {
             return _context.GetTree(_currentUser.User.Id).Map(_toFolder);
+        }
+
+        public Folder GetFolder(Guid id)
+        {
+            var folder = _context.Folders.Include(x => x.SubFolders).Single(x => x.Id == id);
+            return folder.Map(x => _toFolderWithDepth(x, 1)); //only enumerate to a depth of one level
         }
 
         public Folder GetFullTree(Guid root)

@@ -8,11 +8,12 @@ namespace Fync.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/Bundles/Scripts")
-                .Include());
+                .Include("~/Scripts/bootStrap.js"));
 
             bundles.Add(new LessBundle("~/Content/Css")
-                .Include("~/Styles/Site.less"));
-
+                .Include(
+                "~/Styles/Variables.less",
+                "~/Styles/Site.less"));
         }
     }
 }
