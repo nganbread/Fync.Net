@@ -123,18 +123,18 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SqlScripts\AddHierarchyNodeColumn.sql">
+    <EmbeddedResource Include="SqlScripts\AddHierarchyNodeColumn.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlScripts\AlterFolderDelete.sql">
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlScripts\AlterFolderDelete.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlScripts\AlterFolderInsert.sql">
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlScripts\AlterFolderInsert.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlScripts\AlterFolderUpdate.sql">
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlScripts\AlterFolderUpdate.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fync.Common\Fync.Common.csproj">

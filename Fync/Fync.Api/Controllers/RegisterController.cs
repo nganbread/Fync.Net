@@ -23,7 +23,7 @@ namespace Fync.Api.Controllers
                 if (_authenticationService.Register(model.EmailAddress, model.Password))
                 {
                     return new HttpResponseMessage(HttpStatusCode.OK);
-                }                
+                }
             }
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }

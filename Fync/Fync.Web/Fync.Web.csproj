@@ -186,6 +186,7 @@
     <Content Include="Views\Shared\_AnonymousHeader.cshtml" />
     <Content Include="Styles\Variables.less" />
     <Content Include="Views\Folder\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\fync.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

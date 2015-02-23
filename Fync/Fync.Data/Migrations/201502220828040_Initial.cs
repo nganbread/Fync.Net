@@ -147,11 +147,10 @@ namespace Fync.Data.Migrations
                       WHERE ([Id] = @Id)"
             );
 
-
-            SqlFile("SqlScripts/AddHierarchyNodeColumn.sql");
-            SqlFile("SqlScripts/AlterFolderInsert.sql");
-            SqlFile("SqlScripts/AlterFolderUpdate.sql");
-            SqlFile("SqlScripts/AlterFolderDelete.sql");
+            SqlResource("Fync.Data.SqlScripts.AddHierarchyNodeColumn.sql");
+            SqlResource("Fync.Data.SqlScripts.AlterFolderInsert.sql");
+            SqlResource("Fync.Data.SqlScripts.AlterFolderUpdate.sql");
+            SqlResource("Fync.Data.SqlScripts.AlterFolderDelete.sql");
         }
         
         public override void Down()

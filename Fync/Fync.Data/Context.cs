@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using Fync.Common;
-using Fync.Common.Models;
 using Fync.Data.Identity;
 using Fync.Service.Models.Data;
 using Microsoft.AspNet.Identity.EntityFramework;
