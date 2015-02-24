@@ -3,14 +3,31 @@
 <h2>
     @Model.Folder.Name
 </h2>
-<ol>
+<ol class="filelist">
     @foreach (var folder in Model.Folder.SubFolders)
     {
-        <li>@Html.ActionLink(folder.Name, "Index", "Folder", new {folder.Id}, null)</li>
+        <li class="folder">
+            <div class="icon"></div>
+            <div class="name">
+                @Html.ActionLink(folder.Name, "Index", "Folder", new { folder.Id }, null)
+            </div>
+            <div class="details">
+
+            </div>
+        </li>
         
     }
     @foreach (var file in Model.Files)
     {
-        <li>@Html.ActionLink(file.Name, "Index", "Data", new {Model.Folder.Id, fileName = file.Name}, null)</li>
+
+        <li class="file">
+            <div class="icon"></div>
+            <div class="name">
+                @Html.ActionLink(file.Name, "Index", "Data", new { Model.Folder.Id, fileName = file.Name }, null)
+            </div>
+            <div class="details">
+
+            </div>
+        </li>
     }
 </ol>
