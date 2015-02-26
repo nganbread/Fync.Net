@@ -1,5 +1,92 @@
 ﻿@import "Variables";
 
-body {
-    background: @primary-colour
+* {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
 }
+
+a:link {
+    color: @medium-grey-colour;
+    text-decoration: none;
+}
+
+a:visited {
+    color: @medium-grey-colour;
+    text-decoration: none;
+}
+
+a:hover {
+    color: @medium-grey-colour;
+    text-decoration: underline;
+}
+
+a:active {
+    color: @medium-grey-colour;
+    text-decoration: underline;
+}
+
+h1{
+    font-weight: 300;
+}
+
+html, body {
+    background: @background-colour;
+    width: 100%;
+    height: 100%;
+}
+
+.left-panel {
+    width: @side-bar-width;
+}
+
+.content-panel {
+    width: 100%;
+}
+
+.panel{
+    margin:@standard-margin;
+    padding:@standard-padding;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    height: @header-height;
+
+    .content-panel {
+        background: @colour-500;
+    }
+
+    .left-panel {
+        display: flex;
+
+        .icon {
+            width: 100%;
+            text-align: center;
+            color: @colour-600;
+            line-height: @header-height;
+            font-size: @header-height * 0.8;
+
+            -webkit-transition: all 0.1s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+        }
+
+        .icon:hover {
+            color: @colour-300;
+            font-size: @header-height*0.85;
+        }
+    }
+}
+
+.body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    .left-panel{
+        background: @medium-grey-colour;
+    }
+}
+

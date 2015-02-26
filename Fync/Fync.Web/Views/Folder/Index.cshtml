@@ -1,32 +1,48 @@
 ﻿@model FolderModel
 
-<h2>
-    @Model.Folder.Name
-</h2>
-<ol class="filelist">
+<div class="z-depth-1 panel">
+    <h1>
+        /@Model.Folder.Name/
+    </h1>    
+</div>
+
+<ol class="file-list">
+    <li class="column-headers">
+        <div class="icon mdi-hardware-keyboard-control">
+            
+        </div>
+        <div class="name">
+            Name
+        </div>
+        <div class="details">
+            Date
+        </div>
+    </li>
+
     @foreach (var folder in Model.Folder.SubFolders)
     {
-        <li class="folder">
-            <div class="icon"></div>
+        <li>
+            <div class="icon mdi-file-folder-open">
+            </div>
             <div class="name">
-                @Html.ActionLink(folder.Name, "Index", "Folder", new { folder.Id }, null)
+                @Html.ActionLink(folder.Name, "Index", "Folder", new {folder.Id}, null)
             </div>
             <div class="details">
 
             </div>
         </li>
-        
+
     }
     @foreach (var file in Model.Files)
     {
 
-        <li class="file">
-            <div class="icon"></div>
+        <li>
+            <div class="icon mdi-editor-insert-drive-file"></div>
             <div class="name">
-                @Html.ActionLink(file.Name, "Index", "Data", new { Model.Folder.Id, fileName = file.Name }, null)
+                @Html.ActionLink(file.Name, "Index", "Data", new {Model.Folder.Id, fileName = file.Name}, null)
             </div>
             <div class="details">
-
+                @file.DateCreatedUtc.ToShortDateString()
             </div>
         </li>
     }

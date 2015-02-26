@@ -1,13 +1,8 @@
-﻿@using Fync.Service
-@{
-    var currentUser = ViewBag.CurrentUser as ICurrentUser;
-}
+﻿<div class="header">
+    <div class="left-panel">
+        <span class="icon mdi-file-cloud-done"></span>
+    </div>
+    <div class="content-panel z-depth-1">
 
-@if (currentUser.User == null)
-{
-    Html.Partial("_AuthenticatedHeader");
-}
-else
-{
-    Html.Partial("_AnonymousHeader");
-}
+    </div>
+</div>

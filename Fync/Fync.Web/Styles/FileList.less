@@ -1,0 +1,56 @@
+﻿@import "Variables";
+
+ol.file-list {
+    list-style-type: none;
+    margin: @standard-margin;
+    padding: @standard-padding;
+
+    li {
+        display: flex;
+        list-style-position: inside;
+        border-bottom: 1px solid @light-grey-colour;
+        line-height: @file-line-height;
+
+        .icon {
+            width: @file-line-height;
+            text-align: center;
+            line-height: @file-line-height;
+            font-size: @file-line-height * 0.6;
+            color: @light-grey-colour;
+            order:1;
+        }
+
+        .name {
+            order:2;
+            flex-grow:1;
+
+            a {
+                display: block;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+
+        .details{
+            order:3;
+            width:@file-line-height * 2;
+        }
+    }
+
+    li.column-headers{
+        color:@colour-300;
+        border-bottom: 2px solid @colour-100;
+    }
+
+    li:hover{
+
+        > .details{
+            text-decoration:underline;
+        }
+
+        > .icon {
+            color: @colour-600;
+        }
+    } 
+}

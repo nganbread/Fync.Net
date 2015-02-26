@@ -8,24 +8,20 @@
 
     @RenderSection("Styles", required: false)
     @Styles.Render("~/Content/css")
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <div>
-        @if (IsSectionDefined("header"))
-        {
-            @RenderSection("header", required: false)
-        }
-        else
-        {
-            @Html.Partial("_Header")
-        }
+    @Html.Partial("_Header")
+
+<div class="body">
+    <div class="left-panel z-depth-2">
+        
     </div>
-    <div>
+    <div class="content-panel">
         @RenderBody()
-    </div>
-    <div>
-        @RenderSection("footer", required: false)
-    </div>
+    </div>    
+</div>
+
 </body>
 </html>
 

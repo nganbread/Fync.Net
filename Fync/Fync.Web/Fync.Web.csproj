@@ -153,6 +153,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fonts\Glyphs\Material-Design-Icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootStrap.js" />
     <Content Include="Web.config" />
@@ -192,11 +193,15 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Styles\Site.less" />
-    <Content Include="Views\Shared\_AuthenticatedHeader.cshtml" />
-    <Content Include="Views\Shared\_AnonymousHeader.cshtml" />
     <Content Include="Styles\Variables.less" />
     <Content Include="Views\Folder\Index.cshtml" />
+    <Content Include="Fonts\Glyphs\Material-Design-Icons.eot" />
+    <Content Include="Fonts\Glyphs\Material-Design-Icons.ttf" />
+    <Content Include="Fonts\Glyphs\Material-Design-Icons.woff" />
     <None Include="Properties\PublishProfiles\fync.pubxml" />
+    <Content Include="Styles\MaterialDesignIcons.less" />
+    <Content Include="Styles\Shadows.less" />
+    <Content Include="Styles\FileList.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
