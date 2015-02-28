@@ -1,12 +1,9 @@
 ﻿using System;
-using Fync.Common;
 using Fync.Common.Libraries;
 using Fync.Common.Models;
-using Fync.Data;
 using Fync.Data.Entities.Table;
 using Fync.Data.Identity;
 using Fync.Service.Maps;
-using Fync.Service.Models;
 using Fync.Service.Models.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

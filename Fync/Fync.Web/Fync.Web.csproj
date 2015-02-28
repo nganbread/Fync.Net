@@ -192,7 +192,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
-    <Content Include="Styles\Site.less" />
+    <Content Include="Styles\Main.less" />
     <Content Include="Styles\Variables.less" />
     <Content Include="Views\Folder\Index.cshtml" />
     <Content Include="Fonts\Glyphs\Material-Design-Icons.eot" />

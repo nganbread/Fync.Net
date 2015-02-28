@@ -12,11 +12,10 @@ namespace Fync.Web
 
             bundles.Add(new LessBundle("~/Content/Css")
                 .Include(
-                "~/Styles/Variables.less",
                 "~/Styles/Shadows.less",
-                "~/Styles/FileList.less",
                 "~/Styles/MaterialDesignIcons.less",
-                "~/Styles/Site.less"));
+                "~/Styles/Main.less",
+                "~/Styles/FileList.less"));
         }
     }
 }
