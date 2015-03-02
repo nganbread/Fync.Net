@@ -7,11 +7,12 @@ namespace Fync.Service
 {
     public interface IFolderService
     {
-        Folder GetFullTree(Guid root);
+        FolderWithChildren GetFullTree(Guid root);
         void UpdateRootFolder(NewFolder updatedRootFolder, DateTime updateDate);
-        Folder CreateFolder(Guid folderId, string folderName, DateTime createDate);
+        FolderWithChildren CreateFolder(Guid folderId, string folderName, DateTime createDate);
         void DeleteFolder(Guid folderId, DateTime deletedDate);
-        Folder GetFullTree();
-        Folder GetFolder(Guid id);
+        FolderWithChildren GetFullTree();
+        FolderWithChildren GetFolder(Guid id);
+        FolderWithParentAndChildren GetFolderFromPath(string[] pathComponents);
     }
 }

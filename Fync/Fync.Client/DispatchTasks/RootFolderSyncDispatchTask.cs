@@ -24,7 +24,7 @@ namespace Fync.Client.DispatchTasks
 
         private async Task Initialise()
         {
-            _serverFolder = await _httpClient.GetAsync<Folder>("Folder");
+            ServerFolderWithChildren = await _httpClient.GetAsync<FolderWithChildren>("Folder");
             _localFolder = _clientConfiguration.BaseDirectory;
             _localFolder.Create();
         }

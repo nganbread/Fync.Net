@@ -9,6 +9,13 @@ namespace Fync.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //See Web.Config <UrlRouteHandler>
+            routes.MapRoute(
+                name: "Fync",
+                url: "Fync/{*pathComponents}",
+                defaults: new { controller = "Fync", action = "Index" }
+                );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

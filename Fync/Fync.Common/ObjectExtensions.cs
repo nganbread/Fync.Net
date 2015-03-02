@@ -8,7 +8,7 @@ namespace Fync.Common
     {
         public static TOut Map<TOut, TIn>(this TIn source, Func<TIn, TOut> mapper)
         {
-            return mapper(source);
+            return source == null ? default(TOut) : mapper(source);
         }
 
         public static IList<TOut> MapToList<TOut, TIn>(this IEnumerable<TIn> source, Func<TIn, TOut> mapper)

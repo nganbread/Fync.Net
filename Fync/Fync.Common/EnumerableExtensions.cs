@@ -37,5 +37,10 @@ namespace Fync.Common
                 collection.Remove(item);
             }
         }
+
+        public static IEnumerable<T> Concat<T>(this IEnumerable<T> enumerable, params T[] concat)
+        {
+            return Enumerable.Concat(enumerable, concat);
+        }
     }
 }

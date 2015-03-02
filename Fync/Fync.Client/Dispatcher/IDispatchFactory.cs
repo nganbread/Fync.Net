@@ -6,10 +6,10 @@ namespace Fync.Client.Dispatcher
 {
     internal interface IDispatchFactory
     {
-        IDispatchTask FileSync(Folder parentFolder, FileInfo localFile, SymbolicFile serverFile);
-        IDispatchTask FileSync(Folder parentFolder, string filePath, SymbolicFile serverFile);
-        IDispatchTask FolderSync(DirectoryInfo localFolder, Folder parentFolder, Folder serverFolder);
-        IDispatchTask FolderSync(string folderPath, Folder parentFolder, Folder serverFolder);
+        IDispatchTask FileSync(FolderWithChildren parentFolderWithChildren, FileInfo localFile, SymbolicFile serverFile);
+        IDispatchTask FileSync(FolderWithChildren parentFolderWithChildren, string filePath, SymbolicFile serverFile);
+        IDispatchTask FolderSync(DirectoryInfo localFolder, FolderWithChildren parentFolderWithChildren, FolderWithChildren serverFolderWithChildren);
+        IDispatchTask FolderSync(string folderPath, FolderWithChildren parentFolderWithChildren, FolderWithChildren serverFolderWithChildren);
         IDispatchTask RootFolderSync();
     }
 }

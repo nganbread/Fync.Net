@@ -25,17 +25,17 @@ namespace Fync.Client.Dispatcher
             _rootFolderSyncDispatchTaskFactory = rootFolderSyncDispatchTaskFactory;
         }
 
-        public IDispatchTask FileSync(Folder parentFolder, string filePath, SymbolicFile serverFile)
+        public IDispatchTask FileSync(FolderWithChildren parentFolderWithChildren, string filePath, SymbolicFile serverFile)
         {
-            return FileSync(parentFolder, CreateFileInfo(filePath), serverFile);
+            return FileSync(parentFolderWithChildren, CreateFileInfo(filePath), serverFile);
         }
-        public IDispatchTask FileSync(Folder parentFolder, FileInfo localFile, SymbolicFile serverFile)
+        public IDispatchTask FileSync(FolderWithChildren parentFolderWithChildren, FileInfo localFile, SymbolicFile serverFile)
         {
             return _fileSyncDispatchTaskFactory(string.Empty, new Dictionary<string, object>
             {
                 {"localFile", localFile},
                 {"serverFile", serverFile},
-                {"parentFolder", parentFolder},
+                {"parentFolder", parentFolderWithChildren},
 
             });
         }
@@ -45,9 +45,9 @@ namespace Fync.Client.Dispatcher
             return _clientConfiguration.BaseDirectory.CreateFileInfo(filePath);
         }
         
-        public IDispatchTask FolderSync(string workingDirectory, Folder parentFolder, Folder serverFolder)
+        public IDispatchTask FolderSync(string workingDirectory, FolderWithChildren parentFolderWithChildren, FolderWithChildren serverFolderWithChildren)
         {
-            return FolderSync(CreateDirectoryInfo(workingDirectory), parentFolder, serverFolder);
+            return FolderSync(CreateDirectoryInfo(workingDirectory), parentFolderWithChildren, serverFolderWithChildren);
         }
 
         public IDispatchTask RootFolderSync()
@@ -55,13 +55,13 @@ namespace Fync.Client.Dispatcher
             return _rootFolderSyncDispatchTaskFactory();
         }
 
-        public IDispatchTask FolderSync(DirectoryInfo localFolder, Folder parentFolder, Folder serverFolder)
+        public IDispatchTask FolderSync(DirectoryInfo localFolder, FolderWithChildren parentFolderWithChildren, FolderWithChildren serverFolderWithChildren)
         {
             return _folderSyncDispatchTaskFactory(string.Empty, new Dictionary<string, object>
             {
                 {"localFolder", localFolder},
-                {"parentFolder", parentFolder},
-                {"serverFolder", serverFolder},
+                {"parentFolder", parentFolderWithChildren},
+                {"serverFolder", serverFolderWithChildren},
             });
         }
 

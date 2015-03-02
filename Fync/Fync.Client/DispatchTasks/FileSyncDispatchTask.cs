@@ -14,7 +14,7 @@ namespace Fync.Client.DispatchTasks
 {
     internal class FileSyncDispatchTask : DispatchTaskBase
     {
-        private readonly Folder _parentFolder;
+        private readonly FolderWithChildren ParentFolderWithChildren;
         private readonly FileInfo _localFile;
         private readonly SymbolicFile _serverFile;
         private readonly IFileHelper _fileHelper;
@@ -23,9 +23,9 @@ namespace Fync.Client.DispatchTasks
         private readonly IHashCache _localDataBase;
         private readonly IDispatcher _dispatcher;
 
-        public FileSyncDispatchTask(Folder parentFolder, FileInfo localFile, SymbolicFile serverFile, IFileHelper fileHelper, IHttpClient httpClient, IHasher hasher, IHashCache localDataBase, IDispatcher dispatcher)
+        public FileSyncDispatchTask(FolderWithChildren parentFolderWithChildren, FileInfo localFile, SymbolicFile serverFile, IFileHelper fileHelper, IHttpClient httpClient, IHasher hasher, IHashCache localDataBase, IDispatcher dispatcher)
         {
-            _parentFolder = parentFolder;
+            ParentFolderWithChildren = parentFolderWithChildren;
             _localFile = localFile;
             _serverFile = serverFile;
             _fileHelper = fileHelper;
@@ -37,7 +37,7 @@ namespace Fync.Client.DispatchTasks
 
         public override int GetHashCode()
         {
-            return (_localFile.FullName + _serverFile.SafeGet(x => x.Name, "null") + _parentFolder.Name).GetHashCode();
+            return (_localFile.FullName + _serverFile.SafeGet(x => x.Name, "null") + ParentFolderWithChildren.Name).GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -46,7 +46,7 @@ namespace Fync.Client.DispatchTasks
             return that != null
                    && that._localFile.FullName.Equals(_localFile.FullName, StringComparison.InvariantCultureIgnoreCase)
                    && that._serverFile == _serverFile
-                   && that._parentFolder == _parentFolder;
+                   && that.ParentFolderWithChildren == ParentFolderWithChildren;
         }
 
         public override int Priority
@@ -118,7 +118,7 @@ namespace Fync.Client.DispatchTasks
 
             //Download the file
             Logger.Instance.Log("\tDownload file...");
-            var fileStream = await _httpClient.GetStreamAsync("{0}/Data?fileName={1}", _parentFolder.Id, _serverFile.Name);
+            var fileStream = await _httpClient.GetStreamAsync("{0}/Data?fileName={1}", ParentFolderWithChildren.Id, _serverFile.Name);
             await _fileHelper.SaveToDiskAsync(fileStream, _localFile);
             await _hasher.HashAsync(_localFile.FullName); //TODO:hash it while its in memory instead of from disk
         }
@@ -145,11 +145,11 @@ namespace Fync.Client.DispatchTasks
                     Hash = hash,
                     Name = _localFile.Name,
                 };
-                await _httpClient.PutAsync("{0}/SymbolicFile".FormatWith(_parentFolder.Id), newSymbolicFile);
+                await _httpClient.PutAsync("{0}/SymbolicFile".FormatWith(ParentFolderWithChildren.Id), newSymbolicFile);
             }
             else
             {
-                await _httpClient.PostStreamAsync(_localFile.OpenRead(), new NewFile { Name = _localFile.Name }, "{0}/SymbolicFile", _parentFolder.Id);
+                await _httpClient.PostStreamAsync(_localFile.OpenRead(), new NewFile { Name = _localFile.Name }, "{0}/SymbolicFile", ParentFolderWithChildren.Id);
             }
         }
 

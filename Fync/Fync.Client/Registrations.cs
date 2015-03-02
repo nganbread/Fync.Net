@@ -22,6 +22,8 @@ namespace Fync.Client
             container.Register<IFolderMonitor, FolderMonitor>().AsSingleton();
             container.Register<ISyncEngine, SyncEngine>();
 
+            container.Register<IDeletedFolders, DeletedFolders>().AsSingleton();
+
             container.Register<FileSyncDispatchTask>().AsMultiInstance();
             container.Register<FolderSyncDispatchTask>().AsMultiInstance();
             container.Register<RootFolderSyncDispatchTask>().AsSingleton();

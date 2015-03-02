@@ -161,12 +161,13 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataController.cs" />
-    <Compile Include="Controllers\FolderController.cs" />
+    <Compile Include="Controllers\FyncController.cs" />
     <Compile Include="CurrentUser.cs" />
     <Compile Include="CurrentUserWrapper.cs" />
+    <Compile Include="ModelBinders\SlashSeparatedArray.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\RegisterModel.cs" />
-    <Compile Include="Models\Folder\FolderModel.cs" />
+    <Compile Include="Models\Folder\FyncModel.cs" />
     <Compile Include="Startup\Mvc\FilterConfig.cs" />
     <Compile Include="Startup\Mvc\IFilterConfig.cs" />
     <Compile Include="Startup\Mvc\FilterAttributes\InjectCurrentUserIntoViewBagAttribute.cs" />
@@ -194,7 +195,6 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Styles\Main.less" />
     <Content Include="Styles\Variables.less" />
-    <Content Include="Views\Folder\Index.cshtml" />
     <Content Include="Fonts\Glyphs\Material-Design-Icons.eot" />
     <Content Include="Fonts\Glyphs\Material-Design-Icons.ttf" />
     <Content Include="Fonts\Glyphs\Material-Design-Icons.woff" />
@@ -202,6 +202,7 @@
     <Content Include="Styles\MaterialDesignIcons.less" />
     <Content Include="Styles\Shadows.less" />
     <Content Include="Styles\FileList.less" />
+    <Content Include="Views\Fync\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

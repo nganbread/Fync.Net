@@ -24,12 +24,12 @@ namespace Fync.Client.Tests.DispatchTasks
             _httpClient = new Mock<IHttpClient>();
         }
 
-        private FolderSyncDispatchTask CreateTask(DirectoryInfo localFolder, Folder parentFolder, Folder serverFolder)
+        private FolderSyncDispatchTask CreateTask(DirectoryInfo localFolder, FolderWithChildren parentFolderWithChildren, FolderWithChildren serverFolderWithChildren)
         {
             return new FolderSyncDispatchTask(
                 localFolder,
-                parentFolder,
-                serverFolder,
+                parentFolderWithChildren,
+                serverFolderWithChildren,
                 _dispatchFactory.Object,
                 _dispatcher.Object,
                 _httpClient.Object);
@@ -39,8 +39,8 @@ namespace Fync.Client.Tests.DispatchTasks
         public void GivenThereAreTwoTasks_WhenTheyHaveTheSameFolderReferences_ThenOnlyOneOfTheTasksExistsInTheSet()
         {
             var set = new HashSet<FolderSyncDispatchTask>();
-            var serverFolder = new Folder();
-            var parentFolder = new Folder();
+            var serverFolder = new FolderWithChildren();
+            var parentFolder = new FolderWithChildren();
             var localFolder = new DirectoryInfo("C:/");
             set.Add(CreateTask(localFolder, parentFolder, serverFolder));
             set.Add(CreateTask(localFolder, parentFolder, serverFolder));
@@ -52,8 +52,8 @@ namespace Fync.Client.Tests.DispatchTasks
         public void GivenThereAreTwoTasks_WhenTheyHaveTheSameFolderReferencesAndDirectoryPaths_ThenOnlyOneOfTheTasksExistsInTheSet()
         {
             var set = new HashSet<FolderSyncDispatchTask>();
-            var serverFolder = new Folder();
-            var parentFolder = new Folder();
+            var serverFolder = new FolderWithChildren();
+            var parentFolder = new FolderWithChildren();
             var localFolder1 = new DirectoryInfo("C:/");
             var localFolder2 = new DirectoryInfo("C:/");
             set.Add(CreateTask(localFolder1, parentFolder, serverFolder));
@@ -66,8 +66,8 @@ namespace Fync.Client.Tests.DispatchTasks
         public void GivenThereAreTwoTasks_WhenTheyHaveTheSameFolderReferencesAndDifferentDirectoryPaths_ThenBothOfTheTasksExistsInTheSet()
         {
             var set = new HashSet<FolderSyncDispatchTask>();
-            var serverFolder = new Folder();
-            var parentFolder = new Folder();
+            var serverFolder = new FolderWithChildren();
+            var parentFolder = new FolderWithChildren();
             var localFolder1 = new DirectoryInfo("C:/1/");
             var localFolder2 = new DirectoryInfo("C:/2/");
             set.Add(CreateTask(localFolder1, parentFolder, serverFolder));

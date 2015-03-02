@@ -17,5 +17,10 @@ namespace Fync.Web
         {
             get { return _currentUser().User; }
         }
+
+        public int UserId
+        {
+            get { return _currentUser().UserId; }
+        }
     }
 }

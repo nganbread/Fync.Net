@@ -117,8 +117,10 @@
   <ItemGroup>
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\FyncController.cs" />
     <Compile Include="Controllers\SymbolicFileController.cs" />
     <Compile Include="CurrentUserWrapper.cs" />
+    <Compile Include="ModelBinders\SlashSeparatedArray.cs" />
     <Compile Include="Startup\Registrations.cs" />
     <Compile Include="Startup\TinyIocApiResolver.cs" />
     <Compile Include="Startup\WebApi\RouteConfig.cs" />

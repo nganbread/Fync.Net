@@ -9,8 +9,10 @@ namespace Fync.Data
     {
         IDbSet<FolderEntity> Folders { get; }
         IDbSet<User> Users { get; }
-        FolderEntity GetTree(Guid folderId);
-        void SaveChanges();
+        FolderEntity GetTree(int userId, Guid folderId);
         FolderEntity GetTree(int userId);
+        FolderEntity GetFolderFromPath(int userId, string[] pathComponents);
+
+        void SaveChanges();
     }
 }

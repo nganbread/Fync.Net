@@ -17,14 +17,14 @@ namespace Fync.Api.Controllers
             _folderService = folderService;
         }
 
-        public Folder Get(Guid? id = null)
+        public FolderWithChildren Get(Guid? id = null)
         {
             return id.HasValue
                 ? _folderService.GetFullTree(id.Value)
                 : _folderService.GetFullTree();
         }
 
-        public Folder Post(Guid folderId, NewFolder newFolder)
+        public FolderWithChildren Post(Guid folderId, NewFolder newFolder)
         {
             return _folderService.CreateFolder(folderId, newFolder.Name, DateTime.UtcNow);
         }

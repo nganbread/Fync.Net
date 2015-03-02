@@ -31,10 +31,10 @@ namespace Fync.Client.Tests.DispatchTasks
             _dispatcher = new Mock<IDispatcher>();
         }
 
-        private FileSyncDispatchTask CreateTask(Folder parentFolder, FileInfo localFile, SymbolicFile serverFile)
+        private FileSyncDispatchTask CreateTask(FolderWithChildren parentFolderWithChildren, FileInfo localFile, SymbolicFile serverFile)
         {
             return new FileSyncDispatchTask(
-                parentFolder,
+                parentFolderWithChildren,
                 localFile,
                 serverFile,
                 _fileHelper.Object,
@@ -48,7 +48,7 @@ namespace Fync.Client.Tests.DispatchTasks
         public void GivenThereAreTwoTasks_WhenTheyHaveTheSameFolderAndFileReferences_ThenOnlyOneExistsInASet()
         {
             var set = new HashSet<FileSyncDispatchTask>();
-            var parentFolder = new Folder();
+            var parentFolder = new FolderWithChildren();
             var localFile = new FileInfo("C:/file.txt");
             var serverFile = new SymbolicFile();
 
@@ -62,7 +62,7 @@ namespace Fync.Client.Tests.DispatchTasks
         public void GivenThereAreTwoTasks_WhenTheyHaveTheSameFolderReferencessAndFileInfo_ThenOnlyOneExistsInASet()
         {
             var set = new HashSet<FileSyncDispatchTask>();
-            var parentFolder = new Folder();
+            var parentFolder = new FolderWithChildren();
             var localFile1 = new FileInfo("C:/file.txt");
             var localFile2 = new FileInfo("C:/file.txt");
             var serverFile = new SymbolicFile();
@@ -76,7 +76,7 @@ namespace Fync.Client.Tests.DispatchTasks
         public void GivenThereAreTwoTasks_WhenTheyHaveTheSameFolderReferencessAndDifferentFileInfo_ThenOnlyTwoExistsInASet()
         {
             var set = new HashSet<FileSyncDispatchTask>();
-            var parentFolder = new Folder();
+            var parentFolder = new FolderWithChildren();
             var localFile1 = new FileInfo("C:/file1.txt");
             var localFile2 = new FileInfo("C:/file2.txt");
             var serverFile = new SymbolicFile();

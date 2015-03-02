@@ -6,14 +6,25 @@ namespace Fync.Service.Maps
 {
     internal static class FromFolderEntity
     {
+        public static FolderWithParent ToFolderWithParent(FolderEntity folderEntity)
+        {
+            return new FolderWithParent
+            {
+                Id = folderEntity.Id,
+                Name = folderEntity.Name,
+                ModifiedDate = folderEntity.ModifiedDate,
+                Deleted = folderEntity.Deleted,
+                Parent = folderEntity.Parent.Map(ToFolderWithParent)
+            };
+        }
 
-        public static Folder ToFolder(FolderEntity folderEntity, int depth)
+        public static FolderWithChildren ToFolderWithChildren(FolderEntity folderEntity, int depth)
         {
             var subFolders = depth == 0
                 ? null
-                : folderEntity.SubFolders.MapToList(x => ToFolder(x, depth - 1));
+                : folderEntity.SubFolders.MapToList(x => ToFolderWithChildren(x, depth - 1));
 
-            return new Folder
+            return new FolderWithChildren
             {
                 Id = folderEntity.Id,
                 Name = folderEntity.Name,
@@ -23,15 +34,32 @@ namespace Fync.Service.Maps
             };
         }
 
-        public static Folder ToFolder(FolderEntity folderEntity)
+        public static FolderWithChildren ToFolderWithChildren(FolderEntity folderEntity)
         {
-            return new Folder
+            return new FolderWithChildren
             {
                 Id = folderEntity.Id,
                 Name = folderEntity.Name,
-                SubFolders = folderEntity.SubFolders.MapToList(ToFolder),
+                SubFolders = folderEntity.SubFolders.MapToList(ToFolderWithChildren),
                 ModifiedDate = folderEntity.ModifiedDate,
                 Deleted = folderEntity.Deleted
+            };
+        }
+
+        public static FolderWithParentAndChildren ToFolderWithParentAndChildren(FolderEntity folderEntity, int depth)
+        {
+            var subFolders = depth == 0
+                ? null
+                : folderEntity.SubFolders.MapToList(x => ToFolderWithChildren(x, depth - 1));
+
+            return new FolderWithParentAndChildren
+            {
+                Id = folderEntity.Id,
+                Name = folderEntity.Name,
+                SubFolders = subFolders,
+                ModifiedDate = folderEntity.ModifiedDate,
+                Deleted = folderEntity.Deleted,
+                Parent = folderEntity.Parent.Map(ToFolderWithParent)
             };
         }
     }

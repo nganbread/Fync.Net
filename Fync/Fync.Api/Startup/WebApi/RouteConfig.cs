@@ -1,4 +1,9 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Routing;
+using System.Web.Routing;
 
 namespace Fync.Api.App_Start
 {
@@ -9,14 +14,17 @@ namespace Fync.Api.App_Start
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "Fync",
+                routeTemplate: "Fync/{*pathComponents}",
+                defaults: new { controller = "Fync" });
+
+            config.Routes.MapHttpRoute(
                 name: "Default",
                 routeTemplate: "{controller}");
 
             config.Routes.MapHttpRoute(
                 name: "FolderContext",
                 routeTemplate: "{folderId}/{controller}");
-
-
         }
     }
 }

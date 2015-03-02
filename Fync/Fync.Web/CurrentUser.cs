@@ -24,5 +24,10 @@ namespace Fync.Web
                     : _userManager.FindById(id);
             }
         }
+
+        public int UserId
+        {
+            get { return HttpContext.Current.User.Identity.GetUserId<int>(); }
+        }
     }
 }

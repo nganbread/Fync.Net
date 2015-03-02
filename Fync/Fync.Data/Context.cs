@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.IO;
 using System.Linq;
 using Fync.Common;
 using Fync.Data.Identity;
@@ -36,12 +38,12 @@ namespace Fync.Data
             return root;
         }
 
-        public FolderEntity GetTree(Guid folderId)
+        public FolderEntity GetTree(int userId, Guid folderId)
         {
             var script = "DECLARE @rootId hierarchyId " +
                          "SELECT @rootId = [HierarchyNode] " +
                          "FROM [dbo].[Folder] " +
-                         "WHERE [Id] = '{0}' ".FormatWith(folderId) + 
+                         "WHERE [OwnerId] = {0} AND [Id] = '{1}'".FormatWith(userId, folderId) +
 
                          "SELECT * " +
                          "FROM [dbo].[Folder] " +
@@ -55,6 +57,54 @@ namespace Fync.Data
             FindAndAttachChildren(root, children);
 
             return root;
+        }
+
+
+        /// <summary>
+        /// TODO: protect from SQL Injection
+        /// TODO: ?? Perform entirely in sql ??
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pathComponents"></param>
+        /// <returns></returns>
+        public FolderEntity GetFolderFromPath(int userId, string[] pathComponents)
+        {
+            var script =
+                "SELECT DISTINCT ancestors.[Id], ancestors.[OwnerId], ancestors.[ParentId], ancestors.[Name], ancestors.[ModifiedDate], ancestors.[Deleted] " +
+                "FROM [dbo].[Folder] as matching " +
+                "RIGHT JOIN [dbo].[Folder] as ancestors " +
+                "ON matching.[hierarchyNode].IsDescendantOf(ancestors.[HierarchyNode]) = 1 " +
+                "WHERE " +
+                    "matching.[OwnerId] = {0} AND ".FormatWith(userId) +
+                    "matching.[Name] = '{0}' AND ".FormatWith(pathComponents.Last()) +
+                    "matching.[HierarchyNode].GetLevel() = {0} ".FormatWith(pathComponents.Length - 1);
+
+            //Perform entirely in SQL?
+            var flat = ((DbSet<FolderEntity>)Folders).SqlQuery(script).ToList(); //Change tracked
+            //var flat = Database.SqlQuery<FolderEntity>(script).ToList(); //Not change tracked
+
+            var dictionary = flat.ToDictionary(x => x.Id);
+            return flat
+                .Where(x => x.Name.Equals(pathComponents.Last(), StringComparison.InvariantCultureIgnoreCase))
+                .Select(x => 
+                { 
+                    FindAndAttachParent(x, dictionary);
+                    return x;
+                })
+                .FirstOrDefault(x => IsMatchingPath(x, pathComponents, pathComponents.Length - 1));
+        }
+
+        private bool IsMatchingPath(FolderEntity folder, string[] path, int index)
+        {
+            if (folder == null) return true;
+            return folder.Name == path[index] && IsMatchingPath(folder.Parent, path, index - 1);
+        }
+
+        private void FindAndAttachParent(FolderEntity folder, IDictionary<Guid, FolderEntity> dictionary)
+        {
+            if (!folder.ParentId.HasValue) return;
+            folder.Parent = dictionary[folder.ParentId.Value];
+            FindAndAttachParent(folder.Parent, dictionary);
         }
 
         void IContext.SaveChanges()

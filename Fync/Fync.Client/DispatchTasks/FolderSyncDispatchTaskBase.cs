@@ -13,15 +13,15 @@ namespace Fync.Client.DispatchTasks
     internal abstract class FolderSyncDispatchTaskBase : DispatchTaskBase
     {
         protected internal DirectoryInfo _localFolder;
-        protected internal Folder _serverFolder;
+        protected internal FolderWithChildren ServerFolderWithChildren;
         protected readonly IDispatchFactory _dispatchFactory;
         protected readonly IDispatcher _dispatcher;
         protected readonly IHttpClient _httpClient;
 
-        protected FolderSyncDispatchTaskBase(DirectoryInfo localFolder, Folder serverFolder, IDispatchFactory dispatchFactory, IDispatcher dispatcher, IHttpClient httpClient)
+        protected FolderSyncDispatchTaskBase(DirectoryInfo localFolder, FolderWithChildren serverFolderWithChildren, IDispatchFactory dispatchFactory, IDispatcher dispatcher, IHttpClient httpClient)
         {
             _localFolder = localFolder;
-            _serverFolder = serverFolder;
+            ServerFolderWithChildren = serverFolderWithChildren;
             _dispatchFactory = dispatchFactory;
             _dispatcher = dispatcher;
             _httpClient = httpClient;
@@ -43,16 +43,16 @@ namespace Fync.Client.DispatchTasks
         protected async Task SyncFiles()
         {
             //TODO: dont need to do this if we just made the server folder
-            var serverFiles = await _httpClient.GetAsync<IList<SymbolicFile>>("{0}/SymbolicFile", _serverFolder.Id);
+            var serverFiles = await _httpClient.GetAsync<IList<SymbolicFile>>("{0}/SymbolicFile", ServerFolderWithChildren.Id);
             foreach (var serverFile in serverFiles)
             {
-                _dispatcher.Queue(_dispatchFactory.FileSync(_serverFolder, _localFolder.CreateFileInfo(serverFile.Name), serverFile));
+                _dispatcher.Queue(_dispatchFactory.FileSync(ServerFolderWithChildren, _localFolder.CreateFileInfo(serverFile.Name), serverFile));
             }
 
             foreach (var fileInfo in _localFolder.GetFiles().ToList())
             {
                 var serverFile = serverFiles.SingleOrDefault(x => x.Name.Equals(fileInfo.Name, StringComparison.InvariantCultureIgnoreCase));
-                _dispatcher.Queue(_dispatchFactory.FileSync(_serverFolder, fileInfo, serverFile));
+                _dispatcher.Queue(_dispatchFactory.FileSync(ServerFolderWithChildren, fileInfo, serverFile));
             }
         }
 
@@ -60,16 +60,16 @@ namespace Fync.Client.DispatchTasks
         {
             var tasks = new List<IDispatchTask>();
 
-            foreach (var subFolder in _serverFolder.SubFolders)
+            foreach (var subFolder in ServerFolderWithChildren.SubFolders)
             {
-                var task = _dispatchFactory.FolderSync(_localFolder.CreateSubdirectoryInfo(subFolder.Name), _serverFolder, subFolder);
+                var task = _dispatchFactory.FolderSync(_localFolder.CreateSubdirectoryInfo(subFolder.Name), ServerFolderWithChildren, subFolder);
                 tasks.Add(task);
             }
 
             foreach (var subFolder in _localFolder.GetDirectories().ToList())
             {
-                var serverSubFolder =  _serverFolder.SubFolders.SingleOrDefault(x => x.Name.Equals(subFolder.Name, StringComparison.InvariantCultureIgnoreCase));
-                var task = _dispatchFactory.FolderSync(subFolder, _serverFolder, serverSubFolder);
+                var serverSubFolder =  ServerFolderWithChildren.SubFolders.SingleOrDefault(x => x.Name.Equals(subFolder.Name, StringComparison.InvariantCultureIgnoreCase));
+                var task = _dispatchFactory.FolderSync(subFolder, ServerFolderWithChildren, serverSubFolder);
                 tasks.Add(task);
             }
 

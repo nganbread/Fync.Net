@@ -52,8 +52,11 @@
     <Compile Include="Libraries\TinyIoC.cs" />
     <Compile Include="Libraries\TinyIoCAspNetExtensions.cs" />
     <Compile Include="Models\AuthenticationDetails.cs" />
+    <Compile Include="Models\FolderBase.cs" />
+    <Compile Include="Models\FolderWithParent.cs" />
+    <Compile Include="Models\FolderWithParentAndChildren.cs" />
     <Compile Include="Models\NewFile.cs" />
-    <Compile Include="Models\Folder.cs" />
+    <Compile Include="Models\FolderWithChildren.cs" />
     <Compile Include="Models\NewFolder.cs" />
     <Compile Include="Models\NewSymbolicFile.cs" />
     <Compile Include="Models\SymbolicFile.cs" />
