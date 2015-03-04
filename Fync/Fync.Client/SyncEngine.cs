@@ -8,24 +8,19 @@ namespace Fync.Client
     {
         private readonly IDispatcher _dispatcher;
         private readonly IDispatchFactory _dispatchFactory;
-        private readonly IFolderMonitor _folderMonitor;
-        private readonly IFileMonitor _fileMonitor;
 
-        public SyncEngine(IDispatcher dispatcher, IDispatchFactory dispatchFactory, IFolderMonitor folderMonitor, IFileMonitor fileMonitor)
+        public SyncEngine(IDispatcher dispatcher, IDispatchFactory dispatchFactory)
         {
             _dispatcher = dispatcher;
             _dispatchFactory = dispatchFactory;
-            _folderMonitor = folderMonitor;
-            _fileMonitor = fileMonitor;
         }
 
         public void Start()
         {
             Logger.Instance.Log("Start");
 
-            _dispatcher.Queue(_dispatchFactory.RootFolderSync());
-            //_fileMonitor.Monitor();
-            //_folderMonitor.Monitor();
+            _dispatcher.Enqueue(_dispatchFactory.RootFolderSync());
+            _dispatcher.Start();
         }
     }
 }

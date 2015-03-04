@@ -7,14 +7,12 @@ namespace Fync.Client.Monitor
     {
         private readonly FileSystemWatcher _folderWatcher;
         private readonly IClientConfiguration _clientConfiguration;
-        private readonly IDeletedFolders _deletedFolders;
         private readonly IDispatchFactory _dispathFactory;
         private readonly IDispatcher _dispatcher;
 
-        public FolderMonitor(IClientConfiguration clientConfiguration, IDeletedFolders deletedFolders, IDispatchFactory dispathFactory, IDispatcher dispatcher)
+        public FolderMonitor(IClientConfiguration clientConfiguration, IDispatchFactory dispathFactory, IDispatcher dispatcher)
         {
             _clientConfiguration = clientConfiguration;
-            _deletedFolders = deletedFolders;
             _dispathFactory = dispathFactory;
             _dispatcher = dispatcher;
             _folderWatcher = new FileSystemWatcher();
@@ -72,8 +70,7 @@ namespace Fync.Client.Monitor
                 case WatcherChangeTypes.Deleted:
                     Logger.Instance.Log("Folder\tDeleted {0}", fileSystemEventArgs.FullPath);
 
-                    _deletedFolders.Add(fileSystemEventArgs.FullPath);
-                    _dispatcher.Queue(_dispathFactory.FolderSync(fileSystemEventArgs.FullPath));
+                    _dispatcher.Enqueue(_dispathFactory.FolderSync(fileSystemEventArgs.FullPath));
                     break;
                     //trigger an update on that folder
             }

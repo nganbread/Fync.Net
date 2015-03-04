@@ -56,13 +56,11 @@
     <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDeletedFolders.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="SyncEngine.cs" />
     <Compile Include="Dispatcher\Dispatcher.cs" />
     <Compile Include="Dispatcher\DispatchFactory.cs" />
-    <Compile Include="DispatchTasks\DispatchTaskBase.cs" />
     <Compile Include="DispatchTasks\FileSyncDispatchTask.cs" />
     <Compile Include="DispatchTasks\FolderSyncDispatchTask.cs" />
     <Compile Include="Dispatcher\IDispatchFactory.cs" />

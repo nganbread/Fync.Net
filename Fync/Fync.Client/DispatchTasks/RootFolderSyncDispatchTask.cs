@@ -15,7 +15,7 @@ namespace Fync.Client.DispatchTasks
             _clientConfiguration = clientConfiguration;
         }
 
-        public override async Task Perform()
+        public override async Task PerformAsync()
         {
             await Initialise();
             SyncSubFolders();
@@ -24,7 +24,7 @@ namespace Fync.Client.DispatchTasks
 
         private async Task Initialise()
         {
-            ServerFolderWithChildren = await _httpClient.GetAsync<FolderWithChildren>("Folder");
+            ServerFolder = await _httpClient.GetAsync<FolderWithChildren>("Folder");
             _localFolder = _clientConfiguration.BaseDirectory;
             _localFolder.Create();
         }
@@ -32,11 +32,6 @@ namespace Fync.Client.DispatchTasks
         public override int GetHashCode()
         {
             return 0;
-        }
-
-        public override int Priority
-        {
-            get { return 0; }
         }
 
         public override bool Equals(object obj)

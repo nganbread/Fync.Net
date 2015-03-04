@@ -22,12 +22,14 @@ namespace Fync.Common
                 .Select(group => group.Select(y => y.items));
         }
 
-        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
             foreach (var item in enumerable)
             {
                 action(item);
             }
+
+            return enumerable;
         }
 
         public static void Remove<T>(this ICollection<T> collection, IEnumerable<T> remove)

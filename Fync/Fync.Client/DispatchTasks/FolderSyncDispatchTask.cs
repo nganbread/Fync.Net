@@ -10,18 +10,19 @@ namespace Fync.Client.DispatchTasks
 {
     internal class FolderSyncDispatchTask : FolderSyncDispatchTaskBase
     {
-        protected readonly FolderWithChildren ParentFolderWithChildren;
+        protected readonly FolderWithChildren ParentFolder;
         private readonly int _readonlyHashCode;
 
-        public FolderSyncDispatchTask(DirectoryInfo localFolder, FolderWithChildren parentFolderWithChildren, FolderWithChildren serverFolderWithChildren, IDispatchFactory dispatchFactory, IDispatcher dispatcher, IHttpClient httpClient)
-            : base(localFolder, serverFolderWithChildren, dispatchFactory, dispatcher, httpClient)
+        public FolderSyncDispatchTask(DirectoryInfo localFolder, FolderWithChildren parentFolder, FolderWithChildren serverFolder, IDispatchFactory dispatchFactory, IDispatcher dispatcher, IHttpClient httpClient)
+            : base(localFolder, serverFolder, dispatchFactory, dispatcher, httpClient)
         {
-            ParentFolderWithChildren = parentFolderWithChildren;
+            ParentFolder = parentFolder;
 
             //Dont let the hashcode change if the serverFolder becomes populated
-            _readonlyHashCode = (_localFolder.FullName + ServerFolderWithChildren.SafeGet(x => x.Name, "null") + ParentFolderWithChildren.Name).GetHashCode();
+            _readonlyHashCode = (_localFolder.FullName + ServerFolder.SafeGet(x => x.Name, "null") + ParentFolder.Name).GetHashCode();
         }
-        public override async Task Perform()
+
+        public override async Task PerformAsync()
         {
             await SyncFolder();
             SyncSubFolders();
@@ -38,29 +39,30 @@ namespace Fync.Client.DispatchTasks
             var that = obj as FolderSyncDispatchTask;
             return that != null
                    && that._localFolder.FullName.Equals(_localFolder.FullName, StringComparison.InvariantCultureIgnoreCase)
-                   && that.ServerFolderWithChildren == ServerFolderWithChildren
-                   && that.ParentFolderWithChildren == ParentFolderWithChildren;
+                   && that.ServerFolder == ServerFolder
+                   && that.ParentFolder == ParentFolder;
         }
 
         private async Task SyncFolder()
         {
-            if (ServerFolderWithChildren == null)
+            if (ServerFolder == null)
             {
                 //Doesnt exist on server
-                ServerFolderWithChildren = await _httpClient.PostAsync<FolderWithChildren>("{0}/Folder".FormatWith(ParentFolderWithChildren.Id), new { _localFolder.Name });
+                ServerFolder = await _httpClient.PostAsync<FolderWithChildren>("{0}/Folder".FormatWith(ParentFolder.Id), new { _localFolder.Name });
             }
-            else if (!_localFolder.Exists && !ServerFolderWithChildren.Deleted)
+            else if (!_localFolder.Exists && !ServerFolder.Deleted)
             {
                 _localFolder.Create();
             }
-            else if (_localFolder.Exists && ServerFolderWithChildren.Deleted)
+            else if (_localFolder.Exists && ServerFolder.Deleted)
             {
-                if (_localFolder.LastWriteTimeUtc < ServerFolderWithChildren.ModifiedDate)
+                if (_localFolder.LastWriteTimeUtc < ServerFolder.ModifiedDate)
                 {
                     _localFolder.Delete();
-                    await _httpClient.DeleteAsync("Folder/{0}", ServerFolderWithChildren.Id);
+                    await _httpClient.DeleteAsync("Folder/{0}", ServerFolder.Id);
                 }
             }
         }
+
     }
 }

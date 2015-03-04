@@ -125,7 +125,7 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlScripts\AddHierarchyNodeColumn.sql">
+    <EmbeddedResource Include="SqlScripts\AddFolderHierarchyNodeColumn.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="SqlScripts\AlterFolderDelete.sql">
@@ -147,6 +147,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201502220828040_Initial.resx">
       <DependentUpon>201502220828040_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SqlScripts\AlterFolderNameColumnCaseSensitivity.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

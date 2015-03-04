@@ -18,7 +18,7 @@ namespace Fync.Client.Windows.Services
 
         public string EmailAddress
         {
-            get { return @"user4@email.com"; }
+            get { return @"user@email.com"; }
         }
 
         public string Password

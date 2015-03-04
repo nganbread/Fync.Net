@@ -10,18 +10,18 @@ using Fync.Common.Models;
 
 namespace Fync.Client.DispatchTasks
 {
-    internal abstract class FolderSyncDispatchTaskBase : DispatchTaskBase
+    internal abstract class FolderSyncDispatchTaskBase : IDispatchTask
     {
         protected internal DirectoryInfo _localFolder;
-        protected internal FolderWithChildren ServerFolderWithChildren;
+        protected internal FolderWithChildren ServerFolder;
         protected readonly IDispatchFactory _dispatchFactory;
         protected readonly IDispatcher _dispatcher;
         protected readonly IHttpClient _httpClient;
 
-        protected FolderSyncDispatchTaskBase(DirectoryInfo localFolder, FolderWithChildren serverFolderWithChildren, IDispatchFactory dispatchFactory, IDispatcher dispatcher, IHttpClient httpClient)
+        protected FolderSyncDispatchTaskBase(DirectoryInfo localFolder, FolderWithChildren serverFolder, IDispatchFactory dispatchFactory, IDispatcher dispatcher, IHttpClient httpClient)
         {
             _localFolder = localFolder;
-            ServerFolderWithChildren = serverFolderWithChildren;
+            ServerFolder = serverFolder;
             _dispatchFactory = dispatchFactory;
             _dispatcher = dispatcher;
             _httpClient = httpClient;
@@ -34,25 +34,19 @@ namespace Fync.Client.DispatchTasks
             _httpClient = httpClient;
         }
 
-        public override int Priority
-        {
-            get { return 2; }
-        }
-
-
         protected async Task SyncFiles()
         {
             //TODO: dont need to do this if we just made the server folder
-            var serverFiles = await _httpClient.GetAsync<IList<SymbolicFile>>("{0}/SymbolicFile", ServerFolderWithChildren.Id);
+            var serverFiles = await _httpClient.GetAsync<IList<SymbolicFile>>("{0}/SymbolicFile", ServerFolder.Id);
             foreach (var serverFile in serverFiles)
             {
-                _dispatcher.Queue(_dispatchFactory.FileSync(ServerFolderWithChildren, _localFolder.CreateFileInfo(serverFile.Name), serverFile));
+                _dispatcher.Enqueue(_dispatchFactory.FileSync(ServerFolder, _localFolder.CreateFileInfo(serverFile.Name), serverFile));
             }
 
             foreach (var fileInfo in _localFolder.GetFiles().ToList())
             {
                 var serverFile = serverFiles.SingleOrDefault(x => x.Name.Equals(fileInfo.Name, StringComparison.InvariantCultureIgnoreCase));
-                _dispatcher.Queue(_dispatchFactory.FileSync(ServerFolderWithChildren, fileInfo, serverFile));
+                _dispatcher.Enqueue(_dispatchFactory.FileSync(ServerFolder, fileInfo, serverFile));
             }
         }
 
@@ -60,20 +54,22 @@ namespace Fync.Client.DispatchTasks
         {
             var tasks = new List<IDispatchTask>();
 
-            foreach (var subFolder in ServerFolderWithChildren.SubFolders)
+            foreach (var subFolder in ServerFolder.SubFolders)
             {
-                var task = _dispatchFactory.FolderSync(_localFolder.CreateSubdirectoryInfo(subFolder.Name), ServerFolderWithChildren, subFolder);
+                var task = _dispatchFactory.FolderSync(_localFolder.CreateSubdirectoryInfo(subFolder.Name), ServerFolder, subFolder);
                 tasks.Add(task);
             }
 
             foreach (var subFolder in _localFolder.GetDirectories().ToList())
             {
-                var serverSubFolder =  ServerFolderWithChildren.SubFolders.SingleOrDefault(x => x.Name.Equals(subFolder.Name, StringComparison.InvariantCultureIgnoreCase));
-                var task = _dispatchFactory.FolderSync(subFolder, ServerFolderWithChildren, serverSubFolder);
+                var serverSubFolder =  ServerFolder.SubFolders.SingleOrDefault(x => x.Name.Equals(subFolder.Name, StringComparison.InvariantCultureIgnoreCase));
+                var task = _dispatchFactory.FolderSync(subFolder, ServerFolder, serverSubFolder);
                 tasks.Add(task);
             }
 
-            _dispatcher.Queue(tasks);
+            _dispatcher.Enqueue(tasks);
         }
+
+        public abstract Task PerformAsync();
     }
 }

@@ -5,8 +5,8 @@ namespace Fync.Client.Dispatcher
 {
     internal interface IDispatcher
     {
-        void Queue(IDispatchTask task);
-        void Queue(IEnumerable<IDispatchTask> tasks);
+        void Enqueue(IDispatchTask task);
+        void Enqueue(IEnumerable<IDispatchTask> tasks);
         void Start();
     }
 }

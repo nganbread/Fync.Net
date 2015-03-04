@@ -5,6 +5,5 @@ namespace Fync.Client.DispatchTasks
     internal interface IDispatchTask
     {
         Task PerformAsync();
-        int Priority { get; }
     }
 }

@@ -40,8 +40,7 @@ namespace Fync.Client.Tests.DispatchTasks
                 _fileHelper.Object,
                 _httpClient.Object,
                 _hasher.Object,
-                _localDataBase.Object,
-                _dispatcher.Object);
+                _localDataBase.Object);
         }
 
         [Test]

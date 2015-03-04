@@ -88,6 +88,7 @@ namespace Fync.Data
                 .Where(x => x.Name.Equals(pathComponents.Last(), StringComparison.InvariantCultureIgnoreCase))
                 .Select(x => 
                 { 
+                    //This is lazy
                     FindAndAttachParent(x, dictionary);
                     return x;
                 })

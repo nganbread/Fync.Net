@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Fync.Client.DispatchTasks;
 
@@ -7,42 +9,36 @@ namespace Fync.Client.Dispatcher
 {
     internal class Dispatcher : IDispatcher
     {
-        private readonly HashSet<IDispatchTask> _dispatchItems;
-        private bool _processing;
+        private readonly ConcurrentQueue<IDispatchTask> _dispatchItems;
 
         public Dispatcher()
         {
-            _dispatchItems = new HashSet<IDispatchTask>();
+            _dispatchItems = new ConcurrentQueue<IDispatchTask>();
         }
-        public void Queue(IDispatchTask task)
+        public void Enqueue(IDispatchTask task)
         {
-            _dispatchItems.Add(task);
-
-            Start();
+            _dispatchItems.Enqueue(task);
         }
 
-        public void Queue(IEnumerable<IDispatchTask> tasks)
+        public void Enqueue(IEnumerable<IDispatchTask> tasks)
         {
             foreach (var task in tasks)
             {
-                _dispatchItems.Add(task);
+                _dispatchItems.Enqueue(task);
             }
-
-            Start();
         }
 
         public void Start()
         {
-            if (_processing) return;
-
-            _processing = true;
-            while (_dispatchItems.Any())
+            IDispatchTask task;
+            while (_dispatchItems.TryDequeue(out task))
             {
-                var next = _dispatchItems.First();
-                _dispatchItems.Remove(next);
-                Task.Run(() => next.PerformAsync()).Wait();
+                var enclosedTask = task;
+                Task.Run(() => enclosedTask.PerformAsync()).Wait();
             }
-            _processing = false;
+
+            Thread.Sleep(5000);
+            Start();
         }
     }
 }

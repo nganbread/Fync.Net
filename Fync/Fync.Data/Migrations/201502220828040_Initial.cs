@@ -147,7 +147,8 @@ namespace Fync.Data.Migrations
                       WHERE ([Id] = @Id)"
             );
 
-            SqlResource("Fync.Data.SqlScripts.AddHierarchyNodeColumn.sql");
+            SqlResource("Fync.Data.SqlScripts.AddFolderHierarchyNodeColumn.sql");
+            SqlResource("Fync.Data.SqlScripts.AlterFolderNameColumnCaseSensitivity.sql");
             SqlResource("Fync.Data.SqlScripts.AlterFolderInsert.sql");
             SqlResource("Fync.Data.SqlScripts.AlterFolderUpdate.sql");
             SqlResource("Fync.Data.SqlScripts.AlterFolderDelete.sql");

@@ -80,7 +80,7 @@ namespace Fync.Client.Web
         {
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception(response.StatusCode.ToString());
+                throw new Exception(JsonConvert.SerializeObject(response));
             }
             return await response.Content.ReadAsAsync<T>();
         }

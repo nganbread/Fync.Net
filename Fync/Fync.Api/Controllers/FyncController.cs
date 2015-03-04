@@ -6,7 +6,6 @@ using Fync.Service;
 
 namespace Fync.Api.Controllers
 {
-    [AllowAnonymous]
     public class FyncController : ApiController
     {
         private readonly IFolderService _folderService;
@@ -16,7 +15,7 @@ namespace Fync.Api.Controllers
             _folderService = folderService;
         }
 
-        public FolderWithChildren Get([ModelBinder(typeof(SlashSeparatedArray))]string[] pathComponents)
+        public FolderWithParentAndChildren Get([ModelBinder(typeof(SlashSeparatedArray))]string[] pathComponents)
         {
             return _folderService.GetFolderFromPath(pathComponents);
         }
