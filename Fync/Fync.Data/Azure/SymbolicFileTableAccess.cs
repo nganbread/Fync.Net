@@ -50,10 +50,11 @@ namespace Fync.Data
             }
         }
 
-        public void InsertSymbolicFileToFolder(Guid folderId, string hash, string fileName, DateTime createdDate)
+        public SymbolicFileTableEntity InsertSymbolicFileToFolder(Guid folderId, string hash, string fileName, DateTime createdDate)
         {
             var symbolicFile = new SymbolicFileTableEntity(folderId, fileName, hash, createdDate);
             _cloudTable.Execute(TableOperation.InsertOrReplace(symbolicFile));
+            return symbolicFile;
         }
     }
 }

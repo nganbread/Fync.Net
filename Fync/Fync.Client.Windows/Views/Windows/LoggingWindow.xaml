@@ -5,6 +5,9 @@
         Title="MainWindow" 
         Height="350" Width="525">
     <Grid>
-        <TextBlock Text="{Binding Text}"/>
+        <ScrollViewer>
+
+            <TextBlock Text="{Binding Text}"/>
+        </ScrollViewer>
     </Grid>
 </Window>

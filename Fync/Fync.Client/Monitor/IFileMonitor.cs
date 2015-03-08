@@ -1,6 +1,6 @@
 using System;
 
-namespace Fync.Client
+namespace Fync.Client.Monitor
 {
     public interface IFileMonitor : IDisposable
     {

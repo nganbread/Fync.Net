@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using Fync.Client.DataBase;
+using Fync.Client.Hash;
 using Fync.Client.Windows.Services;
 using Fync.Client.Windows.ViewModels;
 using Fync.Client.Windows.Views;

@@ -49,7 +49,7 @@ namespace Fync.Service
             };
         }
 
-        public void CreateSymbolicFile(Stream stream, Guid folderId, string fileName, DateTime dateCreated)
+        public SymbolicFile CreateSymbolicFile(Stream stream, Guid folderId, string fileName, DateTime dateCreated)
         {
             var hash = _hasher.Hash(stream);
             if (!_fileTableAccess.FileExists(hash))
@@ -59,7 +59,7 @@ namespace Fync.Service
                 _fileTableAccess.CreateFile(hash, blob.Name);
             }
 
-            AddSymbolicFileToFolder(folderId, hash, fileName, dateCreated);
+            return AddSymbolicFileToFolder(folderId, hash, fileName, dateCreated);
         }
 
         public IList<SymbolicFile> GetFilesInFolder(Guid folderId)
@@ -72,17 +72,17 @@ namespace Fync.Service
             return _symbolicFileTableAccess.GetSymbolicFileOrDefault(folderId, fileName).Map(_toFile);
         }
 
-        public void AddSymbolicFileToFolder(Guid folderId, NewSymbolicFile symbolicFile, DateTime dateCreated)
+        public SymbolicFile AddSymbolicFileToFolder(Guid folderId, NewSymbolicFile symbolicFile, DateTime dateCreated)
         {
             if (!_fileTableAccess.FileExists(symbolicFile.Hash)) throw new Exception();
 
-            AddSymbolicFileToFolder(folderId, symbolicFile.Hash, symbolicFile.Name, dateCreated);
+            return AddSymbolicFileToFolder(folderId, symbolicFile.Hash, symbolicFile.Name, dateCreated);
         }
 
-        private void AddSymbolicFileToFolder(Guid folderId, string hash, string fileName, DateTime dateCreatedUtc)
+        private SymbolicFile AddSymbolicFileToFolder(Guid folderId, string hash, string fileName, DateTime dateCreatedUtc)
         {
             DeleteSymbolicFileFromFolder(folderId, fileName, dateCreatedUtc);
-            _symbolicFileTableAccess.InsertSymbolicFileToFolder(folderId, hash, fileName, dateCreatedUtc);
+            return _symbolicFileTableAccess.InsertSymbolicFileToFolder(folderId, hash, fileName, dateCreatedUtc).Map(_toFile);
         }
 
         public void DeleteSymbolicFilesFromFolder(Guid folderId, DateTime dateDeleted)

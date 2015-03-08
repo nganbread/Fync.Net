@@ -22,9 +22,9 @@ namespace Fync.Common
             }
         }
 
-        public virtual Task<string> HashAsync(string filePath)
+        public virtual string Hash(FileInfo filePath)
         {
-            return Task.Run(() => Hash(filePath));
+            return Hash(filePath.FullName);
         }
     }
 }

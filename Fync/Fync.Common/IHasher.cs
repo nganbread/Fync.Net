@@ -7,6 +7,6 @@ namespace Fync.Common
     {
         string Hash(Stream stream);
         string Hash(string filePath);
-        Task<string> HashAsync(string filePath);
+        string Hash(FileInfo filePath);
     }
 }

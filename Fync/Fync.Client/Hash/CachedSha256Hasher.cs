@@ -1,10 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Fync.Client.DataBase;
+﻿using System.IO;
 using Fync.Common;
 
-namespace Fync.Client
+namespace Fync.Client.Hash
 {
     internal class CachedSha256Hasher : Sha256Hasher
     {
@@ -21,12 +18,10 @@ namespace Fync.Client
             _hashCache.InsertHash(hash, filePath);
             return hash;
         }
-
-        public override async Task<string> HashAsync(string filePath)
+        
+        public override string Hash(FileInfo filePath)
         {
-            var hash = await base.HashAsync(filePath);
-            await _hashCache.InsertHashAsync(hash, filePath);
-            return hash;
+            return Hash(filePath.FullName);
         }
     }
 }

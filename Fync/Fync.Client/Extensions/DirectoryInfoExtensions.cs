@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Fync.Client.Extensions
 {
@@ -13,50 +14,19 @@ namespace Fync.Client.Extensions
         {
             return new FileInfo(directoryInfo.FullName.Slash(fileName));
         }
-    }
 
-    public static class FileInfoExtensions
-    {
-        public static bool CanRead(this FileInfo fileInfo)
+        public static DirectoryInfo ToDirectoryInfo(this string folderPath)
         {
-            FileStream stream = null;
-
-            try
-            {
-                stream = fileInfo.OpenRead();
-            }
-            catch (IOException)
-            {
-                return true;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-
-            return false;
+            return new DirectoryInfo(folderPath);
         }
 
-        public static bool CanWrite(this FileInfo fileInfo)
+        public static string GetRelativePath(this DirectoryInfo directoryInfo, DirectoryInfo @base)
         {
-            FileStream stream = null;
+            var directory = new Uri(directoryInfo.FullName);
+            var baseDirectory = new Uri(@base.FullName);
+            var relative = baseDirectory.MakeRelativeUri(directory);
 
-            try
-            {
-                stream = fileInfo.OpenWrite();
-            }
-            catch (IOException)
-            {
-                return true;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-
-            return false;
+            return Uri.UnescapeDataString(relative.ToString());
         }
     }
 }

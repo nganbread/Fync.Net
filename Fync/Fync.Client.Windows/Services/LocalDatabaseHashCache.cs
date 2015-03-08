@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Threading.Tasks;
-using Fync.Client.DataBase;
+using Fync.Client.Hash;
 using Fync.Common;
 
 namespace Fync.Client.Windows.Services
@@ -57,21 +57,6 @@ namespace Fync.Client.Windows.Services
         public void RemoveHash(string hash, string filePath)
         {
             new SQLiteCommand(RemoveHashSql.FormatWith(hash, filePath), _connection).ExecuteNonQuery();
-        }
-
-        public Task InsertHashAsync(string hash, string filePath)
-        {
-            return Task.Run(() => InsertHash(hash, filePath));
-        }
-
-        public Task RemoveHashAsync(string hash, string filePath)
-        {
-            return Task.Run(() => RemoveHash(hash, filePath));
-        }
-
-        public Task<IList<FileInfo>> FilePathsOfCachedHashAsync(string hash)
-        {
-            return Task.Run(() => FilePathsOfCachedHash(hash));
         }
 
         public void Dispose()

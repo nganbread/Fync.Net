@@ -120,7 +120,8 @@
     <Compile Include="Controllers\FyncController.cs" />
     <Compile Include="Controllers\SymbolicFileController.cs" />
     <Compile Include="CurrentUserWrapper.cs" />
-    <Compile Include="ModelBinders\SlashSeparatedArray.cs" />
+    <Compile Include="ModelBinders\SlashSeparatedArrayAttribute.cs" />
+    <Compile Include="ModelBinders\SlashSeparatedArrayModelBinder.cs" />
     <Compile Include="Startup\Registrations.cs" />
     <Compile Include="Startup\TinyIocApiResolver.cs" />
     <Compile Include="Startup\WebApi\RouteConfig.cs" />
@@ -143,9 +144,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Fync.Common\Fync.Common.csproj">
       <Project>{54B35500-158C-4E88-A14D-325F0EF39F36}</Project>

@@ -1,5 +1,4 @@
 using System.IO;
-using Fync.Client.Dispatcher;
 
 namespace Fync.Client.Monitor
 {
@@ -7,20 +6,16 @@ namespace Fync.Client.Monitor
     {
         private readonly FileSystemWatcher _folderWatcher;
         private readonly IClientConfiguration _clientConfiguration;
-        private readonly IDispatchFactory _dispathFactory;
-        private readonly IDispatcher _dispatcher;
 
-        public FolderMonitor(IClientConfiguration clientConfiguration, IDispatchFactory dispathFactory, IDispatcher dispatcher)
+        public FolderMonitor(IClientConfiguration clientConfiguration)
         {
             _clientConfiguration = clientConfiguration;
-            _dispathFactory = dispathFactory;
-            _dispatcher = dispatcher;
             _folderWatcher = new FileSystemWatcher();
         }
 
         public void Monitor()
         {
-            _folderWatcher.Path = _clientConfiguration.BaseDirectory.FullName;
+            _folderWatcher.Path = _clientConfiguration.FyncDirectory.FullName;
             _folderWatcher.IncludeSubdirectories = true;
             _folderWatcher.EnableRaisingEvents = true;
             _folderWatcher.Filter = "*.*";
@@ -70,7 +65,7 @@ namespace Fync.Client.Monitor
                 case WatcherChangeTypes.Deleted:
                     Logger.Instance.Log("Folder\tDeleted {0}", fileSystemEventArgs.FullPath);
 
-                    _dispatcher.Enqueue(_dispathFactory.FolderSync(fileSystemEventArgs.FullPath));
+                    //_dispatcher.Enqueue(_dispathFactory.FolderSync(fileSystemEventArgs.FullPath));
                     break;
                     //trigger an update on that folder
             }

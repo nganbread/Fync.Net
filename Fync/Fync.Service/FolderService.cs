@@ -37,12 +37,22 @@ namespace Fync.Service
             _toFolderWithParentAndChildren = toFolderWithParentAndChildren;
         }
 
+        public FolderWithChildren CreateFolder(string[] pathComponents, DateTime createDate)
+        {
+            var folderName = pathComponents.Last();
+            //Kinda inefficient
+            var folder = GetFolderFromPath(pathComponents.Take(pathComponents.Length - 1).ToArray());
+
+            return CreateFolder(folder.Id, folderName, createDate);
+        }
+
         public FolderWithChildren CreateFolder(Guid folderId, string folderName, DateTime createDate)
         {
             var parent = _context.Folders.Single(x => x.Id == folderId);
-            if(parent.Owner.Id != _currentUser.UserId) throw new Exception();
+            if (parent.Owner.Id != _currentUser.UserId) throw new Exception();
 
-            var existing = parent.SubFolders.SingleOrDefault(x => x.Name.Equals(folderName, StringComparison.InvariantCultureIgnoreCase));
+            var existing =
+                parent.SubFolders.SingleOrDefault(x => x.Name.Equals(folderName, StringComparison.InvariantCultureIgnoreCase));
             if (existing != null)
             {
                 existing.Name = folderName;

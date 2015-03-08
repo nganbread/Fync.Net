@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using Fync.Common.Models;
 using Fync.Service;
@@ -41,34 +42,24 @@ namespace Fync.Api.Controllers
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
-        public HttpResponseMessage Put(Guid folderId, NewSymbolicFile symbolicFile)
+        public SymbolicFile Put(Guid folderId, NewSymbolicFile symbolicFile)
         {
-            _symbolicFileService.AddSymbolicFileToFolder(folderId, symbolicFile, DateTime.UtcNow);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return _symbolicFileService.AddSymbolicFileToFolder(folderId, symbolicFile, DateTime.UtcNow);
         }
 
-        public async Task<HttpResponseMessage> Post(Guid folderId)
+        public async Task<SymbolicFile> Post(Guid folderId)
         {
-            try
-            {
-                var provider = new MultipartMemoryStreamProvider();
+            var provider = new MultipartMemoryStreamProvider();
 
-                await Request.Content.ReadAsMultipartAsync(provider);
+            await Request.Content.ReadAsMultipartAsync(provider);
 
-                if (provider.Contents.Count != 2) return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            if (provider.Contents.Count != 2) throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-                var stream = await provider.Contents.Single(x => x.Headers.ContentType.MediaType == "application/file").ReadAsStreamAsync();
-                var modelJson = await provider.Contents.Single(x => x.Headers.ContentType.MediaType == "application/json").ReadAsStringAsync();
-                var model = JsonConvert.DeserializeObject<NewFile>(modelJson);
+            var stream = await provider.Contents.Single(x => x.Headers.ContentType.MediaType == "application/file").ReadAsStreamAsync();
+            var modelJson = await provider.Contents.Single(x => x.Headers.ContentType.MediaType == "application/json").ReadAsStringAsync();
+            var model = JsonConvert.DeserializeObject<NewFile>(modelJson);
 
-                _symbolicFileService.CreateSymbolicFile(stream, folderId, model.Name, DateTime.UtcNow);
-
-            }
-            catch (Exception e)
-            {
-                
-            }
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return _symbolicFileService.CreateSymbolicFile(stream, folderId, model.Name, DateTime.UtcNow);
         }
     }
 }

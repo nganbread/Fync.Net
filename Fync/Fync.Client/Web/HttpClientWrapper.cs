@@ -19,7 +19,7 @@ namespace Fync.Client.Web
         {
             _httpClient = new HttpClient(new HttpClientHandler { CookieContainer = new CookieContainer() })
             {
-                BaseAddress = clientConfiguration.BaseUri
+                BaseAddress = clientConfiguration.BaseUri,
             };
             var authenticationDetails = new AuthenticationDetails
             {
@@ -33,6 +33,12 @@ namespace Fync.Client.Web
         {
             var httpResponse = await _httpClient.GetAsync(requestUri);
             return await HandleResponse<T>(httpResponse);
+        }
+
+        public async Task<T> PutAsync<T>(string requestUri, object data)
+        {
+            var response = await _httpClient.PutAsJsonAsync(requestUri, data);
+            return await HandleResponse<T>(response);
         }
 
         public async Task<Stream> GetStreamAsync(string requestUri)
@@ -60,6 +66,23 @@ namespace Fync.Client.Web
             };
             var response = await _httpClient.PostAsync(requestUri.FormatWith(format), content);
             HandleResponse(response);
+        }
+
+        public async Task<T> PostStreamAsync<T>(Stream fileStream, object model, string requestUri, params object[] format)
+        {
+            var content = new MultipartFormDataContent
+            {
+                new StreamContent(fileStream)
+                {
+                    Headers = { ContentType = new MediaTypeHeaderValue("application/file")}
+                },
+                new StringContent(JsonConvert.SerializeObject(model))
+                {
+                    Headers = { ContentType = new MediaTypeHeaderValue("application/json")}
+                }
+            };
+            var response = await _httpClient.PostAsync(requestUri.FormatWith(format), content);
+            return await HandleResponse<T>(response);
         }
 
         public async Task<T> PostAsync<T>(string requestUri, object data)

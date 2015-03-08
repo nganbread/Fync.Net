@@ -10,6 +10,7 @@ namespace Fync.Service
         FolderWithChildren GetFullTree(Guid root);
         void UpdateRootFolder(NewFolder updatedRootFolder, DateTime updateDate);
         FolderWithChildren CreateFolder(Guid folderId, string folderName, DateTime createDate);
+        FolderWithChildren CreateFolder(string[] pathComponents, DateTime createDate);
         void DeleteFolder(Guid folderId, DateTime deletedDate);
         FolderWithChildren GetFullTree();
         FolderWithChildren GetFolder(Guid id);

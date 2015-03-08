@@ -14,6 +14,14 @@ namespace Fync.Common
             }
         }
 
+        public static void AddRange<T>(this ICollection<T> enumerable, IEnumerable<T> add)
+        {
+            foreach (var item in add)
+            {
+                enumerable.Add(item);
+            }
+        }
+
         public static IEnumerable<IEnumerable<T>> Split<T>(this IEnumerable<T> enumerable, int splitSize)
         {
             return enumerable
@@ -43,6 +51,11 @@ namespace Fync.Common
         public static IEnumerable<T> Concat<T>(this IEnumerable<T> enumerable, params T[] concat)
         {
             return Enumerable.Concat(enumerable, concat);
+        }
+
+        public static IEnumerable<T> Concatenate<T>(this T item, params T[] concat)
+        {
+            return Enumerable.Concat(new[] { item }, concat);
         }
     }
 }

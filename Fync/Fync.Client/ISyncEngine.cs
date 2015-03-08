@@ -1,4 +1,4 @@
-﻿namespace Fync.Client
+namespace Fync.Client
 {
     public interface ISyncEngine
     {

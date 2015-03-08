@@ -19,6 +19,11 @@ namespace Fync.Api.App_Start
                 defaults: new { controller = "Fync" });
 
             config.Routes.MapHttpRoute(
+                name: "Folder",
+                routeTemplate: "Folder/{*pathComponents}",
+                defaults: new { controller = "Folder" });
+
+            config.Routes.MapHttpRoute(
                 name: "Default",
                 routeTemplate: "{controller}");
 

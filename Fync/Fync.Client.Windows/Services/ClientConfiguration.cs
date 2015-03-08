@@ -1,6 +1,7 @@
 using System;
 using System.Configuration;
 using System.IO;
+using Fync.Client.Extensions;
 
 namespace Fync.Client.Windows.Services
 {
@@ -11,9 +12,18 @@ namespace Fync.Client.Windows.Services
             get { return new Uri(ConfigurationManager.AppSettings["BaseUri"]); }
         }
 
+        public DirectoryInfo FyncDirectory
+        {
+            get
+            {
+                var folderName = ConfigurationManager.AppSettings["DirectoryName"];
+                return BaseDirectory.CreateSubdirectoryInfo(folderName);
+            }
+        }
+
         public DirectoryInfo BaseDirectory
         {
-            get { return new DirectoryInfo(@"D:/Railway/"); }
+            get { return ConfigurationManager.AppSettings["BaseDirectory"].ToDirectoryInfo(); }
         }
 
         public string EmailAddress

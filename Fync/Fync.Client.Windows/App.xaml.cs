@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
-using Fync.Client.DataBase;
+using Fync.Client.Hash;
+using Fync.Client.Monitor;
 using Fync.Client.Windows.Views;
 using TinyIoC;
 
@@ -25,9 +26,23 @@ namespace Fync.Client.Windows
             //Start
             Logger.Instance = _container.Resolve<ILogger>();
             _container.Resolve<TaskBarView>();
-            Task.Run(() => _container.Resolve<ISyncEngine>().Start());
-            Task.Run(() => _container.Resolve<IFileMonitor>().Monitor());
-            Task.Run(() => _container.Resolve<IFolderMonitor>().Monitor());
+
+            var a = _container.CanResolve<ISyncEngine>();
+            var syncEngine = _container.Resolve<ISyncEngine>();
+            var fileMonitor = _container.Resolve<IFileMonitor>();
+            var folderMonitor = _container.Resolve<IFolderMonitor>();
+
+            Task.Factory.StartNew(syncEngine.Start).ContinueWith(t =>
+            {
+                Task.Run(() =>
+                {
+                    fileMonitor.Monitor();
+                });
+                Task.Run(() =>
+                {
+                    folderMonitor.Monitor();
+                });
+            });
         }
 
         protected override void OnExit(ExitEventArgs e)

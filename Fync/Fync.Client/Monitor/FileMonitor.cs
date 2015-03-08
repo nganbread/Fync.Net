@@ -15,7 +15,7 @@ namespace Fync.Client.Monitor
 
         public void Monitor()
         {
-            _fileWatcher.Path = _clientConfiguration.BaseDirectory.FullName;
+            _fileWatcher.Path = _clientConfiguration.FyncDirectory.FullName;
             _fileWatcher.IncludeSubdirectories = true;
             _fileWatcher.EnableRaisingEvents = true;
             _fileWatcher.Filter = "*.*";
