@@ -27,12 +27,11 @@ namespace Fync.Client.Windows
             Logger.Instance = _container.Resolve<ILogger>();
             _container.Resolve<TaskBarView>();
 
-            var a = _container.CanResolve<ISyncEngine>();
             var syncEngine = _container.Resolve<ISyncEngine>();
             var fileMonitor = _container.Resolve<IFileMonitor>();
             var folderMonitor = _container.Resolve<IFolderMonitor>();
 
-            Task.Factory.StartNew(syncEngine.Start).ContinueWith(t =>
+            Task.Run(() => syncEngine.Start()).ContinueWith(x =>
             {
                 Task.Run(() =>
                 {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using System.Threading.Tasks;
 using Fync.Client.Hash;
 using Fync.Common;
 

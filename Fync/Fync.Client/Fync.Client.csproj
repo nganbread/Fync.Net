@@ -80,7 +80,7 @@
     <Compile Include="Visitors\SyncNewFolderVisitor.cs" />
     <Compile Include="Visitors\CreateExistingSubFoldersVisitor.cs" />
     <Compile Include="Visitors\CreateNewSubFoldersVisitor.cs" />
-    <Compile Include="Traverser\NodeTypeTraverser.cs" />
+    <Compile Include="Traverser\ITraverser.cs" />
     <Compile Include="Visitors\TypeVisitorBase.cs" />
     <Compile Include="Visitors\IVisitor.cs" />
     <Compile Include="Node\FileNode.cs" />

@@ -13,7 +13,6 @@ namespace Fync.Client.Web
     internal class HttpClientWrapper : IHttpClient
     {
         private readonly HttpClient _httpClient;
-        private int q = 0;
 
         public HttpClientWrapper(IClientConfiguration clientConfiguration)
         {

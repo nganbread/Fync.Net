@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Fync.Client.Node.Contracts;
 
 namespace Fync.Client.Traverser
 {
     internal interface ITraverser
     {
-        Task Traverse();
+        Task Traverse(IFolderNode root);
     }
 }

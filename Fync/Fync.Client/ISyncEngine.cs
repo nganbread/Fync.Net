@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Fync.Client
 {
     public interface ISyncEngine
     {
-        void Start();
+        Task Start();
     }
 }

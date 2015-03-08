@@ -1,5 +1,7 @@
 ﻿using Fync.Client.Hash;
 using Fync.Client.Monitor;
+using Fync.Client.Traverser;
+using Fync.Client.Visitors;
 using Fync.Client.Web;
 using Fync.Common;
 using TinyIoC;
@@ -17,7 +19,10 @@ namespace Fync.Client
             container.Register<ISyncEngine, SyncEngine>();
 
             container.Register<SyncEngine>();
-        }
 
+            container.AutoRegister(x => x.IsAssignableFrom(typeof(IVisitor<>)));
+            container.Register(typeof(FolderTraverser<,>));
+            container.Register(typeof(FileTraverser<,>));
+        }
     }
 }
