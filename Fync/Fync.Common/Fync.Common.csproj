@@ -45,9 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="IConfiguration.cs" />
+    <Compile Include="IFactory.cs" />
     <Compile Include="IHasher.cs" />
     <Compile Include="Libraries\TinyIoC.cs" />
     <Compile Include="Libraries\TinyIoCAspNetExtensions.cs" />
@@ -60,11 +64,11 @@
     <Compile Include="Models\NewFolder.cs" />
     <Compile Include="Models\NewSymbolicFile.cs" />
     <Compile Include="Models\SymbolicFile.cs" />
-    <Compile Include="ObjectExtensions.cs" />
-    <Compile Include="RecursionExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\RecursionExtensions.cs" />
     <Compile Include="Registrations.cs" />
     <Compile Include="Sha256Hasher.cs" />
-    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

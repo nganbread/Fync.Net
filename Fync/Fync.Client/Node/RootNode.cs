@@ -1,12 +1,13 @@
 using System.IO;
+using Fync.Client.Node.Base;
 using Fync.Common.Models;
 
 namespace Fync.Client.Node
 {
-    class RootNode : FolderNode
+    internal class RootNode : FolderNode
     {
         public RootNode(DirectoryInfo directoryInfo, FolderWithChildren folder)
-            : base(null, directoryInfo, folder)
+            : base(folder, null, directoryInfo)
         {
         }
     }

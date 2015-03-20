@@ -8,6 +8,7 @@ namespace Fync.Common
         {
             container.Register<IConfiguration, Configuration>();
             container.Register<IHasher, Sha256Hasher>().AsSingleton();
+            container.Register(typeof(IFactory<>), typeof(Factory<>)).AsMultiInstance();
         }
     }
 }

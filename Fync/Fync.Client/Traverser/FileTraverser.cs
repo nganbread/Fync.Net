@@ -1,48 +1,35 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Fync.Client.Node.Contracts;
+﻿using System.Threading.Tasks;
+using Fync.Client.Node.Base;
 using Fync.Client.Visitors;
 
 namespace Fync.Client.Traverser
 {
-    class FileTraverser<TFileNode, TVisitor1, TVisitor2> : FileTraverser<TFileNode, TVisitor1> 
-        where TFileNode : class, IFileNode
-        where TVisitor1 : IVisitor<TFileNode>
-        where TVisitor2 : IVisitor<TFileNode>
+    internal class FileTraverser : ITraverser
     {
-        public FileTraverser(TVisitor1 visitor1, TVisitor2 visitor2)
-            :base(visitor1)
-        {
-            _visitors.Add(visitor2);
-        }
-    }
-    class FileTraverser<TFileNode, TVisitor> : ITraverser
-        where TFileNode : class, IFileNode
-        where TVisitor : IVisitor<TFileNode>
-    {
-        protected readonly IList<IVisitor<TFileNode>> _visitors;
+        private readonly IStrategy<IFileNode>[] _stategies;
 
-        public FileTraverser(TVisitor visitor)
+        public FileTraverser(IStrategy<IFileNode> strategy)
         {
-            _visitors = new List<IVisitor<TFileNode>>
-            {
-                visitor
-            };
+            _stategies = new[] {strategy};
         }
 
-        public  async Task Traverse(IFolderNode folderNode)
+        public FileTraverser(IStrategy<IFileNode>[] strategies)
         {
-            foreach (var node in folderNode.Contents.OfType<TFileNode>().ToList())
+            _stategies = strategies;
+        }
+
+        public async Task Traverse(IFolderNode folderNode)
+        {
+            foreach (var node in folderNode.Files)
             {
                 var closuredNode = node;
-                foreach (var visitor in _visitors.Where(x => x.WantsToVisit(closuredNode)).ToList())
+                foreach (var strategy in _stategies)
                 {
-                    await visitor.Visit(closuredNode);
+                    await strategy.Perform(closuredNode);
                 }
             }
 
-            foreach (var folder in folderNode.Contents.OfType<IFolderNode>().ToList())
+            foreach (var folder in folderNode.SubFolders)
             {
                 await Traverse(folder);
             }

@@ -5,6 +5,7 @@ using Fync.Client.Windows.Services;
 using Fync.Client.Windows.ViewModels;
 using Fync.Client.Windows.Views;
 using Fync.Client.Windows.Views.Windows;
+using Fync.Common.Common;
 using TinyIoC;
 
 namespace Fync.Client.Windows

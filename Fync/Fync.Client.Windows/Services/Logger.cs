@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Fync.Common;
+using Fync.Common.Common;
 using Newtonsoft.Json;
 
 namespace Fync.Client.Windows.Services

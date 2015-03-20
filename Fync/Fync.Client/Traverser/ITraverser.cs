@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Fync.Client.Node.Contracts;
+using Fync.Client.Node.Base;
 
 namespace Fync.Client.Traverser
 {

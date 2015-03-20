@@ -36,10 +36,9 @@ namespace Fync.Api.Controllers
             return file;
         }
 
-        public HttpResponseMessage Delete(Guid folderId, DeletedSymbolicFile deletedSymbolicFile)
+        public SymbolicFile Delete(Guid folderId, string fileName)
         {
-            _symbolicFileService.DeleteSymbolicFileFromFolder(folderId, deletedSymbolicFile.FileName, DateTime.UtcNow);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return _symbolicFileService.DeleteSymbolicFileFromFolder(folderId, fileName, DateTime.UtcNow);
         }
 
         public SymbolicFile Put(Guid folderId, NewSymbolicFile symbolicFile)

@@ -2,8 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using Fync.Api.ModelBinders;
 using Fync.Common.Models;
 using Fync.Service;
 
@@ -26,15 +24,14 @@ namespace Fync.Api.Controllers
                 : _folderService.GetFullTree();
         }
 
-        public FolderWithChildren Post([SlashSeparatedArrayAttribute]string[] pathComponents, NewFolder newFolder)
+        public FolderWithChildren Post(Guid folderId, NewFolder newFolder)
         {
-            return _folderService.CreateFolder(pathComponents, DateTime.UtcNow);
+            return _folderService.CreateFolder(folderId, newFolder.Name, DateTime.UtcNow);
         }
 
-        public HttpResponseMessage Delete(Guid folderId)
+        public FolderWithChildren Delete(Guid folderId)
         {
-            _folderService.DeleteFolder(folderId, DateTime.UtcNow);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return _folderService.DeleteFolder(folderId, DateTime.UtcNow);
         }
 
         public HttpResponseMessage Put(NewFolder root)

@@ -75,12 +75,16 @@ namespace Fync.Service
             }
         }
 
-        public void DeleteFolder(Guid folderId, DateTime dateDeleted)
+        public FolderWithChildren DeleteFolder(Guid folderId, DateTime dateDeleted)
         {
             var folder = _context.Folders.Single(x => x.Id == folderId);
             if(folder.Parent == null) throw new Exception(); //cant delete a root folder
             if(folder.Owner != _currentUser.User) throw new Exception();
             RemoveNode(folder, dateDeleted);
+
+            _context.SaveChanges();
+
+            return folder.Map(_toFolder);
         }
 
         public FolderWithChildren GetFullTree()
@@ -149,7 +153,7 @@ namespace Fync.Service
         private void RemoveNode(FolderEntity folderToRemove, DateTime dateDeleted)
         {
             _symbolicFileService.DeleteSymbolicFilesFromFolder(folderToRemove.Id, dateDeleted);
-            folderToRemove.RecursivelySet(x =>
+            folderToRemove.RecursivelyDo(x =>
             {
                 x.Deleted = true;
                 x.ModifiedDate = dateDeleted;

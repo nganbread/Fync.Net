@@ -112,6 +112,11 @@ namespace Fync.Client.Web
             var response = await _httpClient.DeleteAsync(requestUri.FormatWith(format));
             HandleResponse(response);
         }
+        public async Task<T> DeleteAsync<T>(string requestUri, params object[] format)
+        {
+            var response = await _httpClient.DeleteAsync(requestUri.FormatWith(format));
+            return await HandleResponse<T>(response);
+        }
 
         public Task<T> GetAsync<T>(string requestUri, params object[] format)
         {

@@ -19,5 +19,6 @@ namespace Fync.Client.Web
         Task<T> PostAsync<T>(string requestUri, object data);
 
         Task DeleteAsync(string requestUri, params object[] format);
+        Task<T> DeleteAsync<T>(string requestUri, params object[] format);
     }
 }

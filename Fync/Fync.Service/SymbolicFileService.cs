@@ -92,13 +92,17 @@ namespace Fync.Service
             _symbolicFileTableAccess.DeleteSymbolicFilesFromFolder(symbolicFiles, dateDeleted);
         }
 
-        public void DeleteSymbolicFileFromFolder(Guid folderId, string fileName, DateTime dateDeleted)
+        public SymbolicFile DeleteSymbolicFileFromFolder(Guid folderId, string fileName, DateTime dateDeleted)
         {
             var symbolicFile = _symbolicFileTableAccess.GetSymbolicFileOrDefault(folderId, fileName);
             if (symbolicFile != null)
             {
                 _deletedSymbolicFileTableAccess.AddDeletedSymbolicFileToFolder(symbolicFile, dateDeleted);
-                _symbolicFileTableAccess.DeleteSymbolicFileFromFolder(symbolicFile, dateDeleted);
+                return _symbolicFileTableAccess.DeleteSymbolicFileFromFolder(symbolicFile, dateDeleted).Map(_toFile);
+            }
+            else
+            {
+                return null;
             }
         }
     }

@@ -30,10 +30,11 @@ namespace Fync.Data
             return _cloudTable.Execute(TableOperation.Retrieve<SymbolicFileTableEntity>(partition, row)).Result as SymbolicFileTableEntity;
         }
 
-        public void DeleteSymbolicFileFromFolder(SymbolicFileTableEntity symbolicFile, DateTime dateDeleted)
+        public SymbolicFileTableEntity DeleteSymbolicFileFromFolder(SymbolicFileTableEntity symbolicFile, DateTime dateDeleted)
         {
             symbolicFile.DateDeleted = dateDeleted;
             _cloudTable.Execute(TableOperation.Merge(symbolicFile));
+            return symbolicFile;
         }
 
         public void DeleteSymbolicFilesFromFolder(IEnumerable<SymbolicFileTableEntity> symbolicFiles, DateTime dateDeleted)

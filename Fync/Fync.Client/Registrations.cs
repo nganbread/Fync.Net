@@ -14,15 +14,12 @@ namespace Fync.Client
         {
             container.Register<IHttpClient, HttpClientWrapper>().AsSingleton();
             container.Register<IHasher, CachedSha256Hasher>().AsSingleton();
-            container.Register<IFileMonitor, FileMonitor>().AsSingleton();
-            container.Register<IFolderMonitor, FolderMonitor>().AsSingleton();
             container.Register<ISyncEngine, SyncEngine>();
+            container.Register<IFileChangeDetector, FileChangeDetector>();
+            container.Register<IFolderChangeDetector, FolderChangeDetector>();
 
-            container.Register<SyncEngine>();
-
-            container.AutoRegister(x => x.IsAssignableFrom(typeof(IVisitor<>)));
-            container.Register(typeof(FolderTraverser<,>));
-            container.Register(typeof(FileTraverser<,>));
+            container.AutoRegister(DuplicateImplementationActions.RegisterMultiple, x => x.IsAssignableFrom(typeof(IStrategy<>)));
+            container.AutoRegister(DuplicateImplementationActions.RegisterMultiple, x => x.IsAssignableFrom(typeof(ITraverser)));
         }
     }
 }

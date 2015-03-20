@@ -28,5 +28,15 @@ namespace Fync.Client.Extensions
 
             return Uri.UnescapeDataString(relative.ToString());
         }
+
+        public static bool IsSameAs(this DirectoryInfo @this, DirectoryInfo other)
+        {
+            return @this.FullName.Equals(other.FullName, StringComparison.InvariantCulture);
+        }
+
+        public static bool StartsWith(this DirectoryInfo @this, DirectoryInfo other)
+        {
+            return @this.FullName.StartsWith(other.FullName, StringComparison.InvariantCulture);
+        }
     }
 }

@@ -64,5 +64,10 @@ namespace Fync.Client.Extensions
                 fileStream.CopyTo(writeStream);
             }
         }
+
+        public static bool IsSameAs(this FileInfo @this, FileInfo other)
+        {
+            return @this.FullName.Equals(other.FullName, StringComparison.InvariantCulture);
+        }
     }
 }

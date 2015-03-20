@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Fync.Common.Common;
+using PropertyChanged;
 
 namespace Fync.Client.Windows.ViewModels.Windows
 {
