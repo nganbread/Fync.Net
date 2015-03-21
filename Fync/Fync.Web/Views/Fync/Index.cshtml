@@ -55,7 +55,7 @@
         </li>
 
     }
-    @foreach (var file in Model.Files)
+    @foreach (var file in Model.Files.Where(x => !x.DateDeletedUtc.HasValue))
     {
 
         <li>

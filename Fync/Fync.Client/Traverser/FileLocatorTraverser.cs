@@ -3,11 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Fync.Client.Extensions;
 using Fync.Client.Node.Base;
-using Fync.Client.Traverser;
 using Fync.Client.Visitors;
 using Fync.Common;
 
-namespace Fync.Client
+namespace Fync.Client.Traverser
 {
     internal class FileLocatorTraverser : ITraverser
     {
@@ -28,14 +27,14 @@ namespace Fync.Client
                 {
                     await _strategy.Perform(file);
                 }
-                
-                return;
             }
-
-            root
-                .SubFolders
-                .Where(x => _target.Directory.StartsWith(x.DirectoryInfo))
-                .ForEach(x => Traverse(x));
+            else
+            {
+                root
+                    .SubFolders
+                    .Where(x => _target.Directory.StartsWith(x.DirectoryInfo))
+                    .ForEach(x => Traverse(x));
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ using Owin;
 
 namespace Fync.Api
 {
-    public partial class Startup
+    internal partial class Startup
     {
         private void ConfigureAuth(IAppBuilder app)
         {

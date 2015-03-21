@@ -68,19 +68,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationService.cs" />
-    <Compile Include="FileService.cs" />
-    <Compile Include="IFileService.cs" />
+    <Compile Include="User\AuthenticationService.cs" />
+    <Compile Include="Core\FileService.cs" />
+    <Compile Include="Core\IFileService.cs" />
     <Compile Include="Maps\FromDeletedSymbolicFileTableEntity.cs" />
     <Compile Include="Maps\FromSymbolicFileTableEntity.cs" />
     <Compile Include="Models\DeletedSymbolicFile.cs" />
     <Compile Include="Models\File.cs" />
-    <Compile Include="SymbolicFileService.cs" />
-    <Compile Include="FolderService.cs" />
-    <Compile Include="IAuthenticationService.cs" />
-    <Compile Include="ICurrentUser.cs" />
-    <Compile Include="ISymbolicFileService.cs" />
-    <Compile Include="IFolderService.cs" />
+    <Compile Include="Core\SymbolicFileService.cs" />
+    <Compile Include="Core\FolderService.cs" />
+    <Compile Include="User\IAuthenticationService.cs" />
+    <Compile Include="User\ICurrentUser.cs" />
+    <Compile Include="Core\ISymbolicFileService.cs" />
+    <Compile Include="Core\IFolderService.cs" />
     <Compile Include="Maps\FromNewFolder.cs" />
     <Compile Include="Maps\FromFolderEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
