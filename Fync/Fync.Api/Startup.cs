@@ -8,8 +8,8 @@ namespace Fync.Api
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
             ConfigureWebApi(app);
+            ConfigureAuth(app);
             ConfigureSignalR(app);
         }
     }

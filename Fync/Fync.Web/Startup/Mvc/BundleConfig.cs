@@ -1,4 +1,5 @@
 ﻿using System.Web.Optimization;
+using System.Web.Optimization.React;
 
 namespace Fync.Web
 {
@@ -7,8 +8,12 @@ namespace Fync.Web
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/Bundles/Scripts")
-                .Include("~/Scripts/bootStrap.js"));
+            bundles.Add(new JsxBundle("~/Bundles/Scripts")
+                .Include("~/Scripts/lib/flux.js")
+                .Include("~/Scripts/lib/require.js")
+                .Include("~/Scripts/bootStrap.js")
+                .IncludeDirectory("~/Scripts/react/", "*.js", searchSubdirectories: true)
+                .IncludeDirectory("~/Scripts/react/", "*.jsx", searchSubdirectories: true));
 
             bundles.Add(new LessBundle("~/Content/Css")
                 .Include(

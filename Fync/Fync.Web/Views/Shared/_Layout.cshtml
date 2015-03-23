@@ -1,4 +1,6 @@
-﻿@using System.Web.Optimization
+﻿
+@using System.Configuration
+@using System.Web.Optimization
 <!DOCTYPE html>
 
 <html>
@@ -25,5 +27,14 @@
 </body>
 </html>
 
-@RenderSection("Scripts", required: false)
+
+<script src="http://fb.me/react-0.12.2.js"></script>
 @Scripts.Render("~/Bundles/Scripts")
+<script type="text/javascript">
+    define('configuration', [], function () {
+        return {
+            apiUri: '@ConfigurationManager.AppSettings["ApiUri"]'
+    }; });
+</script>
+
+@RenderSection("Scripts", required: false)

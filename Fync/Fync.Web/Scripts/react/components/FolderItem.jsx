@@ -1,0 +1,21 @@
+define('react/components/folderItem', ['react', 'react/actions/actions'], function(react, actions){
+    return react.createClass({
+        displayName: 'FolderItem',
+        render: function(){
+            return <li>
+                <div className="icon mdi-file-folder-open">
+                </div>
+                <div className="name">
+                    <a onClick={this._click} href={this.props.parentName + "/" + this.props.folder.name}>{this.props.folder.name}</a>
+                </div>
+                <div className="details">
+
+                </div>
+            </li>
+        },
+        _click: function(e){
+            e.preventDefault();
+            actions.retrieveFolder(this.props.folder.id);
+        }
+    });
+});
