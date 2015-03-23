@@ -20,7 +20,7 @@ namespace Fync.Api
                     {
                         context.Properties.ExpiresUtc = DateTime.UtcNow.AddYears(10);
                     }
-                }
+                },
             });
         }
     }

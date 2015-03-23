@@ -21,7 +21,7 @@
             folderStore.stop(this._onStoreUpdated);
         },
         _onStoreUpdated: function(){
-            this.state = folderStore.getFolder();
+            this.setState(folderStore.getFolder());
         },
         _renderFiles: function() {
             return this.state.files.map(file => <FileItem file={file} parentId={this.state.id}/> );

@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web;
 using System.Web.Mvc;
 using Fync.Service;
 using Fync.Web.ModelBinders;
@@ -27,7 +25,7 @@ namespace Fync.Web.Controllers
 
             return View(new FyncModel
             {
-                FolderWithParentAndChildren = folder,
+                Folder = folder,
                 Files = files
             });
         }

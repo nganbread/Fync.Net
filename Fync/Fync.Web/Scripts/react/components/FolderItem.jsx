@@ -14,6 +14,7 @@ define('react/components/folderItem', ['react', 'react/actions/actions'], functi
             </li>
         },
         _click: function(e){
+            if(e.nativeEvent.which == 2) return; //middle click
             e.preventDefault();
             actions.retrieveFolder(this.props.folder.id);
         }

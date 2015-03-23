@@ -10,7 +10,7 @@
     dispatcher.register(function (action) {
         switch(action.actionType) {
             case actionType.retrieveFolder:
-                $.get(configuration.apiUri + 'folder?id=' + action.id,
+                $.get(configuration.apiUri + 'fync?id=' + action.id,
                     function(data) {
                         folder = data;
                         triggerChange();

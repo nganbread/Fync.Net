@@ -1,6 +1,4 @@
-﻿
-@using Fync.Common
-@using Newtonsoft.Json
+﻿@using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @model FyncModel
 
@@ -24,12 +22,12 @@
                 var props = @Html.Raw(JsonConvert.SerializeObject(new
                 {
                     files = Model.Files,
-                    folders = Model.FolderWithParentAndChildren.SubFolders,
-                    parent = Model.FolderWithParentAndChildren.Parent,
-                    id = Model.FolderWithParentAndChildren.Id,
-                    name = Model.FolderWithParentAndChildren.Name,
-                    modifiedDate = Model.FolderWithParentAndChildren.ModifiedDate,
-                    deleted = Model.FolderWithParentAndChildren.Deleted
+                    folders = Model.Folder.SubFolders,
+                    parent = Model.Folder.Parent,
+                    id = Model.Folder.Id,
+                    name = Model.Folder.Name,
+                    modifiedDate = Model.Folder.ModifiedDate,
+                    deleted = Model.Folder.Deleted
                 }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
 
                 react.render(new Folder(props), $("#currentFolder")[0]);
@@ -38,74 +36,4 @@
         });
             
     </script>
-
 }
-
-    <div class="z-depth-1 panel">
-        <h1>
-            @{
-                var accumulate = "";
-                var actionLinks = Model
-                    .FolderWithParentAndChildren
-                    .Parent
-                    .RecursivelyGetAll(x => x.Parent, x => x.Name)
-                    .Reverse()
-                    .Concat(Model.FolderWithParentAndChildren.Name)
-                    .Select(x =>
-                    {
-                        accumulate = accumulate + "/" + x;
-                        return new
-                        {
-                            Link = accumulate,
-                            Name = x
-                        };
-                    })
-                    .ToList();
-
-                var currentFolder = actionLinks.Last();
-            }
-            @Html.Raw(actionLinks.Select(x => "<a href='{0}'>{1}</a>".FormatWith(x.Link, x.Name)).StringJoin("/"))
-        </h1>
-    </div>
-
-    <ol class="file-list">
-        <li class="column-headers">
-            <div class="icon mdi-hardware-keyboard-control">
-
-            </div>
-            <div class="name">
-                Name
-            </div>
-            <div class="details">
-                Date
-            </div>
-        </li>
-
-        @foreach (var folder in Model.FolderWithParentAndChildren.SubFolders)
-        {
-            <li>
-                <div class="icon mdi-file-folder-open">
-                </div>
-                <div class="name">
-                    <a href="@currentFolder.Link/@folder.Name">@folder.Name</a>
-                </div>
-                <div class="details">
-
-                </div>
-            </li>
-
-        }
-        @foreach (var file in Model.Files.Where(x => !x.DateDeletedUtc.HasValue))
-        {
-
-            <li>
-                <div class="icon mdi-editor-insert-drive-file"></div>
-                <div class="name">
-                    @Html.ActionLink(file.Name, "Index", "Data", new { Model.FolderWithParentAndChildren.Id, fileName = file.Name }, null)
-                </div>
-                <div class="details">
-                    @file.DateCreatedUtc.ToShortDateString()
-                </div>
-            </li>
-        }
-    </ol>

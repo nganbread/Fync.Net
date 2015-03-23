@@ -19,7 +19,6 @@ namespace Fync.Api.ModelBinders
                 .Unescape()
                 .Split('/')
                 .Where(x => !String.IsNullOrWhiteSpace(x))
-                .Skip(1) //dont want the controller name
                 .ToArray();
 
             return true;

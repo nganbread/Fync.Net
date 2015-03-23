@@ -5,7 +5,7 @@ namespace Fync.Web.Models
 {
     public class FyncModel
     {
-        public FolderWithParentAndChildren FolderWithParentAndChildren { get; set; }
+        public FolderWithParentAndChildren Folder { get; set; }
         public IList<SymbolicFile> Files { get; set; }
     }
 }
