@@ -22,6 +22,9 @@ Azure services used
 
 Web componenents used:
 * LESS
+* React/Flux
+* require.js
+* moment.js
 
 Other components:
 * SQLite
