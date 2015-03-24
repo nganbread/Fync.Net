@@ -10,6 +10,6 @@ define('react/components/pathLink', ['react', 'react/actions/actions', 'react/se
             e.preventDefault();
 
             actions.navigateToFolder(this.props.directory.id);
-        },
+        }
     });
 });

@@ -1,6 +1,7 @@
 ﻿define('react/actions/actionTypes', [], function() {
     return {
         navigateToFolder: 'navigateToFolder',
-        goUp: 'goUp'
+        goUp: 'goUp',
+        addNewFiles: 'addNewFiles'
     }
 });
