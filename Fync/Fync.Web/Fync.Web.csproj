@@ -213,6 +213,7 @@
     <Content Include="Scripts\lib\flux.js" />
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Scripts\lib\moment.js" />
     <Content Include="Scripts\lib\require.js" />
     <Content Include="Scripts\react\actions\actionTypes.js" />
     <Content Include="Scripts\react\actions\actions.js" />
@@ -270,7 +271,9 @@
     <Content Include="Scripts\react\components\Folder.jsx" />
     <Content Include="Scripts\react\components\FolderItem.jsx" />
     <Content Include="Scripts\react\components\PathPanel.jsx" />
-    <Content Include="Scripts\react\components\PathDirectory.jsx" />
+    <Content Include="Scripts\react\components\PathLink.jsx" />
+    <Content Include="Scripts\react\components\GoUpButton.jsx" />
+    <Content Include="Styles\PathPanel.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

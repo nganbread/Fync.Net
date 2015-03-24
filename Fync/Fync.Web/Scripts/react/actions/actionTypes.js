@@ -1,5 +1,6 @@
 ﻿define('react/actions/actionTypes', [], function() {
     return {
-        retrieveFolder: 'retrieveFolder'
+        navigateToFolder: 'navigateToFolder',
+        goUp: 'goUp'
     }
 });

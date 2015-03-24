@@ -59,15 +59,16 @@ namespace Fync.Data
             return root;
         }
 
-
         /// <summary>
         /// TODO: protect from SQL Injection
         /// TODO: ?? Perform entirely in sql ??
+        /// 
+        /// Gets a folder, and all of its parents, that match a provided path
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="pathComponents"></param>
         /// <returns></returns>
-        public FolderEntity GetFolderFromPath(int userId, string[] pathComponents)
+        public FolderEntity GetFolderWithParentsFromPath(int userId, string[] pathComponents)
         {
             var script =
                 "SELECT DISTINCT ancestors.[Id], ancestors.[OwnerId], ancestors.[ParentId], ancestors.[Name], ancestors.[ModifiedDate], ancestors.[Deleted] " +

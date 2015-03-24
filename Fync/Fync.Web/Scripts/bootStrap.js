@@ -7,5 +7,5 @@
 
     define('react', [], function () { return React; });
     define('flux', [], function () { return Flux; });
-
+    define('time', [], function () { return moment; });
 })();

@@ -12,6 +12,7 @@ namespace Fync.Service
         FolderWithChildren DeleteFolder(Guid folderId, DateTime deletedDate);
         FolderWithChildren GetFullTree();
         FolderWithChildren GetFolder(Guid id);
-        FolderWithParentAndChildren GetFolderFromPath(string[] pathComponents);
+        FolderWithParentAndChildren GetFolderWithParentsFromPath(string[] pathComponents);
+        FolderWithParentAndChildren GetFolderWithParents(Guid id);
     }
 }

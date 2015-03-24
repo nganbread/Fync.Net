@@ -1,16 +1,21 @@
-define('react/components/fileItem', ['react'], function(react){
+define('react/components/fileItem', ['react', 'time'], function(react, time){
 	return react.createClass({
-			displayName: 'FileItem',
 			render: function(){
 				return <li>
 					<div className="icon mdi-editor-insert-drive-file"></div>
 					<div className="name">
-						<a href={"/Data?id="+this.props.parentId+"&fileName="+this.props.file.name}>{this.props.file.name}</a>
+						<a href={this._getUrl()}>{this.props.file.name}</a>
 					</div>
 					<div className="details">
-						{this.props.file.dateCreatedUtc}
+                        <a href={this._getUrl()}>{this._getDate()}</a>
 					</div>
 				</li>
-			}
+			},
+            _getUrl: function(){
+                return "/Data?id="+this.props.parentId+"&fileName="+this.props.file.name;
+            },
+            _getDate: function(){
+                return time(this.props.file.dateCreatedUtc).format('h:mma DD/MM/YY')
+            }
 		});
 });

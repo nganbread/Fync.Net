@@ -19,7 +19,7 @@ namespace Fync.Api.Controllers
 
         public object Get(Guid id)
         {
-            var folder = _folderService.GetFolder(id);
+            var folder = _folderService.GetFolderWithParents(id);
             if (folder == null) throw new HttpException(404, "Folder Not Found");
             var files = _symbolicFileService.GetFilesInFolder(folder.Id);
 
@@ -27,7 +27,7 @@ namespace Fync.Api.Controllers
             {
                 files = files,
                 folders = folder.SubFolders,
-                //parent = folder.Parent,
+                parent = folder.Parent,
                 id = folder.Id,
                 name = folder.Name,
                 modifiedDate = folder.ModifiedDate,

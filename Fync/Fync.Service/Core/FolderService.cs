@@ -41,7 +41,7 @@ namespace Fync.Service
         {
             var folderName = pathComponents.Last();
             //Kinda inefficient
-            var folder = GetFolderFromPath(pathComponents.Take(pathComponents.Length - 1).ToArray());
+            var folder = GetFolderWithParentsFromPath(pathComponents.Take(pathComponents.Length - 1).ToArray());
 
             return CreateFolder(folder.Id, folderName, createDate);
         }
@@ -98,12 +98,18 @@ namespace Fync.Service
             return folder.Map(x => _toFolderWithDepth(x, 1)); //only enumerate to a depth of one level
         }
 
-        public FolderWithParentAndChildren GetFolderFromPath(string[] pathComponents)
+        public FolderWithParentAndChildren GetFolderWithParents(Guid id)
+        {
+            var folder = _context.Folders.Include(x => x.Parent).Single(x => x.Id == id);
+            return folder.Map(x => _toFolderWithParentAndChildren(x, 1));
+        }
+
+        public FolderWithParentAndChildren GetFolderWithParentsFromPath(string[] pathComponents)
         {
             //Root folder is Fync
             if (pathComponents.First() != "Fync") return null;
 
-            var folder = _context.GetFolderFromPath(_currentUser.UserId, pathComponents);
+            var folder = _context.GetFolderWithParentsFromPath(_currentUser.UserId, pathComponents);
             return folder == null
             ? null
             : folder.Map(x => _toFolderWithParentAndChildren(x, 1));

@@ -1,13 +1,13 @@
-﻿define('react/components/folder', ['react', 'react/components/fileItem', 'react/components/folderItem', 'react/stores/folderStore'], function(react, FileItem, FolderItem, folderStore){
+﻿define('react/components/folder', ['react', 'react/components/fileItem', 'react/components/folderItem', 'react/stores/folderStore', 'react/components/backButton'], function(react, FileItem, FolderItem, folderStore, GoUpButton){
     return react.createClass({
-        displayName: 'Folder',
         getInitialState: function(){
             if(this.props.folders && this.props.files && this.props.id && this.props.name){
                 return {
                     folders: this.props.folders,
                     files: this.props.files,
                     id: this.props.id,
-                    name: this.props.name
+                    name: this.props.name,
+                    parent: this.props.parent
                 }
             }else{
                 return folderStore.getFolder();
@@ -26,15 +26,14 @@
         _renderFiles: function() {
             return this.state.files.map(file => <FileItem file={file} parentId={this.state.id}/> );
         },
-
         _renderFolders: function() {
             return this.state.folders.map(folder => <FolderItem folder={folder} parentName={this.state.name}/> );
         },
         render: function() {
             return <ol className="file-list">
                 <li className="column-headers">
-                    <div className="icon mdi-hardware-keyboard-control">
-
+                    <div>
+                        <GoUpButton folder={this.state.parent}/>
                     </div>
                     <div className="name">
                         Name

@@ -24,7 +24,8 @@ namespace Fync.Web
 		        .AddScript("~/Scripts/react/Folder.jsx")
 		        .AddScript("~/Scripts/react/FileItem.jsx")
 		        .AddScript("~/Scripts/react/FolderItem.jsx")
-		        .AddScript("~/Scripts/react/PathDirectory.jsx")
+		        .AddScript("~/Scripts/react/PathLink.jsx")
+                .AddScript("~/Scripts/react/GoUpButton.jsx")
 		        .AddScript("~/Scripts/react/PathPanel.jsx");
 		}
 	}

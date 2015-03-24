@@ -11,7 +11,7 @@ namespace Fync.Data
         IDbSet<User> Users { get; }
         FolderEntity GetTree(int userId, Guid folderId);
         FolderEntity GetTree(int userId);
-        FolderEntity GetFolderFromPath(int userId, string[] pathComponents);
+        FolderEntity GetFolderWithParentsFromPath(int userId, string[] pathComponents);
 
         void SaveChanges();
     }

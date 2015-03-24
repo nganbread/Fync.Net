@@ -34,9 +34,9 @@ namespace Fync.Data
             return _context().GetTree(userId, folderId);
         }
 
-        public FolderEntity GetFolderFromPath(int userId, string[] pathComponents)
+        public FolderEntity GetFolderWithParentsFromPath(int userId, string[] pathComponents)
         {
-            return _context().GetFolderFromPath(userId, pathComponents);
+            return _context().GetFolderWithParentsFromPath(userId, pathComponents);
         }
 
         public void SaveChanges()

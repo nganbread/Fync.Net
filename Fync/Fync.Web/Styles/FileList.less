@@ -23,18 +23,26 @@ ol.file-list {
         .name {
             order:2;
             flex-grow:1;
+        }
 
-            a {
-                display: block;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-            }
+        a {
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .details{
             order:3;
-            width:@file-line-height * 2;
+            width:@file-line-height * 3;
+        }
+
+        a.backButton{
+            text-decoration: none;
+
+            :hover{
+                color:@colour-600;
+            }
         }
     }
 

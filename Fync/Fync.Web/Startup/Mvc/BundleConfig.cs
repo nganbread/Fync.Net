@@ -9,6 +9,7 @@ namespace Fync.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new JsxBundle("~/Bundles/Scripts")
+                .Include("~/Scripts/lib/moment.js")
                 .Include("~/Scripts/lib/flux.js")
                 .Include("~/Scripts/lib/require.js")
                 .Include("~/Scripts/bootStrap.js")
@@ -18,6 +19,7 @@ namespace Fync.Web
             bundles.Add(new LessBundle("~/Content/Css")
                 .Include(
                 "~/Styles/Shadows.less",
+                "~/Styles/PathPanel.less",
                 "~/Styles/MaterialDesignIcons.less",
                 "~/Styles/Main.less",
                 "~/Styles/FileList.less"));

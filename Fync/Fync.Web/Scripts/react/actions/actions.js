@@ -1,9 +1,14 @@
 ﻿define('react/actions/actions', ['react/dispatcher/dispatcher', 'react/actions/actionTypes'], function(dispatcher, actionType) {
     return {
-        retrieveFolder: function (id) {
+        navigateToFolder: function (id) {
             dispatcher.dispatch({
-                actionType: actionType.retrieveFolder,
+                actionType: actionType.navigateToFolder,
                 id: id
+            });
+        },
+        goUp : function(){
+            dispatcher.dispatch({
+               actionType: actionType.goUp
             });
         }
     }
