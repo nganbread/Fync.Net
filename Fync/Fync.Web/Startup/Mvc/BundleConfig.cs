@@ -18,6 +18,7 @@ namespace Fync.Web
 
             bundles.Add(new LessBundle("~/Content/Css")
                 .Include(
+                "~/Styles/Variables.less",
                 "~/Styles/Shadows.less",
                 "~/Styles/PathPanel.less",
                 "~/Styles/MaterialDesignIcons.less",

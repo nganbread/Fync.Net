@@ -5,18 +5,25 @@
 <div class="z-depth-1 panel" id="pathPanel"></div>
 <div id="currentFolder"></div>
 @*@Html.React("FileList", new
-        {
-            files = Model.Files,
-            folders = Model.FolderWithParentAndChildren.SubFolders,
-            parent = Model.FolderWithParentAndChildren.Parent,
-            id = Model.FolderWithParentAndChildren.Id,
-            name = Model.FolderWithParentAndChildren.Name,
-            modifiedDate = Model.FolderWithParentAndChildren.ModifiedDate,
-            deleted = Model.FolderWithParentAndChildren.Deleted
-    })*@
+    {
+        files = Model.Files,
+        folders = Model.FolderWithParentAndChildren.SubFolders,
+        parent = Model.FolderWithParentAndChildren.Parent,
+        id = Model.FolderWithParentAndChildren.Id,
+        name = Model.FolderWithParentAndChildren.Name,
+        modifiedDate = Model.FolderWithParentAndChildren.ModifiedDate,
+        deleted = Model.FolderWithParentAndChildren.Deleted
+})*@
 
 @section scripts{
     <script type="text/javascript">
+        //Start services
+        require(['react/services/history', 'react/services/pageTitle'], function(history, pageTitle) {
+            pageTitle.start();
+            history.start();
+        });
+
+        //Start rendering
         require(['jquery', 'react', 'react/components/folder', 'react/components/pathPanel'], function($, react, Folder, PathPanel) {
             $(function () {
                 var props = @Html.Raw(JsonConvert.SerializeObject(new
@@ -34,6 +41,6 @@
                 react.render(new PathPanel(props), $("#pathPanel")[0]);
             });
         });
-            
+
     </script>
 }

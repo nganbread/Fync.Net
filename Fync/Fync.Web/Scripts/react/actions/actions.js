@@ -1,14 +1,16 @@
 ﻿define('react/actions/actions', ['react/dispatcher/dispatcher', 'react/actions/actionTypes'], function(dispatcher, actionType) {
     return {
-        navigateToFolder: function (id) {
+        navigateToFolder: function (id, meta) {
             dispatcher.dispatch({
                 actionType: actionType.navigateToFolder,
-                id: id
+                id: id,
+                meta: meta
             });
         },
-        goUp : function(){
+        goUp : function(meta){
             dispatcher.dispatch({
-               actionType: actionType.goUp
+                actionType: actionType.goUp,
+                meta: meta
             });
         }
     }

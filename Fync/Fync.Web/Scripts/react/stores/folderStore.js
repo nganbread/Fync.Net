@@ -1,27 +1,27 @@
 ﻿define('react/stores/folderStore', ['jquery', 'react/dispatcher/dispatcher', 'react/actions/actionTypes', 'configuration'], function($, dispatcher, actionType, configuration) {
     var listeners = [];
     var folder = null;
-    var triggerChange = function() {
+    var triggerChange = function(meta) {
         for (var key in listeners) {
-            listeners[key]();
+            listeners[key](meta);
         };
     };
 
-    var navigateTo = function(id){
+    var navigateTo = function(id, meta){
         $.get(configuration.apiUri + 'fync?id=' + id,
             function(data) {
                 folder = data;
-                triggerChange();
+                triggerChange(meta);
             });
     };
 
     dispatcher.register(function (action) {
         switch(action.actionType) {
             case actionType.navigateToFolder:
-                navigateTo(action.id)
+                navigateTo(action.id, action.meta);
                 break;
             case actionType.goUp:
-                navigateTo(folder.parent.id)
+                navigateTo(folder.parent.id, action.meta);
                 break;
         }
     });

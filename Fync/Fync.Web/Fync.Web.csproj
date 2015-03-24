@@ -218,6 +218,9 @@
     <Content Include="Scripts\react\actions\actionTypes.js" />
     <Content Include="Scripts\react\actions\actions.js" />
     <Content Include="Scripts\react\dispatcher\dispatcher.js" />
+    <Content Include="Scripts\react\services\history.js" />
+    <Content Include="Scripts\react\services\pageTitle.js" />
+    <Content Include="Scripts\react\services\url.js" />
     <Content Include="Scripts\react\stores\folderStore.js" />
     <Content Include="Web.config" />
   </ItemGroup>
