@@ -277,6 +277,7 @@
     <Content Include="Scripts\react\components\PathLink.jsx" />
     <Content Include="Scripts\react\components\GoUpButton.jsx" />
     <Content Include="Styles\PathPanel.less" />
+    <Content Include="Styles\Styles.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -17,13 +17,7 @@ namespace Fync.Web
                 .IncludeDirectory("~/Scripts/react/", "*.jsx", searchSubdirectories: true));
 
             bundles.Add(new LessBundle("~/Content/Css")
-                .Include(
-                "~/Styles/Variables.less",
-                "~/Styles/Shadows.less",
-                "~/Styles/PathPanel.less",
-                "~/Styles/MaterialDesignIcons.less",
-                "~/Styles/Main.less",
-                "~/Styles/FileList.less"));
+                .Include("~/Styles/Styles.less"));
         }
     }
 }
