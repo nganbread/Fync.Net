@@ -12,6 +12,13 @@
                 actionType: actionType.goUp,
                 meta: meta
             });
+        },
+        addNewFiles : function(files, meta){
+            dispatcher.dispatch({
+                actionType: actionType.addNewFiles,
+                files: files,
+                meta: meta
+            });
         }
     }
 });

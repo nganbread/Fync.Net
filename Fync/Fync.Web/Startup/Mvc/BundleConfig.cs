@@ -11,6 +11,8 @@ namespace Fync.Web
             bundles.Add(new JsxBundle("~/Bundles/Scripts")
                 .Include("~/Scripts/lib/moment.js")
                 .Include("~/Scripts/lib/flux.js")
+                .Include("~/Scripts/lib/jquery.js")
+                .Include("~/Scripts/lib/react.js")
                 .Include("~/Scripts/lib/require.js")
                 .Include("~/Scripts/bootStrap.js")
                 .IncludeDirectory("~/Scripts/react/", "*.js", searchSubdirectories: true)

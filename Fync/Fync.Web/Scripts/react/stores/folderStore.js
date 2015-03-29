@@ -38,6 +38,9 @@
         },
         getFolder: function() {
             return folder;
+        },
+        setFolder: function(newFolder) {
+            folder = newFolder;
         }
     };
 });

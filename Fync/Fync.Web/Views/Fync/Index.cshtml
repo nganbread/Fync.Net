@@ -2,8 +2,7 @@
 @using Newtonsoft.Json.Serialization
 @model FyncModel
 
-<div class="z-depth-1 panel" id="pathPanel"></div>
-<div id="currentFolder"></div>
+<div id="app-container"></div>
 @*@Html.React("FileList", new
     {
         files = Model.Files,
@@ -24,21 +23,24 @@
         });
 
         //Start rendering
-        require(['jquery', 'react', 'react/components/folder', 'react/components/pathPanel'], function($, react, Folder, PathPanel) {
-            $(function () {
-                var props = @Html.Raw(JsonConvert.SerializeObject(new
-                {
-                    files = Model.Files,
-                    folders = Model.Folder.SubFolders,
-                    parent = Model.Folder.Parent,
-                    id = Model.Folder.Id,
-                    name = Model.Folder.Name,
-                    modifiedDate = Model.Folder.ModifiedDate,
-                    deleted = Model.Folder.Deleted
-                }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+        require(['jquery', 'react', 'react/components/app'], function($, react, AppClass) {
+            $(function() {
+                var folder = @Html.Raw(JsonConvert.SerializeObject(new
+                            {
+                                files = Model.Files,
+                                folders = Model.Folder.SubFolders,
+                                parent = Model.Folder.Parent,
+                                id = Model.Folder.Id,
+                                name = Model.Folder.Name,
+                                modifiedDate = Model.Folder.ModifiedDate,
+                                deleted = Model.Folder.Deleted
+                            }, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
 
-                react.render(new Folder(props), $("#currentFolder")[0]);
-                react.render(new PathPanel(props), $("#pathPanel")[0]);
+                var initialState = {
+                    folder: folder
+                }
+                var App = react.createFactory(AppClass);
+                react.render(new App(initialState), $("#app-container")[0]);
             });
         });
 

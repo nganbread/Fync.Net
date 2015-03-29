@@ -21,12 +21,16 @@ namespace Fync.Web
 			// your components as well as all of their dependencies.
 			// See http://reactjs.net/ for more information. Example:
 		    ReactSiteConfiguration.Configuration
-		        .AddScript("~/Scripts/react/Folder.jsx")
-		        .AddScript("~/Scripts/react/FileItem.jsx")
-		        .AddScript("~/Scripts/react/FolderItem.jsx")
-		        .AddScript("~/Scripts/react/PathLink.jsx")
-                .AddScript("~/Scripts/react/GoUpButton.jsx")
-		        .AddScript("~/Scripts/react/PathPanel.jsx");
+		        .AddScript("~/Scripts/react/components/App.jsx")
+		        .AddScript("~/Scripts/react/components/FileDropRegion.jsx")
+                .AddScript("~/Scripts/react/components/FileItem.jsx")
+                .AddScript("~/Scripts/react/components/Folder.jsx")
+		        .AddScript("~/Scripts/react/components/FolderItem.jsx")
+		        .AddScript("~/Scripts/react/components/NewFilesItem.jsx")
+		        .AddScript("~/Scripts/react/components/NewFilesPanel.jsx")
+		        .AddScript("~/Scripts/react/components/PathLink.jsx")
+                .AddScript("~/Scripts/react/components/GoUpButton.jsx")
+		        .AddScript("~/Scripts/react/components/PathPanel.jsx");
 		}
 	}
 }

@@ -214,6 +214,8 @@
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\lib\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\lib\moment.js" />
+    <Content Include="Scripts\lib\jquery.js" />
+    <Content Include="Scripts\lib\react.js" />
     <Content Include="Scripts\lib\require.js" />
     <Content Include="Scripts\react\actions\actionTypes.js" />
     <Content Include="Scripts\react\actions\actions.js" />
@@ -222,6 +224,7 @@
     <Content Include="Scripts\react\services\pageTitle.js" />
     <Content Include="Scripts\react\services\url.js" />
     <Content Include="Scripts\react\stores\folderStore.js" />
+    <Content Include="Scripts\react\stores\newFileStore.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +281,14 @@
     <Content Include="Scripts\react\components\GoUpButton.jsx" />
     <Content Include="Styles\PathPanel.less" />
     <Content Include="Styles\Styles.less" />
+    <Content Include="Scripts\react\components\App.jsx" />
+    <Content Include="Scripts\react\components\FileDropRegion.jsx" />
+    <Content Include="Scripts\react\components\NewFilesItem.jsx" />
+    <Content Include="Scripts\react\components\NewFilesPanel.jsx" />
+    <Content Include="Styles\FileDropRegion.less" />
+    <Content Include="Styles\NewFilesPanel.less" />
+    <Content Include="Views\Shared\_LayoutCore.cshtml" />
+    <Content Include="Views\Fync\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -285,9 +296,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Fync.Common\Fync.Common.csproj">
       <Project>{54B35500-158C-4E88-A14D-325F0EF39F36}</Project>
