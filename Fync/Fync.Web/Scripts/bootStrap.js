@@ -5,7 +5,16 @@
         }
     });
 
-    define('react', [], function() { return React; });
+    define('react', [], function () {
+        var react = React;
+        //delete React;
+         return react;
+    });
+    define('$', [], function () {
+        var jquery = $;
+        delete $;
+         return jquery;
+    });
     define('flux', [], function () { return Flux; });
     define('time', [], function () { return moment; });
 })();

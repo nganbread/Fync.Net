@@ -1,22 +1,11 @@
 ﻿define('react/components/folder', ['react', 'react/components/fileItem', 'react/components/folderItem', 'react/stores/folderStore', 'react/components/backButton'], function(react, FileItem, FolderItem, folderStore, GoUpButton){
     return react.createClass({
-        getInitialState: function(){
-            if(this.props.folders && this.props.files && this.props.id && this.props.name){
-                return {
-                    folders: this.props.folders,
-                    files: this.props.files,
-                    id: this.props.id,
-                    name: this.props.name,
-                    parent: this.props.parent
-                }
-            }else{
-                return folderStore.getFolder();
-            }
-        },
+		getInitialState: function(){
+			return folderStore.getFolder();
+		},
         componentDidMount: function() {
             folderStore.listen(this._onStoreUpdated);
         },
-
         componentWillUnmount: function() {
             folderStore.stop(this._onStoreUpdated);
         },

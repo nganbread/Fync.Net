@@ -1,5 +1,4 @@
-﻿
-@using System.Configuration
+﻿@using System.Configuration
 @using System.Web.Optimization
 <!DOCTYPE html>
 
@@ -13,22 +12,12 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    @Html.Partial("_Header")
 
-<div class="body">
-    <div class="left-panel z-depth-2">
-        
-    </div>
-    <div class="content-panel">
-        @RenderBody()
-    </div>    
-</div>
+    @RenderBody()
 
 </body>
 </html>
 
-
-<script src="http://fb.me/react-0.12.2.js"></script>
 @Scripts.Render("~/Bundles/Scripts")
 <script type="text/javascript">
     define('configuration', [], function () {

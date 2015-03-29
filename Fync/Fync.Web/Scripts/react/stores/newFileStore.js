@@ -1,6 +1,7 @@
 define('react/stores/newFileStore', ['jquery', 'react/dispatcher/dispatcher', 'react/actions/actionTypes', 'configuration'], function($, dispatcher, actionType, configuration) {
     var listeners = [];
     var newFiles = [];
+    var showNewFiles = false;
     var triggerChange = function(meta) {
         for (var key in listeners) {
             listeners[key](meta);
@@ -10,7 +11,7 @@ define('react/stores/newFileStore', ['jquery', 'react/dispatcher/dispatcher', 'r
     dispatcher.register(function (action) {
         switch(action.actionType) {
             case actionType.addNewFiles:
-                newFiles.concat(action.files);
+                newFiles = newFiles.concat(action.files);
                 triggerChange(action.meta);
                 break;
         }

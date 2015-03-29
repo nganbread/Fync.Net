@@ -18,7 +18,7 @@
                 actionType: actionType.addNewFiles,
                 files: files,
                 meta: meta
-            })
+            });
         }
     }
 });

@@ -1,7 +1,7 @@
 define('react/components/pathPanel', ['react', 'react/components/pathLink', 'react/stores/folderStore'], function(react, PathLink, folderStore){
     return react.createClass({
         getInitialState: function(){
-            return this.props;
+            return folderStore.getFolder();
         },
         renderPathDirectory: function(directory){
             if(directory == null) return [];
@@ -24,7 +24,9 @@ define('react/components/pathPanel', ['react', 'react/components/pathLink', 'rea
             this.setState(folderStore.getFolder());
         },
         render: function() {
-            return <h1>{this.renderPathDirectory(this.state)}</h1>
+            return <div className='z-depth-1 panel'>
+					<h1>{this.renderPathDirectory(this.state)}</h1>
+				</div>
         }
     });
 });

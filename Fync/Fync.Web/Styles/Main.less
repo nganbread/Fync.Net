@@ -35,35 +35,57 @@ html, body {
     height: 100%;
 }
 
-.left-panel {
-    width: @side-bar-width;
+.left-panel{
+    flex: 0 0 @side-bar-width;
+    background: @medium-grey-colour;
+    display: flex;
 }
 
-.content-panel {
-    width: 100%;
+.content-panel{
+    width:100%;
+    height:100%;
+    display: flex;
+    overflow:auto;
+}
+.right-panel{
+    flex: 0 0 0;
+    background: @light-grey-colour;
+    display: flex;
+}
+.drop-region.active{
+    .right-panel{
+        flex: 0 0 @side-bar-width;
+    }
 }
 
 .panel{
-    margin:@standard-margin;
     padding:@standard-padding;
+    margin:@standard-margin;
 }
 
-.header {
-    width: 100%;
-    display: flex;
-    height: @header-height;
+#app-container{
+    height:100%;
+}
 
-    .content-panel {
-        background: @colour-500;
+.full-flex-row{
+    height:100%;
+    flex-flow:column;
+    display:flex;
+    flex: 1 1 auto;
+
+    .footer{
+        flex: 0 1 @footer-height;
     }
+}
 
-    .left-panel {
-        display: flex;
-
+.header{
+    height: @header-height;
+    .left-panel{
+        background-color:white;
         .icon {
             width: 100%;
             text-align: center;
-            color: @colour-600;
+            color: @colour-400;
             line-height: @header-height;
             font-size: @header-height * 0.8;
 
@@ -71,22 +93,23 @@ html, body {
             -moz-transition: all 0.3s ease;
             -o-transition: all 0.3s ease;
             -ms-transition: all 0.3s ease;
+            &:hover {
+                color: @colour-300;
+                font-size: @header-height*0.85;
+            }
         }
-
-        .icon:hover {
-            color: @colour-300;
-            font-size: @header-height*0.85;
-        }
+    }
+    .content-panel{
+        background-color: @colour-400;
     }
 }
 
-.body {
-    width: 100%;
-    height: 100%;
-    display: flex;
-
+.body{
+    height:100%;
     .left-panel{
-        background: @medium-grey-colour;
+        background-color: @medium-grey-colour;
+    }
+    .right-panel{
+        background:red;
     }
 }
-
