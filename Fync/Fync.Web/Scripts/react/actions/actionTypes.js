@@ -2,6 +2,7 @@
     return {
         navigateToFolder: 'navigateToFolder',
         goUp: 'goUp',
-        addNewFiles: 'addNewFiles'
+        addNewFiles: 'addNewFiles',
+        toggleActiveFile: 'toggleActiveFile'
     }
 });

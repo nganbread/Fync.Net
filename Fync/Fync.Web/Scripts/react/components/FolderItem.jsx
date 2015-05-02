@@ -1,7 +1,7 @@
 define('react/components/folderItem', ['react', 'react/actions/actions'], function(react, actions){
     return react.createClass({
         render: function(){
-            return <li>
+            return <li className="folder">
                 <div className="icon mdi-file-folder-open">
                 </div>
                 <div className="name">

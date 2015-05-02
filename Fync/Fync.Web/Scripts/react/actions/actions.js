@@ -19,6 +19,13 @@
                 files: files,
                 meta: meta
             });
+        },
+        toggleActiveFile : function(file, meta){
+            dispatcher.dispatch({
+                actionType: actionType.toggleActiveFile,
+                file: file,
+                meta: meta
+            });
         }
     }
 });

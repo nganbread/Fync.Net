@@ -27,10 +27,13 @@ ol.file-list {
         }
 
         a {
-            display: block;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+        }
+
+        &.folder a{
+            display: block;
         }
 
         .details{
@@ -45,6 +48,14 @@ ol.file-list {
                 color:@colour-600;
             }
         }
+
+        &.active{
+            background-color:@colour-50;
+            
+            >.icon {
+                color:@colour-300;
+            }
+        }
     }
 
     li.column-headers{
@@ -53,10 +64,6 @@ ol.file-list {
     }
 
     li:hover{
-
-        >.details{
-            text-decoration:underline;
-        }
 
         >.icon {
             color:@colour-600;
