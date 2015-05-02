@@ -1,4 +1,4 @@
-define('react/components/app', ['react', 'react/components/fileDropRegion', 'react/components/pathPanel', 'react/components/folder', 'react/stores/folderStore', 'react/components/newFilesPanel'], function (react, FileDropRegion, PathPanel, Folder, folderStore, NewFilesPanel) {
+define('react/components/app', ['react', 'react/components/fileDropRegion', 'react/components/pathPanel', 'react/components/folder', 'react/stores/folderStore', 'react/components/newFilesPanel', 'react/components/topPanel'], function (react, FileDropRegion, PathPanel, Folder, folderStore, NewFilesPanel, TopPanel) {
 
     return react.createClass({
         componentWillMount: function () {
@@ -16,7 +16,7 @@ define('react/components/app', ['react', 'react/components/fileDropRegion', 'rea
                                             <span className="icon mdi-file-cloud-done"></span>
                                         </div>
                                         <div className='content-panel z-depth-1'>
-
+                                            <TopPanel/>
                                         </div>
                                     </div>
                                 </div>
