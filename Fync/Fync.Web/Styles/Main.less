@@ -52,7 +52,7 @@ html, body {
     background: @light-grey-colour;
     display: flex;
 }
-.drop-region.active{
+.drop-region.active, .drop-region.has-files{
     .right-panel{
         flex: 0 0 @side-bar-width;
     }
@@ -61,6 +61,31 @@ html, body {
 .panel{
     padding:@standard-padding;
     margin:@standard-margin;
+}
+
+ul.new-file-list{
+    list-style-type: none;
+    margin: @small-margin;
+    padding: @small-padding;
+    line-height:@new-file-line-height;
+
+    li {
+        display: flex;
+        list-style-position: inside;
+
+        &.uploading{
+            color: @colour-100;
+        }
+        &.uploaded{
+            color: @colour-500;
+        }
+
+        .icon{
+            width: @new-file-line-height;
+            line-height:@new-file-line-height;
+            flex:auto 0 0;
+        }
+    }
 }
 
 #app-container{

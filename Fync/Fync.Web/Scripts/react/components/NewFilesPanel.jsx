@@ -18,13 +18,11 @@ define('react/components/newFilesPanel', ['react', 'react/stores/newFileStore', 
         },
         render: function () {
             return <div className='new-files-panel z-depth-2 right-panel'>
-				<ol>
+				<ul className="new-file-list">
 					{this.state.files.map(file => {
-						return <li>
-							<NewFileItem file={file}/>
-						</li>
+						return <NewFileItem file={file}/>
 					})}
-				</ol>
+				</ul>
 			</div>
         }
     });

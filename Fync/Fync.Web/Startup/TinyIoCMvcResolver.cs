@@ -19,7 +19,7 @@ namespace Fync.Common.Libraries
              {  
                  return _container.Resolve(serviceType);  
              }  
-             catch (Exception)  
+             catch (Exception e)  
              {  
                  return null;  
              }  

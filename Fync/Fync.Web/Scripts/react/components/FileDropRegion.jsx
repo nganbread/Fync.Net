@@ -1,7 +1,12 @@
 define('react/components/fileDropRegion', ['react', 'react/actions/actions', 'react/stores/newFileStore'], function (react, actions, newFileStore) {
     return react.createClass({
         render: function () {
-            return <div ref='dropRegion' className={"drop-region " + (this.state.isActive || this.state.hasNewFiles ? "active" : "")}>
+            return <div
+                ref='dropRegion'
+                className={
+                    "drop-region " +
+                    (this.state.isActive ? "active " : "") +
+                    (this.state.hasNewFiles ? "has-files " : "")}>
                 {this.props.children}
             </div>
         },

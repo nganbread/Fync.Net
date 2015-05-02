@@ -17,7 +17,7 @@ namespace Fync.Web.Controllers
             _symbolicFileService = symbolicFileService;
         }
 
-        public ActionResult Index([ModelBinder(typeof(SlashSeparatedArray))]string[] pathComponents)
+        public ActionResult Index([SlashSeparatedArray]string[] pathComponents)
         {
             var folder = _folderService.GetFolderWithParentsFromPath(pathComponents);
             if(folder == null) throw new HttpException(404, "Folder Not Found");

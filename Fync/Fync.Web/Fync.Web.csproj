@@ -235,6 +235,7 @@
     <Compile Include="CurrentUser.cs" />
     <Compile Include="CurrentUserWrapper.cs" />
     <Compile Include="ModelBinders\SlashSeparatedArray.cs" />
+    <Compile Include="ModelBinders\SlashSeparatedArrayAttribute.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\RegisterModel.cs" />
     <Compile Include="Models\Folder\FyncModel.cs" />
